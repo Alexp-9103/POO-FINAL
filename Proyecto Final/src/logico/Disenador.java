@@ -11,10 +11,9 @@ public class Disenador {
 	        return aniosExperiencia;
 	    }
 
-	    public void setAñosExperiencia(int añosExperiencia) {
-	        this.aniosExperiencia = añosExperiencia;
-	    }
-	    
+	    public void setAniosExperiencia(int aniosExperiencia) {
+	        this.aniosExperiencia = aniosExperiencia;
+	    }   
 }
 
 
