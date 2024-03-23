@@ -1,17 +1,17 @@
 package logico;
 
-class DiseÃ±ador extends Trabajador {
-    private int aÃ±osExperiencia;
+class Diseñador extends Trabajador {
+    private int añosExperiencia;
     
-    public DiseÃ±ador(String id, String nombre, String apellidos, String direccion, char sexo, int edad, double salarioHora, String evaluacion, int aÃ±osExperiencia) {
+    public Diseñador(String id, String nombre, String apellidos, String direccion, char sexo, int edad, double salarioHora, String evaluacion, int añosExperiencia) {
         super(id, nombre, apellidos, direccion, sexo, edad, salarioHora, evaluacion, salarioHora);
-        this.aÃ±osExperiencia = aÃ±osExperiencia;
+        this.añosExperiencia = añosExperiencia;
     }
-    public int getAÃ±osExperiencia() {
-        return aÃ±osExperiencia;
+    public int getAñosExperiencia() {
+        return añosExperiencia;
     }
 
-    public void setAÃ±osExperiencia(int aÃ±osExperiencia) {
-        this.aÃ±osExperiencia = aÃ±osExperiencia;
+    public void setAñosExperiencia(int añosExperiencia) {
+        this.añosExperiencia = añosExperiencia;
     }
 }
