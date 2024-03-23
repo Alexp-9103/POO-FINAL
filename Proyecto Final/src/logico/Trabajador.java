@@ -10,7 +10,7 @@ public class Trabajador {
 	private double salarioHora;
 	private String Evaluacion;
 
-	public Trabajador(String id, String Nombre, String Apellidos, String Direccion, char Sexo, int Edad, double SalarioHora, String Evaluacion, double salarioHora) {
+	public Trabajador(String id, String Nombre, String Apellidos, String Direccion, char Sexo, int Edad, double SalarioHora, String Evaluacion) {
 	    this.id = id;
 	    this.Nombre = Nombre;
 	    this.Apellido = Apellidos;

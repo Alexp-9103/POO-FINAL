@@ -1,10 +1,10 @@
 package logico;
 
-class Programador extends Trabajador {
+public class Programador extends Trabajador {
     private String lenguajeEspecializado;
 
     public Programador(String id, String nombre, String apellidos, String direccion, char sexo, int edad, double salarioHora, String evaluacion, String lenguajeEspecializado) {
-        super(id, nombre, apellidos, direccion, sexo, edad, salarioHora, evaluacion, salarioHora);
+        super(id, nombre, apellidos, direccion, sexo, edad, salarioHora, evaluacion);
         this.lenguajeEspecializado = lenguajeEspecializado;
     }
 
