@@ -19,7 +19,6 @@ public class Contrato {
         this.prorroga = prorroga;
        
     }
-    
 
 	public int getIdContrato() {
 		return idContrato;
