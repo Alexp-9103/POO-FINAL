@@ -7,7 +7,7 @@ public class Disenador {
 	        super();
 	        this.aniosExperiencia = aniosExperiencia;
 	    }
-	    public int getAñosExperiencia() {
+	    public int getAniosExperiencia() {
 	        return aniosExperiencia;
 	    }
 
