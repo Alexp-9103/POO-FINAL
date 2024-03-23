@@ -66,6 +66,5 @@ public class Contrato {
 
 	public void setProrroga(boolean prorroga) {
 		this.prorroga = prorroga;
-	}   
+	}
 }
-
