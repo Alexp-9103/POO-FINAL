@@ -1,5 +1,6 @@
 package logico;
 
+import java.util.Date;
 import java.util.ArrayList;
 
 public class JJDCommunications {
@@ -46,6 +47,20 @@ public class JJDCommunications {
 	public void setListaProyectos(ArrayList<Proyecto> listaProyectos) {
 		ListaProyectos = listaProyectos;
 	}
+	
+	
+    // Método para calcular el salario total pagado a los trabajadores en un periodo de tiempo determinado
+    public double calcularSalarioTotal(Date fechaInicio, Date fechaFin) {
+        double salarioTotal = 0.0;
+        
+        for (Trabajador trabajador : ListaTrabajadores) {
+            // Calculamos el salario del trabajador en el período y lo sumamos al total        	
+            salarioTotal += Trabajador.calcularSalarioTrabajador(trabajador, fechaInicio, fechaFin);
+        }
+        
+        return salarioTotal;
+    }
+	
     
     
 }
