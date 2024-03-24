@@ -44,7 +44,7 @@ public class JJDCommunications {
 	}
 
 	public void setListaProyectos(ArrayList<Proyecto> listaProyectos) {
-		ListaProyectos = listaProyectos;
+		ListaProyectos =listaProyectos;
 	}
     
     
