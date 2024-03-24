@@ -1,16 +1,17 @@
 package logico;
 
-import java.time.LocalDate;
+import java.util.Date;
+
 
 public class Contrato {
     private int idContrato;
     private int idCliente;
     private String nombreProyecto;
-    private LocalDate fechaInicio;
-    private LocalDate fechaEntrega;
+    private Date fechaInicio;
+    private Date fechaEntrega;
     private boolean prorroga;
 
-    public Contrato(int identificador, int idCliente, String nombreProyecto, LocalDate fechaInicio, LocalDate fechaEntrega, boolean prorroga, int idContrato) {
+    public Contrato(int identificador, int idCliente, String nombreProyecto, Date fechaInicio, Date fechaEntrega, boolean prorroga, int idContrato) {
         this.idContrato = idContrato;
         this.idCliente = idCliente;
         this.nombreProyecto = nombreProyecto;
@@ -44,19 +45,19 @@ public class Contrato {
 		this.nombreProyecto = nombreProyecto;
 	}
 
-	public LocalDate getFechaInicio() {
+	public Date getFechaInicio() {
 		return fechaInicio;
 	}
 
-	public void setFechaInicio(LocalDate fechaInicio) {
+	public void setFechaInicio(Date fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 
-	public LocalDate getFechaEntrega() {
+	public Date getFechaEntrega() {
 		return fechaEntrega;
 	}
 
-	public void setFechaEntrega(LocalDate fechaEntrega) {
+	public void setFechaEntrega(Date fechaEntrega) {
 		this.fechaEntrega = fechaEntrega;
 	}
 
@@ -66,6 +67,23 @@ public class Contrato {
 
 	public void setProrroga(boolean prorroga) {
 		this.prorroga =prorroga;
-	}   
+
+	}
+	
+	public  double calcularCostoProyecto(Date fechaInicio, Date fechaEntrega) {
+		double costoProyecto = 0;
+		
+		
+		JJDCommunications jjd = new JJDCommunications();
+
+		
+	
+		costoProyecto = ((jjd.calcularSalarioTotal(fechaInicio,fechaEntrega)*6)*0.25);
+
+		return costoProyecto;
+	}
+	
+	
+	
 }
 
