@@ -1,5 +1,6 @@
 package logico;
 
+import java.util.Date;
 import java.util.ArrayList;
 
 public class JJDCommunications {
@@ -38,14 +39,22 @@ public class JJDCommunications {
 	public void setListaProyectos(ArrayList<Proyecto> listaProyectos) {
 		ListaProyectos = listaProyectos;
 	}
-
 	public ArrayList<Contrato> getListaContratos() {
 		return ListaContratos;
 	}
-
 	public void setListaContratos(ArrayList<Contrato> listaContratos) {
 		ListaContratos = listaContratos;
 	}
-    
+	
+    public double calcularSalarioTotal(Date fechaInicio, Date fechaFin) {
+    	double salarioTotal = 0.0;
+        
+        for (Trabajador trabajador : ListaTrabajadores) {
+            // Calculamos el salario del trabajador en el per�odo y lo sumamos al total        	
+            salarioTotal += Trabajador.calcularSalarioTrabajador(trabajador, fechaInicio, fechaFin);
+        }
+        
+        return salarioTotal;
+    }    
     
 }

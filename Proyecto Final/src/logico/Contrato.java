@@ -1,7 +1,7 @@
 package logico;
 
-import java.time.LocalDate;
 import java.util.Date;
+
 
 public class Contrato {
     private int idContrato;
@@ -66,16 +66,27 @@ public class Contrato {
 	}
 
 	public void setProrroga(boolean prorroga) {
-		this.prorroga = prorroga;
-	}  
-	
-	// Metodo para calcular la penalización de un contrato.
+		this.prorroga =prorroga;
+
+	}
 	
     public double calcularPenalizacion(Date fechaActual) {
         long diasRetraso = (fechaActual.getTime() - fechaEntrega.getTime()) / (1000 * 60 * 60 * 24);
         double penalizacion = 0.01 * diasRetraso;
         return penalizacion;
     }
+	
+	public  double calcularCostoProyecto(Date fechaInicio, Date fechaEntrega) {
+		double costoProyecto = 0;
+		
+		JJDCommunications jjd = new JJDCommunications();
+	
+		costoProyecto = ((jjd.calcularSalarioTotal(fechaInicio,fechaEntrega)*6)*0.25);
+
+		return costoProyecto;
+	}
+	
+	
 	
 }
 
