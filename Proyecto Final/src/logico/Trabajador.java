@@ -99,18 +99,17 @@ public class Trabajador {
 	}
 	
 	
-    // Método auxiliar para calcular el salario de un trabajador en un período específico
     public static double calcularSalarioTrabajador(Trabajador trabajador, Date fechaInicio, Date fechaFin) {
-        // Calculamos el número de milisegundos entre las fechas de inicio y fin
+        // Calculamos el nï¿½mero de milisegundos entre las fechas de inicio y fin
         long milisegundosTrabajados = fechaFin.getTime() - fechaInicio.getTime();
         
-        // Convertimos milisegundos a días
+        // Convertimos milisegundos a dï¿½as
         int diasTrabajados = (int) (milisegundosTrabajados / (1000 * 60 * 60 * 24));
 
-        // Suponiendo que el trabajador trabaja exactamente 6 horas por día
+        // Suponiendo que el trabajador trabaja exactamente 6 horas por dï¿½a
         int horasTrabajadasPorDia = 6;
 
-        // Calculamos el salario total multiplicando el salario por hora por el número de días trabajados y horas trabajadas por día
+        // Calculamos el salario total multiplicando el salario por hora por el nï¿½mero de dï¿½as trabajados y horas trabajadas por dï¿½a
         double salarioTotal = trabajador.getSalarioHora() * diasTrabajados * horasTrabajadasPorDia;
 
         return salarioTotal;
