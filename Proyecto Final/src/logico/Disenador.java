@@ -10,10 +10,11 @@ public class Disenador {
 	    public int getAniosExperiencia() {
 	        return aniosExperiencia;
 	    }
-
 	    public void setAniosExperiencia(int aniosExperiencia) {
 	        this.aniosExperiencia = aniosExperiencia;
 	    }   
+	    
+	    
 }
 
 
