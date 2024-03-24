@@ -1,25 +1,29 @@
 package logico;
 
-public class Trabajador {
-	private String id;
-	private String Nombre;
-	private String Apellido;
-	private String Direccion;
-	private char Sexo;
-	private int Edad;
-	private double salarioHora;
-	private String Evaluacion;
+import java.util.Date;
 
-	public Trabajador(String id, String Nombre, String Apellidos, String Direccion, char Sexo, int Edad, double salarioHora, String Evaluacion) {
-	    this.id = id;
-	    this.Nombre = Nombre;
-	    this.Apellido = Apellidos;
-	    this.Direccion = Direccion;
-	    this.Sexo = Sexo;
-	    this.Edad = Edad;
-	    this.salarioHora = salarioHora;
-	    this.Evaluacion = Evaluacion;
-	}
+public class Trabajador {
+    private String id;
+    private String Nombre;
+    private String Apellido;
+    private String Direccion;
+    private char Sexo;
+    private int Edad;
+    private double salarioHora;
+    private String Evaluacion;
+    private int aniosExperiencia;
+
+    public Trabajador(String id, String Nombre, String Apellido, String Direccion, char Sexo, int Edad, double salarioHora, String Evaluacion, int aniosExperiencia) {
+        this.id = id;
+        this.Nombre = Nombre;
+        this.Apellido = Apellido;
+        this.Direccion = Direccion;
+        this.Sexo = Sexo;
+        this.Edad = Edad;
+        this.salarioHora = salarioHora;
+        this.Evaluacion = Evaluacion;
+        this.setAniosExperiencia(aniosExperiencia);
+    }
 
 	public String getId() {
 		return id;
@@ -84,5 +88,34 @@ public class Trabajador {
 	public void setEvaluacion(String evaluacion) {
 		Evaluacion = evaluacion;
 	}
+	
+	
+    public int getAniosExperiencia() {
+		return aniosExperiencia;
+	}
+
+	public void setAniosExperiencia(int aniosExperiencia) {
+		this.aniosExperiencia = aniosExperiencia;
+	}
+	
+	
+    // Método auxiliar para calcular el salario de un trabajador en un período específico
+    public static double calcularSalarioTrabajador(Trabajador trabajador, Date fechaInicio, Date fechaFin) {
+        // Calculamos el número de milisegundos entre las fechas de inicio y fin
+        long milisegundosTrabajados = fechaFin.getTime() - fechaInicio.getTime();
+        
+        // Convertimos milisegundos a días
+        int diasTrabajados = (int) (milisegundosTrabajados / (1000 * 60 * 60 * 24));
+
+        // Suponiendo que el trabajador trabaja exactamente 6 horas por día
+        int horasTrabajadasPorDia = 6;
+
+        // Calculamos el salario total multiplicando el salario por hora por el número de días trabajados y horas trabajadas por día
+        double salarioTotal = trabajador.getSalarioHora() * diasTrabajados * horasTrabajadasPorDia;
+
+        return salarioTotal;
+    }
+    
+    
 
 }
