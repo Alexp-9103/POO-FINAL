@@ -2,7 +2,6 @@ package logico;
 
 import java.util.Date;
 
-
 public class Contrato {
     private int idContrato;
     private int idCliente;
@@ -84,9 +83,5 @@ public class Contrato {
 		costoProyecto = ((jjd.calcularSalarioTotal(fechaInicio,fechaEntrega)*6)*0.25);
 
 		return costoProyecto;
-	}
-	
-	
-	
+	}	
 }
-

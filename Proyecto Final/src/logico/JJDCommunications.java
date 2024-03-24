@@ -1,6 +1,9 @@
 package logico;
 
 import java.util.Date;
+
+
+
 import java.util.ArrayList;
 
 public class JJDCommunications {
@@ -8,13 +11,14 @@ public class JJDCommunications {
     private ArrayList<Cliente> ListaClientes;
     private ArrayList<Proyecto> ListaProyectos;
     private ArrayList<Contrato> ListaContratos;
-	
-    public void JJDcommunications() {
-        this.ListaTrabajadores = new ArrayList<>();
-        this.ListaClientes = new ArrayList<>();
-        this.ListaProyectos = new ArrayList<>();
-        this.ListaContratos = new ArrayList<>();
-    }
+    public static JJDCommunications JJD = null;
+	    
+    public static JJDCommunications getInstance(){
+		if(JJD==null){
+			JJD = new JJDCommunications();
+		}
+		return JJD;
+	}
 
 	public ArrayList<Trabajador> getListaTrabajadores() {
 		return ListaTrabajadores;
@@ -37,7 +41,7 @@ public class JJDCommunications {
 	}
 
 	public void setListaProyectos(ArrayList<Proyecto> listaProyectos) {
-		ListaProyectos = listaProyectos;
+		ListaProyectos =listaProyectos;
 	}
 	public ArrayList<Contrato> getListaContratos() {
 		return ListaContratos;
