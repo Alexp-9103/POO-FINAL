@@ -1,11 +1,7 @@
 package logico;
 
 import java.util.Date;
-
-
-
 import java.util.ArrayList;
-
 public class JJDCommunications {
     private ArrayList<Trabajador> ListaTrabajadores;
     private ArrayList<Cliente> ListaClientes;
@@ -61,4 +57,65 @@ public class JJDCommunications {
         return salarioTotal;
     }    
     
+    public void insertarCliente(Cliente cliente){
+		ListaClientes.add(cliente);
+	}
+    
+    public void insertarTrabajador(Trabajador trabajador){
+		ListaTrabajadores.add(trabajador);
+	}
+	
+    public void insertarProyecto(Proyecto proyecto){
+        ListaProyectos.add(proyecto);
+    }
+    
+    public void insertarContrato(Contrato contrato){
+        ListaContratos.add(contrato);
+    }
+    
+	public Cliente BuscarCliente(String id) {
+			for(Cliente cliente : ListaClientes) {
+				if((cliente.getId().equalsIgnoreCase(id))) {
+					
+					return cliente;
+				}
+			}
+			
+			return null;
+		}
+	
+    public Trabajador BuscarTrabajador(String id) {
+        for (Trabajador trabajador : ListaTrabajadores) {
+            if (trabajador.getId().equalsIgnoreCase(id)) {
+                return trabajador;
+            }
+        }
+        
+        return null;
+    }
+    
+    public Proyecto BuscarProyecto(String id) {
+        for (Proyecto proyecto : ListaProyectos) {
+            if (proyecto.getId().equalsIgnoreCase(id)) {
+                return proyecto;
+            }
+        }
+        
+        return null;
+    }
+    
+    //Por si se necesita
+    
+/*    public Contrato BuscarContrato(String id) {
+        for (Contrato contrato : ListaContratos) {
+            if (contrato.getId().equalsIgnoreCase(id)) {
+                return contrato;
+            }
+        }
+        
+        return null;
+    } */ 
+
+	
+
 }
