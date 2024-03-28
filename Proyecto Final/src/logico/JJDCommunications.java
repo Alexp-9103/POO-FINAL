@@ -96,7 +96,7 @@ public class JJDCommunications {
     
     public Proyecto BuscarProyecto(String id) {
         for (Proyecto proyecto : ListaProyectos) {
-            if (proyecto.getId().equalsIgnoreCase(id)) {
+            if (proyecto.getIdCliente().equalsIgnoreCase(id)) {
                 return proyecto;
             }
         }
