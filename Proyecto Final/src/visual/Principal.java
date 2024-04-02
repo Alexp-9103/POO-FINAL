@@ -10,6 +10,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Panel;
+import javax.swing.JSeparator;
 
 public class Principal extends JFrame {
 
@@ -41,54 +42,75 @@ public class Principal extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mnRegistro = new JMenu("Registro");
-		menuBar.add(mnRegistro);
+		JMenu mnTrabajadore = new JMenu("Trabajadores");
+		menuBar.add(mnTrabajadore);
 		
-		JMenuItem mntmRegistrarTrabajador = new JMenuItem("Registar Trabajador");
+		JMenuItem mntmRegistrarTrabajador = new JMenuItem("Registrar Trabajador");
 		mntmRegistrarTrabajador.addActionListener(e -> {
             regTrabajador registroTrabajador = new regTrabajador();
             registroTrabajador.setModal(true);
             registroTrabajador.setVisible(true);
         });
-		mnRegistro.add(mntmRegistrarTrabajador);
+		mnTrabajadore.add(mntmRegistrarTrabajador);
 		
-		JMenuItem mntmRegistrarCliente = new JMenuItem("Registar Cliente");
-		mntmRegistrarCliente.addActionListener(e -> {
-            regCliente registroCliente = new regCliente();
-            registroCliente.setModal(true);
-            registroCliente.setVisible(true);
-        });
-		mnRegistro.add(mntmRegistrarCliente);
+		JSeparator separator = new JSeparator();
+		mnTrabajadore.add(separator);
 		
-		JMenu mnProyecto = new JMenu("Proyecto");
-		menuBar.add(mnProyecto);
-		
-		JMenu mnAdmin = new JMenu("Administracion");
-		menuBar.add(mnAdmin);
-		
-		JMenuItem mntmListadoCliente = new JMenuItem("Listado Cliente");
-		mntmListadoCliente.addActionListener(e -> {
-            ListadoCliente ListadoCliente = new ListadoCliente();
-            ListadoCliente.setModal(true);
-            ListadoCliente.setVisible(true);
-        });
-		mnAdmin.add(mntmListadoCliente);
-		
-		JMenuItem mntmListadoProyecto = new JMenuItem("Listado Proyecto");
-		mntmListadoProyecto.addActionListener(e -> {
-			ListadoProyecto ListadoProyecto = new ListadoProyecto();
-			ListadoProyecto.setModal(true);
-			ListadoProyecto.setVisible(true);
-        });
-		mnAdmin.add(mntmListadoProyecto);
-		
-		JMenuItem mntmListadoTrabajador = new JMenuItem("Listado Trabajador");
+		JMenuItem mntmListadoTrabajador = new JMenuItem("Listado de Trabajadores");
+		mnTrabajadore.add(mntmListadoTrabajador);
 		mntmListadoTrabajador.addActionListener(e -> {
             ListadoTrabajador ListadoTrabajador = new ListadoTrabajador();
             ListadoTrabajador.setModal(true);
             ListadoTrabajador.setVisible(true);
         });
-		mnAdmin.add(mntmListadoTrabajador);
+		
+		JMenu mnProyecto = new JMenu("Proyectos");
+		menuBar.add(mnProyecto);
+		
+		JMenuItem mntmListadoProyecto = new JMenuItem("Listado Proyecto");
+		mnProyecto.add(mntmListadoProyecto);
+		mntmListadoProyecto.addActionListener(e -> {
+			ListadoProyecto ListadoProyecto = new ListadoProyecto();
+			ListadoProyecto.setModal(true);
+			ListadoProyecto.setVisible(true);
+        });
+		
+		JMenu mnCliente = new JMenu("Clientes");
+		menuBar.add(mnCliente);
+		
+		JMenuItem mntmRegistrarCliente = new JMenuItem("Registrar Cliente");
+		mnCliente.add(mntmRegistrarCliente);
+		mntmRegistrarCliente.addActionListener(e -> {
+            regCliente registroCliente = new regCliente();
+            registroCliente.setModal(true);
+            registroCliente.setVisible(true);
+        });
+		
+		JSeparator separator_1 = new JSeparator();
+		mnCliente.add(separator_1);
+		
+		JMenuItem mntmListadoCliente = new JMenuItem("Listado de Clientes");
+		mntmListadoCliente.addActionListener(e -> {
+            ListadoCliente ListadoCliente = new ListadoCliente();
+            ListadoCliente.setModal(true);
+            ListadoCliente.setVisible(true);
+        });
+		mnCliente.add(mntmListadoCliente);
+
+		
+		JMenu mnContrato = new JMenu("Contratos");
+		menuBar.add(mnContrato);
+		
+		JMenuItem mntmListadoContrato = new JMenuItem("Listado de Contratos");
+		mntmListadoContrato.addActionListener(e -> {
+            ListadoContrato ListadoContrato = new ListadoContrato();
+            ListadoContrato.setModal(true);
+            ListadoContrato.setVisible(true);
+        });
+		mnContrato.add(mntmListadoContrato);
+		
+		JMenu mnAdmin = new JMenu("Administracion");
+		menuBar.add(mnAdmin);
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
