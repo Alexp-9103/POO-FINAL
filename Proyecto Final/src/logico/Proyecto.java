@@ -59,10 +59,7 @@ public class Proyecto {
 	public void setLosTrabajadores(ArrayList<Trabajador> losTrabajadores) {
 		this.losTrabajadores = losTrabajadores;
 	}
-	
-	
-	
-	
+		
 	
 
 }

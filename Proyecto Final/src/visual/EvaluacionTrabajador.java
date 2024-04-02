@@ -17,7 +17,7 @@ public class EvaluacionTrabajador extends JDialog {
     public EvaluacionTrabajador(Trabajador trabajador) {
         this.trabajador = trabajador;
 
-        setTitle("Evaluación de Trabajador");
+        setTitle("Evaluaciï¿½n de Trabajador");
         setSize(300, 200);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -35,7 +35,7 @@ public class EvaluacionTrabajador extends JDialog {
         txtNombre.setText(trabajador.getNombre());
         contentPanel.add(txtNombre);
 
-        JLabel lblEvaluacion = new JLabel("Evaluación:");
+        JLabel lblEvaluacion = new JLabel("Evaluacion:");
         contentPanel.add(lblEvaluacion);
 
         comboBoxEvaluacion = new JComboBox<>();
@@ -50,14 +50,14 @@ public class EvaluacionTrabajador extends JDialog {
     private void evaluarTrabajador() {
         String evaluacion = (String) comboBoxEvaluacion.getSelectedItem();
         trabajador.setEvaluacion(evaluacion);
-        JOptionPane.showMessageDialog(this, "Evaluación registrada correctamente.", "Evaluación Registrada", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Evaluaciï¿½n registrada correctamente.", "Evaluaciï¿½n Registrada", JOptionPane.INFORMATION_MESSAGE);
         dispose();
     }
 
     public static void main(String[] args) {
         try {
             // Crear un trabajador de ejemplo para evaluar
-            Trabajador ejemploTrabajador = new Trabajador("12345678901", "Juan", "Pérez", "Calle Principal", 'M', 30, 10.0, "", 5);
+            Trabajador ejemploTrabajador = new Trabajador("12345678901", "Juan", "Pï¿½rez", "Calle Principal", 'M', 30, 10.0, "", 5);
             EvaluacionTrabajador dialog = new EvaluacionTrabajador(ejemploTrabajador);
             dialog.setVisible(true);
         } catch (Exception e) {

@@ -7,7 +7,14 @@ public class JJDCommunications {
     private ArrayList<Cliente> ListaClientes;
     private ArrayList<Proyecto> ListaProyectos;
     private ArrayList<Contrato> ListaContratos;
-    public static JJDCommunications JJD = null;
+	public static JJDCommunications JJD = null;
+    
+    public JJDCommunications() {
+        ListaTrabajadores = new ArrayList<>();
+        ListaClientes = new ArrayList<>();
+        ListaProyectos = new ArrayList<>();
+        ListaContratos = new ArrayList<>();
+    }
 	    
     public static JJDCommunications getInstance(){
 		if(JJD==null){
@@ -50,7 +57,7 @@ public class JJDCommunications {
     	double salarioTotal = 0.0;
         
         for (Trabajador trabajador : ListaTrabajadores) {
-            // Calculamos el salario del trabajador en el per�odo y lo sumamos al total        	
+            // Calculamos el salario del trabajador en el perï¿½odo y lo sumamos al total        	
             salarioTotal += Trabajador.calcularSalarioTrabajador(trabajador, fechaInicio, fechaFin);
         }
         
@@ -93,7 +100,7 @@ public class JJDCommunications {
         
         return null;
     }
-    
+   
     public Proyecto BuscarProyecto(String id) {
         for (Proyecto proyecto : ListaProyectos) {
             if (proyecto.getIdCliente().equalsIgnoreCase(id)) {
@@ -115,7 +122,5 @@ public class JJDCommunications {
         
         return null;
     } */ 
-
-	
-
+	  	
 }
