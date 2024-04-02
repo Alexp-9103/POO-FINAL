@@ -70,7 +70,7 @@ public class regTrabajador extends JDialog {
         paneljefeProyecto.add(spinner);
 
         paneldiseniador = new JPanel();
-        paneldiseniador.setBorder(new TitledBorder(null, "Diseñador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        paneldiseniador.setBorder(new TitledBorder(null, "Dise�ador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         paneldiseniador.setBounds(12, 348, 467, 95);
         contentPanel.add(paneldiseniador);
         paneldiseniador.setLayout(null);
@@ -205,10 +205,12 @@ public class regTrabajador extends JDialog {
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-        JButton okButton = new JButton("OK");
-        okButton.setActionCommand("OK");
-        buttonPane.add(okButton);
-        getRootPane().setDefaultButton(okButton);
+		{
+			JButton okButton = new JButton("Registrar");
+			okButton.setActionCommand("OK");
+			buttonPane.add(okButton);
+			getRootPane().setDefaultButton(okButton);
+		}
 
         {
 			JButton cancelButton = new JButton("Cancelar");
@@ -223,7 +225,7 @@ public class regTrabajador extends JDialog {
 		}
     }
 
-    // Método para mostrar el panel seleccionado y ocultar los demás
+    // Metodo para mostrar el panel seleccionado y ocultar los demas
     private void mostrarPanel(JPanel panel) {
         panel.setVisible(true);
     }

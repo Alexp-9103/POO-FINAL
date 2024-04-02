@@ -41,29 +41,55 @@ public class Principal extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("Registro");
-		menuBar.add(mnNewMenu);
+		JMenu mnRegistro = new JMenu("Registro");
+		menuBar.add(mnRegistro);
 		
 		JMenuItem mntmRegistrarTrabajador = new JMenuItem("Registar Trabajador");
-		mnNewMenu.add(mntmRegistrarTrabajador);
+		mntmRegistrarTrabajador.addActionListener(e -> {
+            regTrabajador registroTrabajador = new regTrabajador();
+            registroTrabajador.setModal(true);
+            registroTrabajador.setVisible(true);
+        });
+		mnRegistro.add(mntmRegistrarTrabajador);
 		
 		JMenuItem mntmRegistrarCliente = new JMenuItem("Registar Cliente");
-		mnNewMenu.add(mntmRegistrarCliente);
+		mntmRegistrarCliente.addActionListener(e -> {
+            regCliente registroCliente = new regCliente();
+            registroCliente.setModal(true);
+            registroCliente.setVisible(true);
+        });
+		mnRegistro.add(mntmRegistrarCliente);
 		
-		JMenu mnNewMenu_1 = new JMenu("Proyecto");
-		menuBar.add(mnNewMenu_1);
+		JMenu mnProyecto = new JMenu("Proyecto");
+		menuBar.add(mnProyecto);
 		
-		JMenu mnNewMenu_2 = new JMenu("Administracion");
-		menuBar.add(mnNewMenu_2);
+		JMenu mnAdmin = new JMenu("Administracion");
+		menuBar.add(mnAdmin);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Listado Cliente");
-		mnNewMenu_2.add(mntmNewMenuItem_2);
+		JMenuItem mntmListadoCliente = new JMenuItem("Listado Cliente");
+		mntmListadoCliente.addActionListener(e -> {
+            ListadoCliente ListadoCliente = new ListadoCliente();
+            ListadoCliente.setModal(true);
+            ListadoCliente.setVisible(true);
+        });
+		mnAdmin.add(mntmListadoCliente);
 		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Listado Proyecto");
-		mnNewMenu_2.add(mntmNewMenuItem_4);
+		JMenuItem mntmListadoProyecto = new JMenuItem("Listado Proyecto");
+		mntmListadoProyecto.addActionListener(e -> {
+			ListadoProyecto ListadoProyecto = new ListadoProyecto();
+			ListadoProyecto.setModal(true);
+			ListadoProyecto.setVisible(true);
+        });
+		mnAdmin.add(mntmListadoProyecto);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Listado Trabajador");
-		mnNewMenu_2.add(mntmNewMenuItem_3);
+		JMenuItem mntmListadoTrabajador = new JMenuItem("Listado Trabajador");
+		mntmListadoTrabajador.addActionListener(e -> {
+            ListadoTrabajador ListadoTrabajador = new ListadoTrabajador();
+            ListadoTrabajador.setModal(true);
+            ListadoTrabajador.setVisible(true);
+        });
+		mnAdmin.add(mntmListadoTrabajador);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
