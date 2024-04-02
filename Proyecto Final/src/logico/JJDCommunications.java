@@ -7,7 +7,14 @@ public class JJDCommunications {
     private ArrayList<Cliente> ListaClientes;
     private ArrayList<Proyecto> ListaProyectos;
     private ArrayList<Contrato> ListaContratos;
-    public static JJDCommunications JJD = null;
+	public static JJDCommunications JJD = null;
+    
+    public JJDCommunications() {
+        ListaTrabajadores = new ArrayList<>();
+        ListaClientes = new ArrayList<>();
+        ListaProyectos = new ArrayList<>();
+        ListaContratos = new ArrayList<>();
+    }
 	    
     public static JJDCommunications getInstance(){
 		if(JJD==null){
