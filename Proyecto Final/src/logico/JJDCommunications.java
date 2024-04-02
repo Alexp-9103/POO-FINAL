@@ -100,7 +100,7 @@ public class JJDCommunications {
         
         return null;
     }
-   
+    
     public Proyecto BuscarProyecto(String id) {
         for (Proyecto proyecto : ListaProyectos) {
             if (proyecto.getIdCliente().equalsIgnoreCase(id)) {
@@ -109,8 +109,7 @@ public class JJDCommunications {
         }
         
         return null;
-    }
-    
+    }  
     //Por si se necesita
     
 /*    public Contrato BuscarContrato(String id) {
