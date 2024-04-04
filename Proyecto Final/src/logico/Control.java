@@ -50,5 +50,4 @@ public class Control implements Serializable {
         return usuarioEncontrado;
     }
     
-    
 }

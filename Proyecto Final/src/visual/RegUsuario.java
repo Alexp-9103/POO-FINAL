@@ -1,9 +1,5 @@
 package visual;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Font;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -17,17 +13,20 @@ import javax.swing.border.EmptyBorder;
 import logico.Control;
 import logico.User;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.awt.event.ActionEvent;
 
 public class RegUsuario extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
     private JTextField nombreUsuarioField;
-    private JPasswordField  contrasenaField;
+    private JPasswordField contrasenaField;
     private JPasswordField confirmarContrasenaField;
     private JComboBox<String> tipoUsuarioComboBox;
 
@@ -124,51 +123,42 @@ public class RegUsuario extends JDialog {
         botonesPanel.add(cancelarButton);
     }
 
-    
     private void registrarUsuario() {
         String nombreUsuario = nombreUsuarioField.getText();
-        String contrasena = contrasenaField.getText();
-        String confirmarContrasena = confirmarContrasenaField.getText();
+        String contrasena = new String(contrasenaField.getPassword());
+        String confirmarContrasena = new String(confirmarContrasenaField.getPassword());
         String tipoUsuario = tipoUsuarioComboBox.getSelectedItem().toString();
 
         if (nombreUsuario.isEmpty() || contrasena.isEmpty() || confirmarContrasena.isEmpty() || tipoUsuario.equals("<Seleccione>")) {
-            // Mostrar mensaje de advertencia si algún campo está vacío o el tipo de usuario no se ha seleccionado
             JOptionPane.showMessageDialog(this, "Por favor complete todos los campos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (!contrasena.equals(confirmarContrasena)) {
-            // Mostrar mensaje de advertencia si las contrasenas no coinciden
             JOptionPane.showMessageDialog(this, "Las contrasenas no coinciden.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // Si los campos están completos y las contrasenas coinciden, entonces registrar al usuario
         User user = new User(tipoUsuario, nombreUsuario, contrasena);
         Control.getInstance().registrarUsuario(user);
 
-        // Guardar el usuario en un fichero
-        try (FileOutputStream fileOut = new FileOutputStream("usuarios.dat", true);
+        try (FileOutputStream fileOut = new FileOutputStream("usuarios.dat");
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
-            objectOut.writeObject(user);
+            objectOut.writeObject(Control.getInstance().getUsuarios());
             JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al registrar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        // Cerrar la ventana de registro
         dispose();
-
-        // Mostrar la ventana de inicio de sesión
-        Login loginWindow = new Login();
-        loginWindow.setLocationRelativeTo(null); // Centrar la ventana de inicio de sesión
-        loginWindow.setVisible(true);
+        mostrarVentanaLogin();
     }
 
 
-
-
-    
-
+    private void mostrarVentanaLogin() {
+        Login loginWindow = new Login();
+        loginWindow.setLocationRelativeTo(null);
+        loginWindow.setVisible(true);
+    }
 }

@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import logico.Control;
@@ -37,15 +38,24 @@ public class Login extends JFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FileInputStream usuariosFile;
-                ObjectInputStream usuariosRead;
                 try {
-                    usuariosFile = new FileInputStream("usuarios.dat");
-                    usuariosRead = new ObjectInputStream(usuariosFile);
-                    Control temp = (Control) usuariosRead.readObject();
-                    Control.instancia = temp;
-                    usuariosFile.close();
+                    FileInputStream usuariosFileInput = new FileInputStream("usuarios.dat");
+                    ObjectInputStream usuariosRead = new ObjectInputStream(usuariosFileInput);
+                    ArrayList<User> usuarios = (ArrayList<User>) usuariosRead.readObject();
+                    Control.getInstance().setUsuarios(usuarios);
+                    usuariosFileInput.close();
                     usuariosRead.close();
+                } catch (FileNotFoundException e) {
+                    // Si el archivo no existe, crea uno nuevo
+                    try {
+                        FileOutputStream usuariosFileOutput = new FileOutputStream("usuarios.dat");
+                        ObjectOutputStream usuariosWrite = new ObjectOutputStream(usuariosFileOutput);
+                        usuariosWrite.writeObject(new ArrayList<User>());
+                        usuariosFileOutput.close();
+                        usuariosWrite.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -57,10 +67,10 @@ public class Login extends JFrame {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }
+
 
 
     
@@ -107,7 +117,7 @@ public class Login extends JFrame {
         btnLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String usuario = usuarioField.getText();
-                String contrasena = contraseniaField.getText();
+                String contrasena = new String(contraseniaField.getPassword());
                 if (usuario.isEmpty() || contrasena.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
