@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
@@ -25,8 +26,8 @@ import logico.User;
 public class Login extends JFrame {
 
     private JPanel contentPane;
-    private JTextField textField;
-    private JTextField textField_1;
+    private JTextField usuarioField;
+    private JPasswordField contraseniaField;
     
 
     /**
@@ -88,25 +89,25 @@ public class Login extends JFrame {
         lblUsuario.setBounds(39, 52, 191, 14);
         panel.add(lblUsuario);
 
-        JLabel lblContrasea = new JLabel("Contraseña:");
+        JLabel lblContrasea = new JLabel("Contrasena:");
         lblContrasea.setBounds(39, 111, 191, 14);
         panel.add(lblContrasea);
 
-        textField = new JTextField();
-        textField.setBounds(39, 77, 191, 20);
-        panel.add(textField);
-        textField.setColumns(10);
+        usuarioField = new JTextField();
+        usuarioField.setBounds(39, 77, 191, 20);
+        panel.add(usuarioField);
+        usuarioField.setColumns(10);
 
-        textField_1 = new JTextField();
-        textField_1.setBounds(39, 141, 191, 20);
-        panel.add(textField_1);
-        textField_1.setColumns(10);
+        contraseniaField = new JPasswordField();
+        contraseniaField.setBounds(39, 141, 191, 20);
+        panel.add(contraseniaField);
+        contraseniaField.setColumns(10);
 
         JButton btnLogin = new JButton("OK");
         btnLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String usuario = textField.getText();
-                String contrasena = textField_1.getText();
+                String usuario = usuarioField.getText();
+                String contrasena = contraseniaField.getText();
                 if (usuario.isEmpty() || contrasena.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {

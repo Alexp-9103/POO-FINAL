@@ -42,9 +42,9 @@ public class Control implements Serializable {
         usuarios.add(user);
     }
 
-    public Optional<User> confirmarLogin(String nombreUsuario, String contraseña) {
+    public Optional<User> confirmarLogin(String nombreUsuario, String contrasena) {
         Optional<User> usuarioEncontrado = usuarios.stream()
-                                                .filter(user -> user.getUserName().equals(nombreUsuario) && user.getPass().equals(contraseña))
+                                                .filter(user -> user.getUserName().equals(nombreUsuario) && user.getPass().equals(contrasena))
                                                 .findFirst();
         usuarioEncontrado.ifPresent(user -> usuarioLogueado = user);
         return usuarioEncontrado;

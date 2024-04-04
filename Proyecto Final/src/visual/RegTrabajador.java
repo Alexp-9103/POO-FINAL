@@ -70,7 +70,7 @@ public class RegTrabajador extends JDialog {
         paneljefeProyecto.add(spinner);
 
         paneldiseniador = new JPanel();
-        paneldiseniador.setBorder(new TitledBorder(null, "Diseñador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        paneldiseniador.setBorder(new TitledBorder(null, "Disenador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         paneldiseniador.setBounds(12, 348, 467, 95);
         contentPanel.add(paneldiseniador);
         paneldiseniador.setLayout(null);
