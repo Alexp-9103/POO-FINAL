@@ -11,12 +11,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Label;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.JLabel;
 
-public class regCliente extends JDialog {
+public class RegCliente extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textid;
@@ -28,7 +30,7 @@ public class regCliente extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			regCliente dialog = new regCliente();
+			RegCliente dialog = new RegCliente();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -39,7 +41,7 @@ public class regCliente extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public regCliente() {
+	public RegCliente() {
 		setBounds(100, 100, 469, 378);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -92,10 +94,16 @@ public class regCliente extends JDialog {
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
-			{
+	        {
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
+
 			}
 		}
 	}

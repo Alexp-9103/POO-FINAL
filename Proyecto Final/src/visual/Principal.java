@@ -10,6 +10,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Panel;
+import javax.swing.JSeparator;
+import java.awt.Font;
 
 public class Principal extends JFrame {
 
@@ -35,35 +37,84 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
+		setTitle("Principal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 550, 400);
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("Registro");
-		menuBar.add(mnNewMenu);
+		JMenu mnTrabajadore = new JMenu("Trabajadores");
+		menuBar.add(mnTrabajadore);
 		
-		JMenuItem mntmRegistrarTrabajador = new JMenuItem("Registar Trabajador");
-		mnNewMenu.add(mntmRegistrarTrabajador);
+		JMenuItem mntmRegistrarTrabajador = new JMenuItem("Registrar Trabajador");
+		mntmRegistrarTrabajador.addActionListener(e -> {
+            RegTrabajador registroTrabajador = new RegTrabajador();
+            registroTrabajador.setModal(true);
+            registroTrabajador.setVisible(true);
+        });
+		mnTrabajadore.add(mntmRegistrarTrabajador);
 		
-		JMenuItem mntmRegistrarCliente = new JMenuItem("Registar Cliente");
-		mnNewMenu.add(mntmRegistrarCliente);
+		JSeparator separator = new JSeparator();
+		mnTrabajadore.add(separator);
 		
-		JMenu mnNewMenu_1 = new JMenu("Proyecto");
-		menuBar.add(mnNewMenu_1);
+		JMenuItem mntmListadoTrabajador = new JMenuItem("Listado de Trabajadores");
+		mnTrabajadore.add(mntmListadoTrabajador);
+		mntmListadoTrabajador.addActionListener(e -> {
+            ListadoTrabajador ListadoTrabajador = new ListadoTrabajador();
+            ListadoTrabajador.setModal(true);
+            ListadoTrabajador.setVisible(true);
+        });
 		
-		JMenu mnNewMenu_2 = new JMenu("Administracion");
-		menuBar.add(mnNewMenu_2);
+		JMenu mnProyecto = new JMenu("Proyectos");
+		menuBar.add(mnProyecto);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Listado Cliente");
-		mnNewMenu_2.add(mntmNewMenuItem_2);
+		JMenuItem mntmListadoProyecto = new JMenuItem("Listado Proyecto");
+		mnProyecto.add(mntmListadoProyecto);
+		mntmListadoProyecto.addActionListener(e -> {
+			ListadoProyecto ListadoProyecto = new ListadoProyecto();
+			ListadoProyecto.setModal(true);
+			ListadoProyecto.setVisible(true);
+        });
 		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Listado Proyecto");
-		mnNewMenu_2.add(mntmNewMenuItem_4);
+		JMenu mnCliente = new JMenu("Clientes");
+		menuBar.add(mnCliente);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Listado Trabajador");
-		mnNewMenu_2.add(mntmNewMenuItem_3);
+		JMenuItem mntmRegistrarCliente = new JMenuItem("Registrar Cliente");
+		mnCliente.add(mntmRegistrarCliente);
+		mntmRegistrarCliente.addActionListener(e -> {
+            RegCliente registroCliente = new RegCliente();
+            registroCliente.setModal(true);
+            registroCliente.setVisible(true);
+        });
+		
+		JSeparator separator_1 = new JSeparator();
+		mnCliente.add(separator_1);
+		
+		JMenuItem mntmListadoCliente = new JMenuItem("Listado de Clientes");
+		mntmListadoCliente.addActionListener(e -> {
+            ListadoCliente ListadoCliente = new ListadoCliente();
+            ListadoCliente.setModal(true);
+            ListadoCliente.setVisible(true);
+        });
+		mnCliente.add(mntmListadoCliente);
+
+		
+		JMenu mnContrato = new JMenu("Contratos");
+		menuBar.add(mnContrato);
+		
+		JMenuItem mntmListadoContrato = new JMenuItem("Listado de Contratos");
+		mntmListadoContrato.addActionListener(e -> {
+            ListadoContrato ListadoContrato = new ListadoContrato();
+            ListadoContrato.setModal(true);
+            ListadoContrato.setVisible(true);
+        });
+		mnContrato.add(mntmListadoContrato);
+		
+		JMenu mnAdmin = new JMenu("Administracion");
+		menuBar.add(mnAdmin);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));

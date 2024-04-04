@@ -79,11 +79,10 @@ public class Contrato {
 		double costoProyecto = 0;
 		
 		JJDCommunications jjd = new JJDCommunications();
-	
+		
 		costoProyecto = ((jjd.calcularSalarioTotal(fechaInicio,fechaEntrega)*6)*0.25);
 
 		return costoProyecto;
-	}	
-	
+  }		
 	
 }
