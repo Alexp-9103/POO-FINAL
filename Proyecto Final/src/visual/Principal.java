@@ -11,6 +11,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Panel;
 import javax.swing.JSeparator;
+import java.awt.Font;
 
 public class Principal extends JFrame {
 
@@ -36,10 +37,12 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
+		setTitle("Principal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 550, 400);
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		setJMenuBar(menuBar);
 		
 		JMenu mnTrabajadore = new JMenu("Trabajadores");
@@ -47,7 +50,7 @@ public class Principal extends JFrame {
 		
 		JMenuItem mntmRegistrarTrabajador = new JMenuItem("Registrar Trabajador");
 		mntmRegistrarTrabajador.addActionListener(e -> {
-            regTrabajador registroTrabajador = new regTrabajador();
+            RegTrabajador registroTrabajador = new RegTrabajador();
             registroTrabajador.setModal(true);
             registroTrabajador.setVisible(true);
         });
@@ -81,7 +84,7 @@ public class Principal extends JFrame {
 		JMenuItem mntmRegistrarCliente = new JMenuItem("Registrar Cliente");
 		mnCliente.add(mntmRegistrarCliente);
 		mntmRegistrarCliente.addActionListener(e -> {
-            regCliente registroCliente = new regCliente();
+            RegCliente registroCliente = new RegCliente();
             registroCliente.setModal(true);
             registroCliente.setVisible(true);
         });

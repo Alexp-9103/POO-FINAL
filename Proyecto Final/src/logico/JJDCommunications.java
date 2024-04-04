@@ -111,6 +111,7 @@ public class JJDCommunications {
         return null;
     }
     
+    
     //Por si se necesita
     
 /*    public Contrato BuscarContrato(String id) {

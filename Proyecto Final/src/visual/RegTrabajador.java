@@ -17,7 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.DefaultComboBoxModel;
 
-public class regTrabajador extends JDialog {
+public class RegTrabajador extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
     private JTextField textid;
@@ -36,7 +36,7 @@ public class regTrabajador extends JDialog {
      */
     public static void main(String[] args) {
         try {
-            regTrabajador dialog = new regTrabajador();
+            RegTrabajador dialog = new RegTrabajador();
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
         } catch (Exception e) {
@@ -47,7 +47,7 @@ public class regTrabajador extends JDialog {
     /**
      * Create the dialog.
      */
-    public regTrabajador() {
+    public RegTrabajador() {
         setBounds(100, 100, 519, 538);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

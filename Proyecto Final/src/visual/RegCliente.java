@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.JLabel;
 
-public class regCliente extends JDialog {
+public class RegCliente extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textid;
@@ -30,7 +30,7 @@ public class regCliente extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			regCliente dialog = new regCliente();
+			RegCliente dialog = new RegCliente();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -41,7 +41,7 @@ public class regCliente extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public regCliente() {
+	public RegCliente() {
 		setBounds(100, 100, 469, 378);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
