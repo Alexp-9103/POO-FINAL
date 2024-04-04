@@ -123,9 +123,6 @@ public class JJDCommunications {
         
         return null;
     } */ 
-    
-    
-
-	
+    	
 
 }
