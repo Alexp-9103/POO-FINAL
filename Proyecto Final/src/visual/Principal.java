@@ -111,6 +111,17 @@ public class Principal extends JFrame {
         });
 		mnContrato.add(mntmListadoContrato);
 		
+		
+		JMenuItem mntmNuevoContrato = new JMenuItem("Nuevo Contrato");
+		mntmNuevoContrato.addActionListener(e -> {
+            RegContrato RegContrato = new RegContrato();
+            RegContrato.setModal(true);
+            RegContrato.setVisible(true);
+        });
+		mnContrato.add(mntmNuevoContrato);
+		
+		
+		
 		JMenu mnAdmin = new JMenu("Administracion");
 		menuBar.add(mnAdmin);
 		

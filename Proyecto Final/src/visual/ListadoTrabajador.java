@@ -31,7 +31,7 @@ public class ListadoTrabajador extends JDialog {
  private JComboBox<String> comboBox;
  private ArrayList<Trabajador> trabajadores;
 
- String[] headers = {"ID", "Nombre", "Apellido", "Dirección", "Sexo", "Edad", "Salario por Hora", "Evaluación"};
+ String[] headers = {"ID", "Nombre", "Apellido", "Direcciï¿½n", "Sexo", "Edad", "Salario por Hora", "Evaluaciï¿½n"};
 
  public static void main(String[] args) {
      try {
@@ -61,7 +61,7 @@ public class ListadoTrabajador extends JDialog {
 
      comboBox = new JComboBox<>();
      comboBox.addActionListener(e -> loadTrabajadores(comboBox.getSelectedIndex()));
-     comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"<Todos>", "Jefe de Proyecto", "Diseñador", "Programador", "Planificador"}));
+     comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"<Todos>", "Jefe de Proyecto", "Disenador", "Programador", "Planificador"}));
      panel.add(comboBox);
 
      JPanel tablePanel = new JPanel();
@@ -99,7 +99,7 @@ public class ListadoTrabajador extends JDialog {
      // Inicializar la lista de trabajadores
      trabajadores = new ArrayList<>();
      // Agregar algunos trabajadores de ejemplo
-     // Aquí deberías cargar tus trabajadores desde tu base de datos o fuente de datos
+     // Aquï¿½ deberï¿½as cargar tus trabajadores desde tu base de datos o fuente de datos
      cargarTrabajadoresEjemplo();
      // Cargar todos los trabajadores por defecto
      loadTrabajadores(0);
@@ -109,7 +109,7 @@ public class ListadoTrabajador extends JDialog {
      // Limpiar modelo de tabla antes de cargar nuevos datos
      model.setRowCount(0);
 
-     // Cargar datos de trabajadores según el tipo seleccionado
+     // Cargar datos de trabajadores segï¿½n el tipo seleccionado
      for (Trabajador trabajador : trabajadores) {
          boolean agregar = false;
          switch (index) {
@@ -119,7 +119,7 @@ public class ListadoTrabajador extends JDialog {
              case 1: // Jefe de Proyecto
                  agregar = trabajador instanceof JefeProyecto;
                  break;
-             case 2: // Diseñador
+             case 2: // Disenador
                  agregar = trabajador instanceof Disenador;
                  break;
              case 3: // Programador
@@ -152,11 +152,11 @@ public class ListadoTrabajador extends JDialog {
      sorter.toggleSortOrder(columnIndex);
  }
 
- // Método para cargar algunos trabajadores de ejemplo (simulación)
+ // Mï¿½todo para cargar algunos trabajadores de ejemplo (simulaciï¿½n)
  private void cargarTrabajadoresEjemplo() {
      // Trabajadores de ejemplo para cada tipo
      trabajadores.add(new JefeProyecto("1", "Juan", "Perez", "Calle 123", 'M', 35, 100, "Excelente", 10, 10)); // Jefe de Proyecto
-     trabajadores.add(new Disenador("2", "Maria", "Gomez", "Avenida 456", 'F', 28, 80, "Bueno", 5)); // Diseñador
+     trabajadores.add(new Disenador("2", "Maria", "Gomez", "Avenida 456", 'F', 28, 80, "Bueno", 5)); // Disenador
      trabajadores.add(new Programador("3", "Carlos", "Lopez", "Calle Principal", 'M', 30, 90, "Muy Bueno", new ArrayList<>(Arrays.asList("Java", "Python")), 3)); // Programador
      trabajadores.add(new Planificador("4", "Ana", "Martinez", "Avenida Central", 'F', 40, 95, "Excelente", 7, 15)); // Planificador
  }
