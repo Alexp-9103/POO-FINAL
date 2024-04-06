@@ -88,7 +88,7 @@ public class Login extends JFrame {
         lblUsuario.setBounds(39, 52, 191, 14);
         panel.add(lblUsuario);
 
-        JLabel lblContrasea = new JLabel("Contraseña:");
+        JLabel lblContrasea = new JLabel("Contrasena:");
         lblContrasea.setBounds(39, 111, 191, 14);
         panel.add(lblContrasea);
 
@@ -118,12 +118,12 @@ public class Login extends JFrame {
                         frame.setVisible(true);
                     } else {
                         // Mostrar mensaje de advertencia y sugerir registro
-                        int opcion = JOptionPane.showConfirmDialog(null, "Usuario no encontrado. ¿Desea registrarse?", "Advertencia", JOptionPane.YES_NO_OPTION);
+                        int opcion = JOptionPane.showConfirmDialog(null, "Usuario no encontrado. ï¿½Desea registrarse?", "Advertencia", JOptionPane.YES_NO_OPTION);
                         if (opcion == JOptionPane.YES_OPTION) {
                             // Abre la ventana de registro
-                            RegUsuario registroUsuario = new RegUsuario(); // Pasar la referencia de la ventana de inicio de sesión al registro
+                            RegUsuario registroUsuario = new RegUsuario(); // Pasar la referencia de la ventana de inicio de sesiï¿½n al registro
                             registroUsuario.setVisible(true);
-                            dispose(); // Cerrar la ventana de inicio de sesión
+                            dispose(); // Cerrar la ventana de inicio de sesiï¿½n
                         }
                     }
                 }
@@ -136,9 +136,9 @@ public class Login extends JFrame {
         btnRegistro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Abrir la ventana de registro
-                RegUsuario registroUsuario = new RegUsuario(); // Pasar la referencia de la ventana de inicio de sesión al registro
+                RegUsuario registroUsuario = new RegUsuario(); // Pasar la referencia de la ventana de inicio de sesiï¿½n al registro
                 registroUsuario.setVisible(true);
-                dispose(); // Cerrar la ventana de inicio de sesión
+                dispose(); // Cerrar la ventana de inicio de sesiï¿½n
             }
         });
         btnRegistro.setBounds(141, 187, 89, 23);

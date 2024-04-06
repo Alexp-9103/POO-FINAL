@@ -54,7 +54,7 @@ public class EvaluacionTrabajador extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         try {
             // Crear un trabajador de ejemplo para evaluar
             Trabajador ejemploTrabajador = new Trabajador("12345678901", "Juan", "P�rez", "Calle Principal", 'M', 30, 10.0, "", 5);
@@ -63,5 +63,5 @@ public class EvaluacionTrabajador extends JDialog {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

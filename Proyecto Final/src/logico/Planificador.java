@@ -14,4 +14,10 @@ public class Planificador extends Trabajador {
     public void setFrecuenciaPlanificacion(int frecuenciaPlanificacion) {
         this.frecuenciaPlanificacion = frecuenciaPlanificacion;
     }
+    
+    @Override
+    public boolean estaDisponible() {
+        return true; 
+    }
+    
 }

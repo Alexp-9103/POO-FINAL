@@ -8,6 +8,8 @@ public class JJDCommunications {
     private ArrayList<Proyecto> ListaProyectos;
     private ArrayList<Contrato> ListaContratos;
 	public static JJDCommunications JJD = null;
+    private String[] ListaSecundaria;
+    private String[] auxiliarListTrabajadores;
     
     public JJDCommunications() {
         ListaTrabajadores = new ArrayList<>();
@@ -79,6 +81,22 @@ public class JJDCommunications {
     public void insertarContrato(Contrato contrato){
         ListaContratos.add(contrato);
     }
+    public String[] getListaSecundaria() {
+  		return ListaSecundaria;
+  	}
+
+  	public void setListaSecundaria(String[] listaSecundaria) {
+  		ListaSecundaria = listaSecundaria;
+  	}
+
+  	public String[] getAuxiliarListTrabajadores() {
+  		return auxiliarListTrabajadores;
+  	}
+
+  	public void setAuxiliarListTrabajadores(String[] auxiliarListTrabajadores) {
+  		this.auxiliarListTrabajadores = auxiliarListTrabajadores;
+  	}
+
     
 	public Cliente BuscarCliente(String id) {
 			for(Cliente cliente : ListaClientes) {
@@ -110,6 +128,38 @@ public class JJDCommunications {
         
         return null;
     }
+    
+    public String[] TrabajadoresEnLista() {
+      int ind = 0;
+        for (Trabajador trabajador : ListaTrabajadores) {
+            if (trabajador.estaDisponible() == true) {
+                auxiliarListTrabajadores[ind] = trabajador.getId() + " | " + trabajador.getNombre() + " " + trabajador.getApellido() + " | " + trabajador.getSalarioHora();
+                ind++;
+            }
+        }
+       return auxiliarListTrabajadores; 
+        
+    }
+    public String[] TrabajadoresEnListaPro(String string) {
+        int ind = 0, cont = 0;
+        for (ind = 0; ListaSecundaria[ind] != null; ind++) {
+            cont++;
+        }
+        ListaSecundaria[cont] = string;
+        ListaSecundaria[cont + 1] = null;
+        return ListaSecundaria;
+    }
+
+    public String[] TrabajadoresEnListaDisp(String string) {
+        int ind = 0, cont = 0;
+        for (ind = 0; auxiliarListTrabajadores[ind] != null; ind++) {
+            cont++;
+        }
+        auxiliarListTrabajadores[cont] = string;
+        auxiliarListTrabajadores[cont + 1] = null;
+        return auxiliarListTrabajadores;
+    }
+
     
     
     //Por si se necesita

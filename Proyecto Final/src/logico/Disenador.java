@@ -14,4 +14,8 @@ public class Disenador extends Trabajador{
 		public void setAniosExperiencia(int aniosExperiencia) {
 			this.aniosExperiencia = aniosExperiencia;
 	}
+	    @Override
+	    public boolean estaDisponible() {
+	        return getCantidadProyectos() < 2;
+	    }
 }

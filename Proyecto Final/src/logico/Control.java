@@ -21,7 +21,6 @@ public class Control implements Serializable {
         }
         return instancia;
     }
-
     public ArrayList<User> getUsuarios() {
         return usuarios;
     }

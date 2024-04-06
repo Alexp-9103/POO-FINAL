@@ -2,7 +2,7 @@ package logico;
 
 import java.util.Date;
 
-public class Trabajador {
+public abstract class Trabajador {
     private String id;
     private String Nombre;
     private String Apellido;
@@ -12,6 +12,8 @@ public class Trabajador {
     private double salarioHora;
     private String Evaluacion;
     private int aniosExperiencia;
+    private int cantidadProyectos;
+
 
     public Trabajador(String id, String Nombre, String Apellido, String Direccion, char Sexo, int Edad, double salarioHora, String Evaluacion, int aniosExperiencia) {
         this.id = id;
@@ -99,7 +101,16 @@ public class Trabajador {
 	}
 	
 	
-    public static double calcularSalarioTrabajador(Trabajador trabajador, Date fechaInicio, Date fechaFin) {
+    public int getCantidadProyectos() {
+		return cantidadProyectos;
+	}
+
+	public void setCantidadProyectos(int cantidadProyectos) {
+		this.cantidadProyectos = cantidadProyectos;
+	}
+    public abstract boolean estaDisponible();
+
+	public static double calcularSalarioTrabajador(Trabajador trabajador, Date fechaInicio, Date fechaFin) {
         // Calculamos el n�mero de milisegundos entre las fechas de inicio y fin
         long milisegundosTrabajados = fechaFin.getTime() - fechaInicio.getTime();
         
