@@ -101,7 +101,15 @@ public class Trabajador {
 	}
 	
 	
-    public static double calcularSalarioTrabajador(Trabajador trabajador, Date fechaInicio, Date fechaFin) {
+    public int getCantProyectosInvolucrados() {
+		return cantProyectosInvolucrados;
+	}
+
+	public void setCantProyectosInvolucrados(int cantProyectosInvolucrados) {
+		this.cantProyectosInvolucrados = cantProyectosInvolucrados;
+	}
+
+	public static double calcularSalarioTrabajador(Trabajador trabajador, Date fechaInicio, Date fechaFin) {
         // Calculamos el n�mero de milisegundos entre las fechas de inicio y fin
         long milisegundosTrabajados = fechaFin.getTime() - fechaInicio.getTime();
         
