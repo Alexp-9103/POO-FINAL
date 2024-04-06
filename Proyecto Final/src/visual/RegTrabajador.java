@@ -229,6 +229,10 @@ public class RegTrabajador extends JDialog {
 
         {
             JButton okButton = new JButton("Registrar");
+            okButton.addActionListener(new ActionListener() {
+            	public void actionPerformed(ActionEvent e) {
+            	}
+            });
             okButton.setActionCommand("OK");
             buttonPane.add(okButton);
             getRootPane().setDefaultButton(okButton);
