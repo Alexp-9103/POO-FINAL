@@ -16,4 +16,8 @@ public class JefeProyecto extends Trabajador {
     public void setCantidadTrabajadores(int cantidadTrabajadores) {
         this.cantidadTrabajadores = cantidadTrabajadores;
     }
+    @Override
+    public boolean estaDisponible() {
+        return getCantidadProyectos() < 2;
+    }
 }

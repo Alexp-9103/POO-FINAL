@@ -17,4 +17,8 @@ public class Programador extends Trabajador {
     public void setLenguajesEspecializados(ArrayList<String> lenguajesEspecializados) {
         this.lenguajesEspecializados = lenguajesEspecializados;
     }
+    @Override
+    public boolean estaDisponible() {
+        return getCantidadProyectos() < 1;
+    }
 }

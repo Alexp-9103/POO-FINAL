@@ -31,7 +31,7 @@ public class ListadoTrabajador extends JDialog {
  private JComboBox<String> comboBox;
  private ArrayList<Trabajador> trabajadores;
 
- String[] headers = {"ID", "Nombre", "Apellido", "Dirección", "Sexo", "Edad", "Salario por Hora", "Evaluación"};
+ String[] headers = {"ID", "Nombre", "Apellido", "Direcciï¿½n", "Sexo", "Edad", "Salario por Hora", "Evaluaciï¿½n"};
 
  public static void main(String[] args) {
      try {
@@ -99,7 +99,7 @@ public class ListadoTrabajador extends JDialog {
      // Inicializar la lista de trabajadores
      trabajadores = new ArrayList<>();
      // Agregar algunos trabajadores de ejemplo
-     // Aquí deberías cargar tus trabajadores desde tu base de datos o fuente de datos
+     // Aquï¿½ deberï¿½as cargar tus trabajadores desde tu base de datos o fuente de datos
      cargarTrabajadoresEjemplo();
      // Cargar todos los trabajadores por defecto
      loadTrabajadores(0);
@@ -109,7 +109,7 @@ public class ListadoTrabajador extends JDialog {
      // Limpiar modelo de tabla antes de cargar nuevos datos
      model.setRowCount(0);
 
-     // Cargar datos de trabajadores según el tipo seleccionado
+     // Cargar datos de trabajadores segï¿½n el tipo seleccionado
      for (Trabajador trabajador : trabajadores) {
          boolean agregar = false;
          switch (index) {
@@ -152,7 +152,7 @@ public class ListadoTrabajador extends JDialog {
      sorter.toggleSortOrder(columnIndex);
  }
 
- // Método para cargar algunos trabajadores de ejemplo (simulación)
+ // Mï¿½todo para cargar algunos trabajadores de ejemplo (simulaciï¿½n)
  private void cargarTrabajadoresEjemplo() {
      // Trabajadores de ejemplo para cada tipo
      trabajadores.add(new JefeProyecto("1", "Juan", "Perez", "Calle 123", 'M', 35, 100, "Excelente", 10, 10)); // Jefe de Proyecto
