@@ -1,10 +1,10 @@
 package visual;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import logico.Control;
@@ -26,26 +27,34 @@ import logico.User;
 public class Login extends JFrame {
 
     private JPanel contentPane;
-    private JTextField textField;
-    private JTextField textField_1;
+    private JTextField usuarioField;
+    private JPasswordField contraseniaField;
+    
 
     /**
      * Launch the application.
      */
+    
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    FileInputStream usuariosFile = new FileInputStream("usuarios.dat");
-                    ObjectInputStream usuariosRead = new ObjectInputStream(usuariosFile);
-                    Object obj = usuariosRead.readObject();
-                    if (obj instanceof Control) {
-                        Control temp = (Control) obj;
-                        Control.instancia = temp;
-                        usuariosFile.close();
-                        usuariosRead.close();
-                    } else {
-                        throw new IOException("El archivo no contiene un objeto de tipo Control");
+                    FileInputStream usuariosFileInput = new FileInputStream("usuarios.dat");
+                    ObjectInputStream usuariosRead = new ObjectInputStream(usuariosFileInput);
+                    ArrayList<User> usuarios = (ArrayList<User>) usuariosRead.readObject();
+                    Control.getInstance().setUsuarios(usuarios);
+                    usuariosFileInput.close();
+                    usuariosRead.close();
+                } catch (FileNotFoundException e) {
+                    // Si el archivo no existe, crea uno nuevo
+                    try {
+                        FileOutputStream usuariosFileOutput = new FileOutputStream("usuarios.dat");
+                        ObjectOutputStream usuariosWrite = new ObjectOutputStream(usuariosFileOutput);
+                        usuariosWrite.writeObject(new ArrayList<User>());
+                        usuariosFileOutput.close();
+                        usuariosWrite.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
                     }
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
@@ -58,11 +67,13 @@ public class Login extends JFrame {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }
 
+
+
+    
     /**
      * Create the frame.
      */
@@ -88,25 +99,25 @@ public class Login extends JFrame {
         lblUsuario.setBounds(39, 52, 191, 14);
         panel.add(lblUsuario);
 
-        JLabel lblContrasea = new JLabel("Contraseña:");
+        JLabel lblContrasea = new JLabel("Contrasena:");
         lblContrasea.setBounds(39, 111, 191, 14);
         panel.add(lblContrasea);
 
-        textField = new JTextField();
-        textField.setBounds(39, 77, 191, 20);
-        panel.add(textField);
-        textField.setColumns(10);
+        usuarioField = new JTextField();
+        usuarioField.setBounds(39, 77, 191, 20);
+        panel.add(usuarioField);
+        usuarioField.setColumns(10);
 
-        textField_1 = new JTextField();
-        textField_1.setBounds(39, 141, 191, 20);
-        panel.add(textField_1);
-        textField_1.setColumns(10);
+        contraseniaField = new JPasswordField();
+        contraseniaField.setBounds(39, 141, 191, 20);
+        panel.add(contraseniaField);
+        contraseniaField.setColumns(10);
 
         JButton btnLogin = new JButton("OK");
         btnLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String usuario = textField.getText();
-                String contrasena = textField_1.getText();
+                String usuario = usuarioField.getText();
+                String contrasena = new String(contraseniaField.getPassword());
                 if (usuario.isEmpty() || contrasena.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
@@ -143,7 +154,7 @@ public class Login extends JFrame {
         });
         btnRegistro.setBounds(141, 187, 89, 23);
         panel.add(btnRegistro);
-
+        
         setLocationRelativeTo(null);
     }
 }

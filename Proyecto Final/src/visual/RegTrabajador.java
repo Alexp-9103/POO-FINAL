@@ -57,6 +57,36 @@ public class RegTrabajador extends JDialog {
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
+        // Crear paneles para cada tipo de trabajador
+        paneljefeProyecto = new JPanel();
+        paneljefeProyecto.setBorder(new TitledBorder(null, "Jefe de Proyecto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        paneljefeProyecto.setBounds(12, 348, 467, 95);
+        contentPanel.add(paneljefeProyecto);
+        paneljefeProyecto.setLayout(null);
+        
+        JLabel lblcantTrabajadores = new JLabel("Cant. trabajadores:");
+        lblcantTrabajadores.setBounds(39, 25, 154, 16);
+        paneljefeProyecto.add(lblcantTrabajadores);
+        
+        JSpinner spinner = new JSpinner();
+        spinner.setBounds(163, 22, 30, 22);
+        paneljefeProyecto.add(spinner);
+
+        paneldiseniador = new JPanel();
+        paneldiseniador.setBorder(new TitledBorder(null, "Disenador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        paneldiseniador.setBounds(12, 348, 467, 95);
+        contentPanel.add(paneldiseniador);
+        paneldiseniador.setLayout(null);
+        
+        JLabel lblNewLabel = new JLabel("Anios de Experiencia:");
+        lblNewLabel.setBounds(166, 26, 129, 16);
+        paneldiseniador.add(lblNewLabel);
+        
+        JSpinner spinner_1 = new JSpinner();
+        spinner_1.setBounds(293, 23, 30, 22);
+        paneldiseniador.add(spinner_1);
+
+
         panelprogramador = new JPanel();
         panelprogramador.setBorder(new TitledBorder(null, "Programador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         panelprogramador.setBounds(12, 348, 467, 95);
@@ -148,10 +178,12 @@ public class RegTrabajador extends JDialog {
         contentPanel.add(paneljefeProyecto);
         paneljefeProyecto.setLayout(null);
 
+        /*
         JLabel lblcantTrabajadores = new JLabel("Cant. trabajadores:");
         lblcantTrabajadores.setBounds(39, 25, 154, 16);
         paneljefeProyecto.add(lblcantTrabajadores);
-
+*/
+        
         spinnerTrabajadores = new JSpinner();
         spinnerTrabajadores.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores mínimo, máximo e incremento
         spinnerTrabajadores.setBounds(163, 22, 80, 22);

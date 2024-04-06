@@ -61,7 +61,7 @@ public class ListadoTrabajador extends JDialog {
 
      comboBox = new JComboBox<>();
      comboBox.addActionListener(e -> loadTrabajadores(comboBox.getSelectedIndex()));
-     comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"<Todos>", "Jefe de Proyecto", "Diseñador", "Programador", "Planificador"}));
+     comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"<Todos>", "Jefe de Proyecto", "Disenador", "Programador", "Planificador"}));
      panel.add(comboBox);
 
      JPanel tablePanel = new JPanel();
@@ -119,7 +119,7 @@ public class ListadoTrabajador extends JDialog {
              case 1: // Jefe de Proyecto
                  agregar = trabajador instanceof JefeProyecto;
                  break;
-             case 2: // Diseñador
+             case 2: // Disenador
                  agregar = trabajador instanceof Disenador;
                  break;
              case 3: // Programador
@@ -156,7 +156,7 @@ public class ListadoTrabajador extends JDialog {
  private void cargarTrabajadoresEjemplo() {
      // Trabajadores de ejemplo para cada tipo
      trabajadores.add(new JefeProyecto("1", "Juan", "Perez", "Calle 123", 'M', 35, 100, "Excelente", 10, 10)); // Jefe de Proyecto
-     trabajadores.add(new Disenador("2", "Maria", "Gomez", "Avenida 456", 'F', 28, 80, "Bueno", 5)); // Diseñador
+     trabajadores.add(new Disenador("2", "Maria", "Gomez", "Avenida 456", 'F', 28, 80, "Bueno", 5)); // Disenador
      trabajadores.add(new Programador("3", "Carlos", "Lopez", "Calle Principal", 'M', 30, 90, "Muy Bueno", new ArrayList<>(Arrays.asList("Java", "Python")), 3)); // Programador
      trabajadores.add(new Planificador("4", "Ana", "Martinez", "Avenida Central", 'F', 40, 95, "Excelente", 7, 15)); // Planificador
  }
