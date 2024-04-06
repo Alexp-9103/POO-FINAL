@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
 
 public class RegTrabajador extends JDialog {
@@ -25,11 +26,13 @@ public class RegTrabajador extends JDialog {
     private JTextField textdireccion;
     private JTextField textsalario;
     private JTextField textField;
-
-    private JPanel paneljefeProyecto;
-    private JPanel paneldiseniador;
     private JPanel panelprogramador;
     private JPanel panelplanificador;
+    private JPanel paneljefeProyecto;
+    private JPanel paneldiseniador;
+    private JSpinner spinnerTrabajadores;
+    private JSpinner spinnerExperiencia;
+    private JSpinner spinnerFrecuencia;
 
     /**
      * Launch the application.
@@ -54,40 +57,20 @@ public class RegTrabajador extends JDialog {
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
-        // Crear paneles para cada tipo de trabajador
-        paneljefeProyecto = new JPanel();
-        paneljefeProyecto.setBorder(new TitledBorder(null, "Jefe de Proyecto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        paneljefeProyecto.setBounds(12, 348, 467, 95);
-        contentPanel.add(paneljefeProyecto);
-        paneljefeProyecto.setLayout(null);
-        
-        JLabel lblcantTrabajadores = new JLabel("Cant. trabajadores:");
-        lblcantTrabajadores.setBounds(39, 25, 154, 16);
-        paneljefeProyecto.add(lblcantTrabajadores);
-        
-        JSpinner spinner = new JSpinner();
-        spinner.setBounds(163, 22, 30, 22);
-        paneljefeProyecto.add(spinner);
-
-        paneldiseniador = new JPanel();
-        paneldiseniador.setBorder(new TitledBorder(null, "Dise�ador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        paneldiseniador.setBounds(12, 348, 467, 95);
-        contentPanel.add(paneldiseniador);
-        paneldiseniador.setLayout(null);
-        
-        JLabel lblNewLabel = new JLabel("Anios de Experiencia:");
-        lblNewLabel.setBounds(166, 26, 129, 16);
-        paneldiseniador.add(lblNewLabel);
-        
-        JSpinner spinner_1 = new JSpinner();
-        spinner_1.setBounds(293, 23, 30, 22);
-        paneldiseniador.add(spinner_1);
-
         panelprogramador = new JPanel();
         panelprogramador.setBorder(new TitledBorder(null, "Programador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         panelprogramador.setBounds(12, 348, 467, 95);
         contentPanel.add(panelprogramador);
         panelprogramador.setLayout(null);
+        
+        JLabel lblLenguajes = new JLabel("Lenguajes especializados:");
+        lblLenguajes.setBounds(12, 29, 160, 16);
+        panelprogramador.add(lblLenguajes);
+        
+        JTextField textField_1 = new JTextField();
+        textField_1.setBounds(165, 26, 202, 22);
+        panelprogramador.add(textField_1);
+        textField_1.setColumns(10);
 
         panelplanificador = new JPanel();
         panelplanificador.setBorder(new TitledBorder(null, "Planificador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -159,6 +142,45 @@ public class RegTrabajador extends JDialog {
         contentPanel.add(textField);
         textField.setColumns(10);
 
+        paneljefeProyecto = new JPanel();
+        paneljefeProyecto.setBorder(new TitledBorder(null, "Jefe de Proyecto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        paneljefeProyecto.setBounds(12, 348, 467, 95);
+        contentPanel.add(paneljefeProyecto);
+        paneljefeProyecto.setLayout(null);
+
+        JLabel lblcantTrabajadores = new JLabel("Cant. trabajadores:");
+        lblcantTrabajadores.setBounds(39, 25, 154, 16);
+        paneljefeProyecto.add(lblcantTrabajadores);
+
+        spinnerTrabajadores = new JSpinner();
+        spinnerTrabajadores.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores mínimo, máximo e incremento
+        spinnerTrabajadores.setBounds(163, 22, 80, 22);
+        paneljefeProyecto.add(spinnerTrabajadores);
+
+        paneldiseniador = new JPanel();
+        paneldiseniador.setBorder(new TitledBorder(null, "Diseñador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        paneldiseniador.setBounds(12, 348, 467, 95);
+        contentPanel.add(paneldiseniador);
+        paneldiseniador.setLayout(null);
+
+        JLabel lblExperiencia = new JLabel("Años de experiencia:");
+        lblExperiencia.setBounds(12, 29, 160, 16);
+        paneldiseniador.add(lblExperiencia);
+
+        spinnerExperiencia = new JSpinner();
+        spinnerExperiencia.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores mínimo, máximo e incremento
+        spinnerExperiencia.setBounds(165, 26, 80, 22);
+        paneldiseniador.add(spinnerExperiencia);
+
+        JLabel lblFrecuencia = new JLabel("Frecuencia (días):");
+        lblFrecuencia.setBounds(12, 29, 160, 16);
+        panelplanificador.add(lblFrecuencia);
+
+        spinnerFrecuencia = new JSpinner();
+        spinnerFrecuencia.setModel(new SpinnerNumberModel(1, 1, 365, 1)); // Valores mínimo, máximo e incremento
+        spinnerFrecuencia.setBounds(165, 26, 80, 22);
+        panelplanificador.add(spinnerFrecuencia);
+
         JPanel panel = new JPanel();
         panel.setBorder(new TitledBorder(null, "Tipo Trabajador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         panel.setBounds(12, 278, 477, 60);
@@ -205,36 +227,35 @@ public class RegTrabajador extends JDialog {
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-		{
-			JButton okButton = new JButton("Registrar");
-			okButton.setActionCommand("OK");
-			buttonPane.add(okButton);
-			getRootPane().setDefaultButton(okButton);
-		}
+        {
+            JButton okButton = new JButton("Registrar");
+            okButton.setActionCommand("OK");
+            buttonPane.add(okButton);
+            getRootPane().setDefaultButton(okButton);
+        }
 
         {
-			JButton cancelButton = new JButton("Cancelar");
-			cancelButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					dispose();
-				}
-			});
-			cancelButton.setActionCommand("Cancel");
-			buttonPane.add(cancelButton);
-
-		}
+            JButton cancelButton = new JButton("Cancelar");
+            cancelButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                }
+            });
+            cancelButton.setActionCommand("Cancel");
+            buttonPane.add(cancelButton);
+        }
     }
 
-    // Metodo para mostrar el panel seleccionado y ocultar los demas
+    
     private void mostrarPanel(JPanel panel) {
         panel.setVisible(true);
     }
 
     private void ocultarPaneles(JPanel panelActual) {
         JPanel[] paneles = {paneljefeProyecto, paneldiseniador, panelprogramador, panelplanificador};
-        for (JPanel panel : paneles) {
-            if (panel != panelActual) {
-                panel.setVisible(false);
+        for (JPanel pnl : paneles) {
+            if (pnl != panelActual) {
+                pnl.setVisible(false);
             }
         }
     }

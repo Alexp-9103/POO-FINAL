@@ -10,6 +10,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -26,8 +27,8 @@ public class RegUsuario extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
     private JTextField nombreUsuarioField;
-    private JTextField contraseñaField;
-    private JTextField confirmarContraseñaField;
+    private JPasswordField  contrasenaField;
+    private JPasswordField confirmarContrasenaField;
     private JComboBox<String> tipoUsuarioComboBox;
 
     /**
@@ -69,23 +70,23 @@ public class RegUsuario extends JDialog {
         contentPanel.add(nombreUsuarioField);
         nombreUsuarioField.setColumns(10);
 
-        JLabel contraseñaLabel = new JLabel("Contraseña:");
-        contraseñaLabel.setBounds(30, 100, 80, 14);
-        contentPanel.add(contraseñaLabel);
+        JLabel contrasenaLabel = new JLabel("Contrasena:");
+        contrasenaLabel.setBounds(30, 100, 80, 14);
+        contentPanel.add(contrasenaLabel);
 
-        contraseñaField = new JTextField();
-        contraseñaField.setBounds(170, 97, 160, 20);
-        contentPanel.add(contraseñaField);
-        contraseñaField.setColumns(10);
+        contrasenaField = new JPasswordField();
+        contrasenaField.setBounds(170, 97, 160, 20);
+        contentPanel.add(contrasenaField);
+        contrasenaField.setColumns(10);
 
-        JLabel confirmarContraseñaLabel = new JLabel("Confirmar Contraseña:");
-        confirmarContraseñaLabel.setBounds(30, 140, 140, 14);
-        contentPanel.add(confirmarContraseñaLabel);
+        JLabel confirmarContrasenaLabel = new JLabel("Confirmar Contrasena:");
+        confirmarContrasenaLabel.setBounds(30, 140, 140, 14);
+        contentPanel.add(confirmarContrasenaLabel);
 
-        confirmarContraseñaField = new JTextField();
-        confirmarContraseñaField.setBounds(170, 137, 160, 20);
-        contentPanel.add(confirmarContraseñaField);
-        confirmarContraseñaField.setColumns(10);
+        confirmarContrasenaField = new JPasswordField();
+        confirmarContrasenaField.setBounds(170, 137, 160, 20);
+        contentPanel.add(confirmarContrasenaField);
+        confirmarContrasenaField.setColumns(10);
 
         JLabel tipoUsuarioLabel = new JLabel("Tipo de Usuario:");
         tipoUsuarioLabel.setBounds(30, 180, 100, 14);
@@ -126,31 +127,31 @@ public class RegUsuario extends JDialog {
     
     private void registrarUsuario() {
         String nombreUsuario = nombreUsuarioField.getText();
-        String contraseña = contraseñaField.getText();
-        String confirmarContraseña = confirmarContraseñaField.getText();
+        String contrasena = contrasenaField.getText();
+        String confirmarContrasena = confirmarContrasenaField.getText();
         String tipoUsuario = tipoUsuarioComboBox.getSelectedItem().toString();
 
-        if (nombreUsuario.isEmpty() || contraseña.isEmpty() || confirmarContraseña.isEmpty() || tipoUsuario.equals("<Seleccione>")) {
-            // Mostrar mensaje de advertencia si algún campo está vacío o el tipo de usuario no se ha seleccionado
+        if (nombreUsuario.isEmpty() || contrasena.isEmpty() || confirmarContrasena.isEmpty() || tipoUsuario.equals("<Seleccione>")) {
+            // Mostrar mensaje de advertencia si algÃºn campo estÃ¡ vacÃ­o o el tipo de usuario no se ha seleccionado
             JOptionPane.showMessageDialog(this, "Por favor complete todos los campos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        if (!contraseña.equals(confirmarContraseña)) {
-            // Mostrar mensaje de advertencia si las contraseñas no coinciden
-            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        if (!contrasena.equals(confirmarContrasena)) {
+            // Mostrar mensaje de advertencia si las contrasenas no coinciden
+            JOptionPane.showMessageDialog(this, "Las contrasenas no coinciden.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // Si los campos están completos y las contraseñas coinciden, entonces registrar al usuario
-        User user = new User(tipoUsuario, nombreUsuario, contraseña);
+        // Si los campos estÃ¡n completos y las contrasenas coinciden, entonces registrar al usuario
+        User user = new User(tipoUsuario, nombreUsuario, contrasena);
         Control.getInstance().registrarUsuario(user);
 
         // Guardar el usuario en un fichero
         try (FileOutputStream fileOut = new FileOutputStream("usuarios.dat", true);
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
             objectOut.writeObject(user);
-            JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.", "Ã‰xito", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al registrar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -159,14 +160,15 @@ public class RegUsuario extends JDialog {
         // Cerrar la ventana de registro
         dispose();
 
-        // Mostrar la ventana de inicio de sesión
+        // Mostrar la ventana de inicio de sesiÃ³n
         Login loginWindow = new Login();
-        loginWindow.setLocationRelativeTo(null); // Centrar la ventana de inicio de sesión
+        loginWindow.setLocationRelativeTo(null); // Centrar la ventana de inicio de sesiÃ³n
         loginWindow.setVisible(true);
     }
 
 
 
 
+    
 
 }

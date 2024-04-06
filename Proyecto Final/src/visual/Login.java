@@ -1,4 +1,5 @@
 package visual;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,24 +28,25 @@ public class Login extends JFrame {
     private JPanel contentPane;
     private JTextField textField;
     private JTextField textField_1;
-    
 
     /**
      * Launch the application.
      */
-    
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FileInputStream usuariosFile;
-                ObjectInputStream usuariosRead;
                 try {
-                    usuariosFile = new FileInputStream("usuarios.dat");
-                    usuariosRead = new ObjectInputStream(usuariosFile);
-                    Control temp = (Control) usuariosRead.readObject();
-                    Control.instancia = temp;
-                    usuariosFile.close();
-                    usuariosRead.close();
+                    FileInputStream usuariosFile = new FileInputStream("usuarios.dat");
+                    ObjectInputStream usuariosRead = new ObjectInputStream(usuariosFile);
+                    Object obj = usuariosRead.readObject();
+                    if (obj instanceof Control) {
+                        Control temp = (Control) obj;
+                        Control.instancia = temp;
+                        usuariosFile.close();
+                        usuariosRead.close();
+                    } else {
+                        throw new IOException("El archivo no contiene un objeto de tipo Control");
+                    }
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -61,8 +63,6 @@ public class Login extends JFrame {
         });
     }
 
-
-    
     /**
      * Create the frame.
      */
@@ -88,7 +88,7 @@ public class Login extends JFrame {
         lblUsuario.setBounds(39, 52, 191, 14);
         panel.add(lblUsuario);
 
-        JLabel lblContrasea = new JLabel("Contrase馻:");
+        JLabel lblContrasea = new JLabel("Contrase帽a:");
         lblContrasea.setBounds(39, 111, 191, 14);
         panel.add(lblContrasea);
 
@@ -118,12 +118,12 @@ public class Login extends JFrame {
                         frame.setVisible(true);
                     } else {
                         // Mostrar mensaje de advertencia y sugerir registro
-                        int opcion = JOptionPane.showConfirmDialog(null, "Usuario no encontrado. 緿esea registrarse?", "Advertencia", JOptionPane.YES_NO_OPTION);
+                        int opcion = JOptionPane.showConfirmDialog(null, "Usuario no encontrado. 驴Desea registrarse?", "Advertencia", JOptionPane.YES_NO_OPTION);
                         if (opcion == JOptionPane.YES_OPTION) {
                             // Abre la ventana de registro
-                            RegUsuario registroUsuario = new RegUsuario(); // Pasar la referencia de la ventana de inicio de sesi髇 al registro
+                            RegUsuario registroUsuario = new RegUsuario(); // Pasar la referencia de la ventana de inicio de sesi贸n al registro
                             registroUsuario.setVisible(true);
-                            dispose(); // Cerrar la ventana de inicio de sesi髇
+                            dispose(); // Cerrar la ventana de inicio de sesi贸n
                         }
                     }
                 }
@@ -136,14 +136,14 @@ public class Login extends JFrame {
         btnRegistro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Abrir la ventana de registro
-                RegUsuario registroUsuario = new RegUsuario(); // Pasar la referencia de la ventana de inicio de sesi髇 al registro
+                RegUsuario registroUsuario = new RegUsuario(); // Pasar la referencia de la ventana de inicio de sesi贸n al registro
                 registroUsuario.setVisible(true);
-                dispose(); // Cerrar la ventana de inicio de sesi髇
+                dispose(); // Cerrar la ventana de inicio de sesi贸n
             }
         });
         btnRegistro.setBounds(141, 187, 89, 23);
         panel.add(btnRegistro);
-        
+
         setLocationRelativeTo(null);
     }
 }

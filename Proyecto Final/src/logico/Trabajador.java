@@ -12,6 +12,7 @@ public class Trabajador {
     private double salarioHora;
     private String Evaluacion;
     private int aniosExperiencia;
+    private int cantProyectosInvolucrados;
 
     public Trabajador(String id, String Nombre, String Apellido, String Direccion, char Sexo, int Edad, double salarioHora, String Evaluacion, int aniosExperiencia) {
         this.id = id;
