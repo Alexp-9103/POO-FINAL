@@ -12,7 +12,7 @@ public class Trabajador {
     private double salarioHora;
     private String Evaluacion;
     private int aniosExperiencia;
-    private int cantProyectosInvolucrados;
+    
     
 
     public Trabajador(String id, String Nombre, String Apellido, String Direccion, char Sexo, int Edad, double salarioHora, String Evaluacion, int aniosExperiencia) {
@@ -101,13 +101,7 @@ public class Trabajador {
 	}
 	
 	
-    public int getCantProyectosInvolucrados() {
-		return cantProyectosInvolucrados;
-	}
-
-	public void setCantProyectosInvolucrados(int cantProyectosInvolucrados) {
-		this.cantProyectosInvolucrados = cantProyectosInvolucrados;
-	}
+  
 
 	public static double calcularSalarioTrabajador(Trabajador trabajador, Date fechaInicio, Date fechaFin) {
         // Calculamos el n�mero de milisegundos entre las fechas de inicio y fin
