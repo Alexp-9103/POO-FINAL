@@ -133,7 +133,7 @@ public class ListadoTrabajador extends JDialog {
              model.addRow(new Object[]{
                      trabajador.getId(),
                      trabajador.getNombre(),
-                     trabajador.getApellido(),
+          
                      trabajador.getDireccion(),
                      trabajador.getSexo(),
                      trabajador.getEdad(),
@@ -155,9 +155,9 @@ public class ListadoTrabajador extends JDialog {
  // M�todo para cargar algunos trabajadores de ejemplo (simulaci�n)
  private void cargarTrabajadoresEjemplo() {
      // Trabajadores de ejemplo para cada tipo
-     trabajadores.add(new JefeProyecto("1", "Juan", "Perez", "Calle 123", 'M', 35, 100, "Excelente", 10, 10)); // Jefe de Proyecto
-     trabajadores.add(new Disenador("2", "Maria", "Gomez", "Avenida 456", 'F', 28, 80, "Bueno", 5)); // Disenador
-     trabajadores.add(new Programador("3", "Carlos", "Lopez", "Calle Principal", 'M', 30, 90, "Muy Bueno", new ArrayList<>(Arrays.asList("Java", "Python")), 3)); // Programador
-     trabajadores.add(new Planificador("4", "Ana", "Martinez", "Avenida Central", 'F', 40, 95, "Excelente", 7, 15)); // Planificador
+     trabajadores.add(new JefeProyecto("1", "Juan", "Calle 123", 'M', 35, 100, "Excelente", 10)); // Jefe de Proyecto
+     trabajadores.add(new Disenador("2", "Maria", "Avenida 456", 'F', 28, 80, "Bueno", 5)); // Disenador
+     trabajadores.add(new Programador("3", "Carlos", "Calle Principal", 'M', 30, 90, "Muy Bueno", new ArrayList<>(Arrays.asList("Java", "Python")), 3)); // Programador
+     trabajadores.add(new Planificador("4", "Ana", "Avenida Central", 'F', 40, 95, "Excelente", 7)); // Planificador
  }
 }

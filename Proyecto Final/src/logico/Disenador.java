@@ -4,8 +4,8 @@ package logico;
 public class Disenador extends Trabajador{
 	    private int aniosExperiencia;
 	    
-	    public Disenador(String id, String nombre, String apellidos, String direccion, char sexo, int edad, double salarioHora, String evaluacion, int aniosExperiencia) {
-	        super(id, nombre, apellidos, direccion, sexo, edad, salarioHora, evaluacion, aniosExperiencia);
+	    public Disenador(String id, String nombre, String direccion, char sexo, int edad, double salarioHora, String evaluacion, int aniosExperiencia) {
+	        super(id, nombre, direccion, sexo, edad, salarioHora, evaluacion);
 	        this.aniosExperiencia = aniosExperiencia;
 	    }
 	    public int getAniosExperiencia() {

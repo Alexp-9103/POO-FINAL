@@ -133,7 +133,7 @@ public class JJDCommunications {
       int ind = 0;
         for (Trabajador trabajador : ListaTrabajadores) {
             if (trabajador.estaDisponible() == true) {
-                auxiliarListTrabajadores[ind] = trabajador.getId() + " | " + trabajador.getNombre() + " " + trabajador.getApellido() + " | " + trabajador.getSalarioHora();
+                auxiliarListTrabajadores[ind] = trabajador.getId() + " | " + trabajador.getNombre() + " "  + " | " + trabajador.getSalarioHora();
                 ind++;
             }
         }

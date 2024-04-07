@@ -5,7 +5,6 @@ import java.util.Date;
 public abstract class Trabajador {
     private String id;
     private String Nombre;
-    private String Apellido;
     private String Direccion;
     private char Sexo;
     private int Edad;
@@ -15,16 +14,15 @@ public abstract class Trabajador {
     private int cantidadProyectos;
 
 
-    public Trabajador(String id, String Nombre, String Apellido, String Direccion, char Sexo, int Edad, double salarioHora, String Evaluacion, int aniosExperiencia) {
+    public Trabajador(String id, String Nombre, String Direccion, char Sexo, int Edad, double salarioHora, String Evaluacion) {
         this.id = id;
         this.Nombre = Nombre;
-        this.Apellido = Apellido;
         this.Direccion = Direccion;
         this.Sexo = Sexo;
         this.Edad = Edad;
         this.salarioHora = salarioHora;
         this.Evaluacion = Evaluacion;
-        this.setAniosExperiencia(aniosExperiencia);
+        
     }
 
 	public String getId() {
@@ -43,13 +41,7 @@ public abstract class Trabajador {
 		Nombre = nombre;
 	}
 
-	public String getApellido() {
-		return Apellido;
-	}
-
-	public void setApellido(String apellido) {
-		Apellido = apellido;
-	}
+	
 
 	public String getDireccion() {
 		return Direccion;

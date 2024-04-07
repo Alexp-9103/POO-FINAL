@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,11 +13,19 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
+
+import logico.Disenador;
+import logico.JJDCommunications;
+import logico.JefeProyecto;
+import logico.Programador;
+import logico.Trabajador;
+
 
 public class RegTrabajador extends JDialog {
 
@@ -33,6 +42,10 @@ public class RegTrabajador extends JDialog {
     private JSpinner spinnerTrabajadores;
     private JSpinner spinnerExperiencia;
     private JSpinner spinnerFrecuencia;
+    private JTextField textLenguajes;
+    private ArrayList<String> lenguajesEspecializados = new ArrayList<>();
+    private Programador programador;
+
 
     /**
      * Launch the application.
@@ -57,27 +70,6 @@ public class RegTrabajador extends JDialog {
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
-        panelprogramador = new JPanel();
-        panelprogramador.setBorder(new TitledBorder(null, "Programador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        panelprogramador.setBounds(12, 348, 467, 95);
-        contentPanel.add(panelprogramador);
-        panelprogramador.setLayout(null);
-        
-        JLabel lblLenguajes = new JLabel("Lenguajes especializados:");
-        lblLenguajes.setBounds(12, 29, 160, 16);
-        panelprogramador.add(lblLenguajes);
-        
-        JTextField textField_1 = new JTextField();
-        textField_1.setBounds(165, 26, 202, 22);
-        panelprogramador.add(textField_1);
-        textField_1.setColumns(10);
-
-        panelplanificador = new JPanel();
-        panelplanificador.setBorder(new TitledBorder(null, "Planificador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        panelplanificador.setBounds(12, 348, 467, 95);
-        contentPanel.add(panelplanificador);
-        panelplanificador.setLayout(null);
-
         JLabel lblid = new JLabel("ID:");
         lblid.setBounds(12, 32, 56, 16);
         contentPanel.add(lblid);
@@ -87,8 +79,8 @@ public class RegTrabajador extends JDialog {
         contentPanel.add(textid);
         textid.setColumns(10);
 
-        JLabel lblnombre = new JLabel("Nombre:");
-        lblnombre.setBounds(12, 83, 56, 16);
+        JLabel lblnombre = new JLabel("Nombre y apellidos:");
+        lblnombre.setBounds(12, 83, 127, 16);
         contentPanel.add(lblnombre);
 
         textnombre = new JTextField();
@@ -117,12 +109,30 @@ public class RegTrabajador extends JDialog {
         rdbtnfemenino.setBounds(101, 218, 127, 25);
         contentPanel.add(rdbtnfemenino);
 
+        // ActionListener para los botones de radio
+        rdbtnmasculino.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (rdbtnmasculino.isSelected()) {
+                    rdbtnfemenino.setSelected(false);
+                }
+            }
+        });
+
+        rdbtnfemenino.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (rdbtnfemenino.isSelected()) {
+                    rdbtnmasculino.setSelected(false);
+                }
+            }
+        });
+
         JLabel lbledad = new JLabel("Edad:");
         lbledad.setBounds(236, 200, 56, 16);
         contentPanel.add(lbledad);
 
         JSpinner spinneredad = new JSpinner();
         spinneredad.setBounds(236, 219, 30, 22);
+        spinneredad.setModel(new SpinnerNumberModel(1, 1, 100, 1)); // Establecer el mínimo en 1
         contentPanel.add(spinneredad);
 
         JLabel lblsalario = new JLabel("Salario:");
@@ -171,7 +181,38 @@ public class RegTrabajador extends JDialog {
         spinnerExperiencia.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores mínimo, máximo e incremento
         spinnerExperiencia.setBounds(165, 26, 80, 22);
         paneldiseniador.add(spinnerExperiencia);
+        
+        panelprogramador = new JPanel();
+        panelprogramador.setBorder(new TitledBorder(null, "Programador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panelprogramador.setBounds(12, 348, 467, 95);
+        contentPanel.add(panelprogramador);
+        panelprogramador.setLayout(null);
+        
+        JLabel lblLenguajes = new JLabel("Lenguajes especializados:");
+        lblLenguajes.setBounds(12, 29, 160, 16);
+        panelprogramador.add(lblLenguajes);
+        
+        
+        textLenguajes = new JTextField();
+        textLenguajes.setBounds(165, 26, 202, 22);
+        panelprogramador.add(textLenguajes);
+        textLenguajes.setColumns(10);
 
+        JButton btnAgregarLenguaje = new JButton("Agregar Lenguaje");
+        btnAgregarLenguaje.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                agregarLenguajeEspecializado();
+            }
+        });
+        btnAgregarLenguaje.setBounds(165, 56, 150, 25);
+        panelprogramador.add(btnAgregarLenguaje);
+
+        panelplanificador = new JPanel();
+        panelplanificador.setBorder(new TitledBorder(null, "Planificador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panelplanificador.setBounds(12, 348, 467, 95);
+        contentPanel.add(panelplanificador);
+        panelplanificador.setLayout(null);
+        
         JLabel lblFrecuencia = new JLabel("Frecuencia (días):");
         lblFrecuencia.setBounds(12, 29, 160, 16);
         panelplanificador.add(lblFrecuencia);
@@ -229,6 +270,58 @@ public class RegTrabajador extends JDialog {
 
         {
             JButton okButton = new JButton("Registrar");
+            okButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    // Obtener los datos del trabajador desde los campos de texto u otros componentes
+                    String id = textid.getText();
+                    String nombre = textnombre.getText();
+                    String direccion = textdireccion.getText();
+                    String sexo = "";
+                    if (rdbtnmasculino.isSelected()) {
+                        sexo = "Masculino";
+                    } else if (rdbtnfemenino.isSelected()) {
+                        sexo = "Femenino";
+                    }
+                    int edad = (int) spinneredad.getValue();
+                    double salario = Double.parseDouble(textsalario.getText());
+                    
+                    // Crear una instancia del tipo de trabajador correspondiente
+                    Trabajador nuevoTrabajador = null;
+                    String selectedItem = (String) comboBox.getSelectedItem();
+                    switch (selectedItem) {
+                        case "Jefe de proyecto":
+                            int cantTrabajadores = (int) spinnerTrabajadores.getValue();
+                            nuevoTrabajador = new JefeProyecto(id, nombre, direccion, sexo, edad, salario, cantTrabajadores);
+                            break;
+                        case "Diseñador":
+                            int experiencia = (int) spinnerExperiencia.getValue();
+                            nuevoTrabajador = new Disenador(id, nombre, direccion, sexo, edad, salario,evaluacion, experiencia);
+                            break;
+                        case "Programador":
+                            ArrayList<String> lenguajesEspecializados = lenguajesEspecializados;
+                            nuevoTrabajador = new Programador(id, nombre, direccion, sexo, edad, salario, lenguajesEspecializados);
+                            break;
+                        case "Planificador":
+                            int frecuencia = (int) spinnerFrecuencia.getValue();
+                            nuevoTrabajador = new Planificador(id, nombre, direccion, sexo, edad, salario, frecuencia);
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                    // Insertar el trabajador en una variable auxiliar
+                    JJDCommunications.getInstance().insertarTrabajadorAuxiliar(nuevoTrabajador);
+                    
+                    // Mostrar un mensaje de éxito al usuario
+                    JOptionPane.showMessageDialog(RegTrabajador.this, "Trabajador registrado exitosamente.");
+                    
+                    // Limpiar los campos de texto u otros componentes si es necesario
+                    // textid.setText("");
+                    // textnombre.setText("");
+                    // textdireccion.setText("");
+                    // Limpiar los demás campos según sea necesario
+                }
+            });
             okButton.setActionCommand("OK");
             buttonPane.add(okButton);
             getRootPane().setDefaultButton(okButton);
@@ -257,6 +350,21 @@ public class RegTrabajador extends JDialog {
             if (pnl != panelActual) {
                 pnl.setVisible(false);
             }
+        }
+    }
+    
+ // Método para agregar el lenguaje especializado al ArrayList y al Programador
+    private void agregarLenguajeEspecializado() {
+        String lenguaje = textLenguajes.getText();
+        if (!lenguaje.isEmpty()) {
+            lenguajesEspecializados.add(lenguaje);
+            JOptionPane.showMessageDialog(this, "Lenguaje agregado exitosamente: " + lenguaje);
+            // Agregar el lenguaje también al objeto Programador si existe
+            if (programador != null) {
+                programador.agregarLenguajeEspecializado(lenguaje);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese un lenguaje especializado.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
