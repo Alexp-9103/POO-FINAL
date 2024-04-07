@@ -310,7 +310,7 @@ public class RegTrabajador extends JDialog {
                     }
                     
                     // Insertar el trabajador en una variable auxiliar
-                    JJDCommunications.getInstance().insertarTrabajadorAuxiliar(nuevoTrabajador);
+                    JJDCommunications.getInstance().insertarTrabajador(nuevoTrabajador);
                     
                     // Mostrar un mensaje de éxito al usuario
                     JOptionPane.showMessageDialog(RegTrabajador.this, "Trabajador registrado exitosamente.");
