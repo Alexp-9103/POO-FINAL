@@ -1,163 +1,145 @@
 package visual;
 
-import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
-
-import logico.Disenador;
-import logico.JefeProyecto;
-import logico.Planificador;
-import logico.Programador;
+import logico.JJDCommunications;
 import logico.Trabajador;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.ScrollPaneConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ListadoTrabajador extends JDialog {
+    private static final long serialVersionUID = 1L;
+    private final JPanel contentPanel = new JPanel();
+    private JButton btnUpdate;
+    private JButton btnCancel;
+    private JTable table;
+    private JButton btnDelete;
+    private static DefaultTableModel model;
+    private static Object[] rows;
+    private Trabajador selected = null;
 
- private DefaultTableModel model;
- private JComboBox<String> comboBox;
- private ArrayList<Trabajador> trabajadores;
+    public static void main(String[] args) {
+        try {
+            ListadoTrabajador dialog = new ListadoTrabajador();
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            dialog.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
- String[] headers = {"ID", "Nombre", "Apellido", "Direcci�n", "Sexo", "Edad", "Salario por Hora", "Evaluaci�n"};
+    public ListadoTrabajador() {
+        setResizable(false);
+        setTitle("Listado de Trabajadores");
+        setModal(true);
+        setBounds(100, 100, 600, 300);
+        setLocationRelativeTo(null);
+        getContentPane().setLayout(new BorderLayout());
+        contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        getContentPane().add(contentPanel, BorderLayout.CENTER);
+        contentPanel.setLayout(new BorderLayout(0, 0));
 
- public static void main(String[] args) {
-     try {
-         ListadoTrabajador dialog = new ListadoTrabajador();
-         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-         dialog.setVisible(true);
-     } catch (Exception e) {
-         e.printStackTrace();
-     }
- }
+        JPanel panel = new JPanel();
+        panel.setBorder(new TitledBorder(null, "Trabajadores Registrados:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        contentPanel.add(panel, BorderLayout.CENTER);
+        panel.setLayout(new BorderLayout(0, 0));
 
- public ListadoTrabajador() {
-     setSize(841, 400);
-     setLocationRelativeTo(null);
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        panel.add(scrollPane, BorderLayout.CENTER);
 
-     JPanel contentPanel = new JPanel();
-     contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-     contentPanel.setLayout(new BorderLayout());
-     getContentPane().add(contentPanel, BorderLayout.CENTER);
+        String[] headers = {"ID", "Nombre", "Dirección", "Sexo", "Edad", "Salario por Hora", "Evaluación", "Experiencia (años)", "Proyectos"};
+        model = new DefaultTableModel();
+        model.setColumnIdentifiers(headers);
+        table = new JTable();
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int index = table.getSelectedRow();
+                if (index > -1) {
+                    btnDelete.setEnabled(true);
+                    btnUpdate.setEnabled(true);
+                    selected = JJDCommunications.getInstance().BuscarTrabajador(table.getValueAt(index, 0).toString());
+                }
+            }
+        });
+        table.setModel(model);
+        scrollPane.setViewportView(table);
 
-     JPanel panel = new JPanel();
-     panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 15));
-     contentPanel.add(panel, BorderLayout.NORTH);
+        JPanel buttonPane = new JPanel();
+        buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-     JLabel lblTipoDeTrabajador = new JLabel("Tipo de Trabajador:");
-     panel.add(lblTipoDeTrabajador);
+        btnDelete = new JButton("Eliminar");
+        btnDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (selected != null) {
+                    int option = JOptionPane.showConfirmDialog(null, "¿Seguro desea eliminar al trabajador con ID: " + selected.getId() + "?", "Eliminar", JOptionPane.WARNING_MESSAGE);
+                    if (option == JOptionPane.YES_OPTION) {
+                    	JJDCommunications.getInstance().eliminarTrabajador(selected.getId());
+                        loadTrabajadores();
+                    }
+                }
+            }
+        });
+        btnDelete.setEnabled(false);
+        buttonPane.add(btnDelete);
 
-     comboBox = new JComboBox<>();
-     comboBox.addActionListener(e -> loadTrabajadores(comboBox.getSelectedIndex()));
-     comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"<Todos>", "Jefe de Proyecto", "Disenador", "Programador", "Planificador"}));
-     panel.add(comboBox);
+        btnUpdate = new JButton("Modificar");
+        btnUpdate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Depending on the subclass, you may want to open a different dialog for updating
+                // For simplicity, assuming a generic dialog for all subclasses.
+                RegTrabajador update = new RegTrabajador();
+                update.setVisible(true);
+            }
+        });
+        btnUpdate.setEnabled(false);
+        btnUpdate.setActionCommand("OK");
+        buttonPane.add(btnUpdate);
+        getRootPane().setDefaultButton(btnUpdate);
 
-     JPanel tablePanel = new JPanel();
-     tablePanel.setLayout(new BorderLayout(0, 0));
-     contentPanel.add(tablePanel, BorderLayout.CENTER);
+        btnCancel = new JButton("Cancelar");
+        btnCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        btnCancel.setActionCommand("Cancel");
+        buttonPane.add(btnCancel);
 
-     JScrollPane scrollPane = new JScrollPane();
-     tablePanel.add(scrollPane, BorderLayout.CENTER);
+        loadTrabajadores();
+    }
 
-     model = new DefaultTableModel() {
-         @Override
-         public boolean isCellEditable(int row, int column) {
-             return false;
-         }
-     };
-     model.setColumnIdentifiers(headers);
-     JTable table = new JTable(model);
-     table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-     table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-     table.getTableHeader().setReorderingAllowed(false);
-     table.addMouseListener(new MouseAdapter() {
-         @Override
-         public void mouseClicked(MouseEvent e) {
-             ordenarTabla(table.columnAtPoint(e.getPoint()));
-         }
-     });
-     scrollPane.setViewportView(table);
-
-     // Ajuste del ancho de las columnas y permitir redimensionarlas
-     for (int i = 0; i < headers.length; i++) {
-         table.getColumnModel().getColumn(i).setPreferredWidth(100);
-     }
-     table.getTableHeader().setResizingAllowed(true);
-
-     // Inicializar la lista de trabajadores
-     trabajadores = new ArrayList<>();
-     // Agregar algunos trabajadores de ejemplo
-     // Aqu� deber�as cargar tus trabajadores desde tu base de datos o fuente de datos
-     cargarTrabajadoresEjemplo();
-     // Cargar todos los trabajadores por defecto
-     loadTrabajadores(0);
- }
-
- private void loadTrabajadores(int index) {
-     // Limpiar modelo de tabla antes de cargar nuevos datos
-     model.setRowCount(0);
-
-     // Cargar datos de trabajadores seg�n el tipo seleccionado
-     for (Trabajador trabajador : trabajadores) {
-         boolean agregar = false;
-         switch (index) {
-             case 0: // Todos
-                 agregar = true;
-                 break;
-             case 1: // Jefe de Proyecto
-                 agregar = trabajador instanceof JefeProyecto;
-                 break;
-             case 2: // Disenador
-                 agregar = trabajador instanceof Disenador;
-                 break;
-             case 3: // Programador
-                 agregar = trabajador instanceof Programador;
-                 break;
-             case 4: // Planificador
-                 agregar = trabajador instanceof Planificador;
-                 break;
-         }
-         if (agregar) {
-             model.addRow(new Object[]{
-                     trabajador.getId(),
-                     trabajador.getNombre(),
-          
-                     trabajador.getDireccion(),
-                     trabajador.getSexo(),
-                     trabajador.getEdad(),
-                     trabajador.getSalarioHora(),
-                     trabajador.getEvaluacion()
-             });
-         }
-     }
- }
-
-
- private void ordenarTabla(int columnIndex) {
-     TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-     sorter.setModel(model);
-     sorter.setSortsOnUpdates(true);
-     sorter.toggleSortOrder(columnIndex);
- }
-
- // M�todo para cargar algunos trabajadores de ejemplo (simulaci�n)
- private void cargarTrabajadoresEjemplo() {
-     // Trabajadores de ejemplo para cada tipo
-     trabajadores.add(new JefeProyecto("1", "Juan", "Calle 123", 'M', 35, 100, "Excelente", 10)); // Jefe de Proyecto
-     trabajadores.add(new Disenador("2", "Maria", "Avenida 456", 'F', 28, 80, "Bueno", 5)); // Disenador
-     trabajadores.add(new Programador("3", "Carlos", "Calle Principal", 'M', 30, 90, "Muy Bueno", new ArrayList<>(Arrays.asList("Java", "Python")), 3)); // Programador
-     trabajadores.add(new Planificador("4", "Ana", "Avenida Central", 'F', 40, 95, "Excelente", 7)); // Planificador
- }
+	public static void loadTrabajadores() {
+		model.setRowCount(0);
+		rows = new Object[model.getColumnCount()];
+		int cant = JJDCommunications.getInstance().getCantTrabajador();
+		for (Trabajador trabajador : JJDCommunications.getInstance().getListaTrabajadores()) {
+            rows[0] = trabajador.getId();
+            rows[1] = trabajador.getNombre();
+            rows[2] = trabajador.getDireccion();
+            rows[3] = trabajador.getSexo();
+            rows[4] = trabajador.getEdad();
+            rows[5] = trabajador.getSalarioHora();
+            rows[6] = trabajador.getEvaluacion();
+			model.addRow(rows);
+		}
+    }
 }
