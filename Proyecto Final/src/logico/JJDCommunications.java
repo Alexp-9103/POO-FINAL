@@ -10,12 +10,14 @@ public class JJDCommunications {
 	public static JJDCommunications JJD = null;
     private String[] ListaSecundaria;
     private String[] auxiliarListTrabajadores;
+    private int cantTrabajador;
     
     public JJDCommunications() {
         ListaTrabajadores = new ArrayList<>();
         ListaClientes = new ArrayList<>();
         ListaProyectos = new ArrayList<>();
         ListaContratos = new ArrayList<>();
+        this.cantTrabajador = 0;
     }
 	    
     public static JJDCommunications getInstance(){
@@ -66,7 +68,16 @@ public class JJDCommunications {
         return salarioTotal;
     }    
     
-    public void insertarCliente(Cliente cliente){
+    public int getCantTrabajador() {
+		return cantTrabajador;
+	}
+   
+
+	public void setCantTrabajador(int cantTrabajador) {
+		this.cantTrabajador = cantTrabajador;
+	}
+
+	public void insertarCliente(Cliente cliente){
 		ListaClientes.add(cliente);
 	}
     
@@ -159,6 +170,13 @@ public class JJDCommunications {
         auxiliarListTrabajadores[cont + 1] = null;
         return auxiliarListTrabajadores;
     }
+
+	public void eliminarTrabajador(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
     
     
