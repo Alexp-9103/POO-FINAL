@@ -71,8 +71,21 @@ public class JJDCommunications {
 	}
     
     public void insertarTrabajador(Trabajador trabajador){
-		ListaTrabajadores.add(trabajador);
-	}
+        // Agregar el trabajador a la lista
+        ListaTrabajadores.add(trabajador);
+
+        // Establecer la evaluación del trabajador como "cumplidor"
+        trabajador.setEvaluacion("cumplidor");
+    }
+    
+    public void eliminarTrabajador(String id) {
+        Trabajador trabajadorAEliminar = BuscarTrabajador(id);
+        if (trabajadorAEliminar != null) {
+            ListaTrabajadores.remove(trabajadorAEliminar);
+        }
+    }
+
+
 	
     public void insertarProyecto(Proyecto proyecto){
         ListaProyectos.add(proyecto);
@@ -160,6 +173,7 @@ public class JJDCommunications {
         return auxiliarListTrabajadores;
     }
 
+    
     
     
     //Por si se necesita
