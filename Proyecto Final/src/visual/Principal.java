@@ -67,15 +67,8 @@ public class Principal extends JFrame {
         mnTrabajadore.add(mntmListadoTrabajador);
         
         JSeparator separator_4 = new JSeparator();
-        mnTrabajadore.add(separator_4);
-        
-        JMenuItem mntmAsignarTrabajadorProyecto = new JMenuItem("Asignar Trabajadores Al Proyecto");
-        mntmAsignarTrabajadorProyecto.addActionListener(e -> {
-        	CrearProyecto AsignarTrabajadorProyecto = new CrearProyecto();
-        	AsignarTrabajadorProyecto.setModal(true);
-        	AsignarTrabajadorProyecto.setVisible(true);
-        });
-        mnTrabajadore.add(mntmAsignarTrabajadorProyecto);
+        mnTrabajadore.add(separator_4); 
+
 
         JMenu mnProyecto = new JMenu("Proyectos");
         menuBar.add(mnProyecto);
@@ -86,6 +79,14 @@ public class Principal extends JFrame {
             ListadoProyecto ListadoProyecto = new ListadoProyecto();
             ListadoProyecto.setModal(true);
             ListadoProyecto.setVisible(true);
+        });
+
+        JMenuItem mntmCrearProyecto = new JMenuItem("Crear Proyecto");
+        mnProyecto.add(mntmCrearProyecto);
+        mntmCrearProyecto.addActionListener(e -> {
+            CrearProyecto crearProyecto = new CrearProyecto();
+            crearProyecto.setModal(true);
+            crearProyecto.setVisible(true);
         });
 
         JMenu mnCliente = new JMenu("Clientes");

@@ -59,7 +59,7 @@ public class JJDCommunications {
     	double salarioTotal = 0.0;
         
         for (Trabajador trabajador : ListaTrabajadores) {
-            // Calculamos el salario del trabajador en el perï¿½odo y lo sumamos al total        	
+            // Calculamos el salario del trabajador en el periodo y lo sumamos al total        	
             salarioTotal += Trabajador.calcularSalarioTrabajador(trabajador, fechaInicio, fechaFin);
         }
         
@@ -70,12 +70,28 @@ public class JJDCommunications {
 		ListaClientes.add(cliente);
 	}
     
+    public void eliminarCliente(String idCliente) {
+        Cliente clienteAEliminar = buscarCliente(idCliente);
+        if (clienteAEliminar != null) {
+            ListaClientes.remove(clienteAEliminar);
+        }
+    }
+
+    public Cliente buscarCliente(String idCliente) {
+        for (Cliente cliente : ListaClientes) {
+            if (cliente.getId().equalsIgnoreCase(idCliente)) {
+                return cliente;
+            }
+        }
+        return null;
+    }
+
     public void insertarTrabajador(Trabajador trabajador){
         // Agregar el trabajador a la lista
         ListaTrabajadores.add(trabajador);
 
-        // Establecer la evaluación del trabajador como "cumplidor"
-        trabajador.setEvaluacion("cumplidor");
+        // Establecer la evaluacion del trabajador como "Cumplidor"
+        trabajador.setEvaluacion("Cumplidor");
     }
     
     public void eliminarTrabajador(String id) {
