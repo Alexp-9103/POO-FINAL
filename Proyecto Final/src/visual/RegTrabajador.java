@@ -223,7 +223,7 @@ public class RegTrabajador extends JDialog {
         panelJefeProyecto.add(lblCantTrabajadores);
 
         spinnerTrabajadores = new JSpinner();
-        spinnerTrabajadores.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores minimo, máximo e incremento
+        spinnerTrabajadores.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores minimo, maximo e incremento
         spinnerTrabajadores.setBounds(163, 22, 80, 22);
         panelJefeProyecto.add(spinnerTrabajadores);
     }
@@ -242,7 +242,7 @@ public class RegTrabajador extends JDialog {
         panelDiseniador.add(lblExperiencia);
 
         spinnerExperiencia = new JSpinner();
-        spinnerExperiencia.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores minimo, máximo e incremento
+        spinnerExperiencia.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores minimo, maximo e incremento
         spinnerExperiencia.setBounds(165, 26, 80, 22);
         panelDiseniador.add(spinnerExperiencia);
     }
@@ -326,7 +326,7 @@ public class RegTrabajador extends JDialog {
 
         comboBox = new JComboBox<>();
         comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Seleccione un tipo de trabajador", "Jefe de proyecto", "Dise�ador", "Programador", "Planificador"})); // Cambie la opcion predeterminada
-        comboBox.setMaximumRowCount(5); // Aumente el recuento máximo para incluir la opcion vacia
+        comboBox.setMaximumRowCount(5); // Aumente el recuento maximo para incluir la opcion vacia
         comboBox.setBounds(12, 24, 218, 22);
         panel.add(comboBox);
 
@@ -338,7 +338,7 @@ public class RegTrabajador extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 String selectedItem = (String) comboBox.getSelectedItem();
 
-                // Mostrar u ocultar los paneles según el tipo de trabajador seleccionado
+                // Mostrar u ocultar los paneles segun el tipo de trabajador seleccionado
                 switch (selectedItem) {
                     case "Jefe de proyecto":
                         mostrarPanel(panelJefeProyecto);
@@ -374,7 +374,7 @@ public class RegTrabajador extends JDialog {
         }
     }
 
-    // Metodo para mostrar el panel seleccionado y ocultar los demás
+    // Metodo para mostrar el panel seleccionado y ocultar los demas
     private void mostrarPanel(JPanel panel) {
         panel.setVisible(true);
     }
@@ -398,10 +398,10 @@ public class RegTrabajador extends JDialog {
         try {
             salarioHora = Double.parseDouble(textsalario.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un salario válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un salario valido.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        String evaluacion = "Cumplidor"; // Por defecto, puedes cambiarlo según tu logica
+        String evaluacion = "Cumplidor"; // Por defecto, puedes cambiarlo segun tu logica
 
         // Validar campos obligatorios
         if (id.isEmpty() || nombre.isEmpty() || direccion.isEmpty()) {
@@ -439,8 +439,8 @@ public class RegTrabajador extends JDialog {
                 // No se requieren validaciones adicionales para el panelPlanificador
                 break;
             default:
-                // Si no se selecciona un tipo de trabajador válido, mostrar un mensaje de error
-                JOptionPane.showMessageDialog(this, "Seleccione un tipo de trabajador válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                // Si no se selecciona un tipo de trabajador valido, mostrar un mensaje de error
+                JOptionPane.showMessageDialog(this, "Seleccione un tipo de trabajador valido.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
         }
 

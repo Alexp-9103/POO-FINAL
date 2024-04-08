@@ -41,12 +41,12 @@ public class Principal extends JFrame {
             // Cargar datos desde el controlador
         	JJDCommunications.cargarDatos();
 
-            // Mostrar el diálogo de inicio de sesión
+            // Mostrar el dialogo de inicio de sesion
             Principal dialog = new Principal(true);
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
 
-            // Guardar datos al cerrar la aplicación
+            // Guardar datos al cerrar la aplicacion
             dialog.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -75,18 +75,18 @@ public class Principal extends JFrame {
         menuBar.setFont(new Font("Arial", Font.BOLD, 16));
         setJMenuBar(menuBar);
 
-        // Menú Usuario
-        JMenu mnUsuario = new JMenu("Menú Usuario");
+        // Menu Usuario
+        JMenu mnUsuario = new JMenu("Menu Usuario");
         menuBar.add(mnUsuario);
 
-        // Gestión de Proyectos
-        JMenu mnProyectosUsuario = new JMenu("Gestión de Proyectos");
+        // Gestion de Proyectos
+        JMenu mnProyectosUsuario = new JMenu("Gestion de Proyectos");
         mnUsuario.add(mnProyectosUsuario);
 
         JMenuItem mntmCrearProyectoUsuario = new JMenuItem("Crear Nuevo Proyecto");
         mntmCrearProyectoUsuario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para crear un nuevo proyecto
+                // Accion para crear un nuevo proyecto
             	abrirCrearProyecto();
             }
         });
@@ -95,7 +95,7 @@ public class Principal extends JFrame {
         JMenuItem mntmVerDetallesProyectoUsuario = new JMenuItem("Ver Detalles de un Proyecto Existente");
         mntmVerDetallesProyectoUsuario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para ver detalles de un proyecto existente
+                // Accion para ver detalles de un proyecto existente
             }
         });
         mnProyectosUsuario.add(mntmVerDetallesProyectoUsuario);
@@ -103,20 +103,20 @@ public class Principal extends JFrame {
         JMenuItem mntmListarProyectosUsuario = new JMenuItem("Listar Todos los Proyectos");
         mntmListarProyectosUsuario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para listar todos los proyectos
+                // Accion para listar todos los proyectos
             	abrirListadoProyecto();
             }
         });
         mnProyectosUsuario.add(mntmListarProyectosUsuario);
 
-        // Gestión de Contratos
-        JMenu mnContratosUsuario = new JMenu("Gestión de Contratos");
+        // Gestion de Contratos
+        JMenu mnContratosUsuario = new JMenu("Gestion de Contratos");
         mnUsuario.add(mnContratosUsuario);
 
         JMenuItem mntmNuevoContratoUsuario = new JMenuItem("Nuevo Contrato");
         mntmNuevoContratoUsuario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para crear un nuevo contrato
+                // Accion para crear un nuevo contrato
             	abrirRegContrato();
             }
         });
@@ -125,7 +125,7 @@ public class Principal extends JFrame {
         JMenuItem mntmProrrogarContratoUsuario = new JMenuItem("Prorrogar Contrato");
         mntmProrrogarContratoUsuario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para prorrogar un contrato
+                // Accion para prorrogar un contrato
             	abrirProrrogarContrato();
             }
         });
@@ -134,56 +134,56 @@ public class Principal extends JFrame {
         JMenuItem mntmListarContratosUsuario = new JMenuItem("Listar Todos los Contratos");
         mntmListarContratosUsuario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para listar todos los contratos
+                // Accion para listar todos los contratos
             	abrirListadoContrato();
             }
         });
         mnContratosUsuario.add(mntmListarContratosUsuario);
 
-        // Cálculo de Costos y Penalizaciones
-        JMenu mnCostosPenalizacionesUsuario = new JMenu("Cálculo de Costos y Penalizaciones");
+        // Calculo de Costos y Penalizaciones
+        JMenu mnCostosPenalizacionesUsuario = new JMenu("Calculo de Costos y Penalizaciones");
         mnUsuario.add(mnCostosPenalizacionesUsuario);
 
         JMenuItem mntmCalcularCostoProyectoUsuario = new JMenuItem("Calcular Costo de un Proyecto");
         mntmCalcularCostoProyectoUsuario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para calcular el costo de un proyecto
+                // Accion para calcular el costo de un proyecto
             	abrirCostoProyecto();
             }
         });
         mnCostosPenalizacionesUsuario.add(mntmCalcularCostoProyectoUsuario);
 
-        JMenuItem mntmCalcularPenalizacionUsuario = new JMenuItem("Calcular Penalización por Retraso en Entrega");
+        JMenuItem mntmCalcularPenalizacionUsuario = new JMenuItem("Calcular Penalizacion por Retraso en Entrega");
         mntmCalcularPenalizacionUsuario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para calcular la penalización por retraso en entrega
+                // Accion para calcular la penalizacion por retraso en entrega
             	abrirPenalizacion();
             }
         });
         mnCostosPenalizacionesUsuario.add(mntmCalcularPenalizacionUsuario);
         
 
-        // Menú Administrativo
-        JMenu mnAdministrativo = new JMenu("Menú Administrativo");
+        // Menu Administrativo
+        JMenu mnAdministrativo = new JMenu("Menu Administrativo");
         menuBar.add(mnAdministrativo);
         
-        // Código agregado para habilitar/deshabilitar menú "Menú Administrativo"
+        // Codigo agregado para habilitar/deshabilitar menu "Menu Administrativo"
         if (isAdmin) {
             mnAdministrativo.setEnabled(true);
         } else {
             mnAdministrativo.setEnabled(false);
-            // Cambia el tono de color del menú administrativo
+            // Cambia el tono de color del menu administrativo
             mnAdministrativo.setForeground(Color.LIGHT_GRAY);
         }
 
-        // Gestión de Trabajadores
-        JMenu mnTrabajadoresAdministrativo = new JMenu("Gestión de Trabajadores");
+        // Gestion de Trabajadores
+        JMenu mnTrabajadoresAdministrativo = new JMenu("Gestion de Trabajadores");
         mnAdministrativo.add(mnTrabajadoresAdministrativo);
 
         JMenuItem mntmAgregarTrabajadorAdministrativo = new JMenuItem("Agregar Nuevo Trabajador");
         mntmAgregarTrabajadorAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para agregar un nuevo trabajador
+                // Accion para agregar un nuevo trabajador
             	abrirRegTrabajador();
             }
         });
@@ -192,20 +192,20 @@ public class Principal extends JFrame {
         JMenuItem mntmListarTrabajadoresAdministrativo = new JMenuItem("Listar Todos los Trabajadores");
         mntmListarTrabajadoresAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para listar todos los trabajadores
+                // Accion para listar todos los trabajadores
             	abrirListadoTrabajador();
             }
         });
         mnTrabajadoresAdministrativo.add(mntmListarTrabajadoresAdministrativo);
 
-        // Gestión de Proyectos
-        JMenu mnProyectosAdministrativo = new JMenu("Gestión de Proyectos");
+        // Gestion de Proyectos
+        JMenu mnProyectosAdministrativo = new JMenu("Gestion de Proyectos");
         mnAdministrativo.add(mnProyectosAdministrativo);
 
         JMenuItem mntmCrearProyectoAdministrativo = new JMenuItem("Crear Nuevo Proyecto");
         mntmCrearProyectoAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para crear un nuevo proyecto
+                // Accion para crear un nuevo proyecto
             	abrirCrearProyecto();
             }
         });
@@ -214,7 +214,7 @@ public class Principal extends JFrame {
         JMenuItem mntmVerDetallesProyectoAdministrativo = new JMenuItem("Ver Detalles de un Proyecto Existente");
         mntmVerDetallesProyectoAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para ver detalles de un proyecto existente
+                // Accion para ver detalles de un proyecto existente
             	abrirDetallesProyecto();
             }
         });
@@ -223,20 +223,20 @@ public class Principal extends JFrame {
         JMenuItem mntmListarProyectosAdministrativo = new JMenuItem("Listar Todos los Proyectos");
         mntmListarProyectosAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para listar todos los proyectos
+                // Accion para listar todos los proyectos
             	abrirListadoProyecto();
             }
         });
         mnProyectosAdministrativo.add(mntmListarProyectosAdministrativo);
 
-        // Gestión de Clientes
-        JMenu mnClientesAdministrativo = new JMenu("Gestión de Clientes");
+        // Gestion de Clientes
+        JMenu mnClientesAdministrativo = new JMenu("Gestion de Clientes");
         mnAdministrativo.add(mnClientesAdministrativo);
 
         JMenuItem mntmAgregarClienteAdministrativo = new JMenuItem("Agregar Nuevo Cliente");
         mntmAgregarClienteAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para agregar un nuevo cliente
+                // Accion para agregar un nuevo cliente
             	abrirRegCliente();
             }
         });
@@ -245,20 +245,20 @@ public class Principal extends JFrame {
         JMenuItem mntmListarClientesAdministrativo = new JMenuItem("Listar Todos los Clientes");
         mntmListarClientesAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para listar todos los clientes
+                // Accion para listar todos los clientes
             	abrirListadoCliente();
             }
         });
         mnClientesAdministrativo.add(mntmListarClientesAdministrativo);
 
-        // Gestión de Contratos
-        JMenu mnContratosAdministrativo = new JMenu("Gestión de Contratos");
+        // Gestion de Contratos
+        JMenu mnContratosAdministrativo = new JMenu("Gestion de Contratos");
         mnAdministrativo.add(mnContratosAdministrativo);
 
         JMenuItem mntmNuevoContratoAdministrativo = new JMenuItem("Nuevo Contrato");
         mntmNuevoContratoAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para crear un nuevo contrato
+                // Accion para crear un nuevo contrato
             	abrirRegContrato();
             }
         });
@@ -267,7 +267,7 @@ public class Principal extends JFrame {
         JMenuItem mntmProrrogarContratoAdministrativo = new JMenuItem("Prorrogar Contrato");
         mntmProrrogarContratoAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para prorrogar un contrato
+                // Accion para prorrogar un contrato
             	abrirProrrogarContrato();
             }
         });
@@ -276,29 +276,29 @@ public class Principal extends JFrame {
         JMenuItem mntmListarContratosAdministrativo = new JMenuItem("Listar Todos los Contratos");
         mntmListarContratosAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para listar todos los contratos
+                // Accion para listar todos los contratos
             	abrirListadoContrato();
             }
         });
         mnContratosAdministrativo.add(mntmListarContratosAdministrativo);
 
-        // Cálculo de Costos y Penalizaciones
-        JMenu mnCostosPenalizacionesAdministrativo = new JMenu("Cálculo de Costos y Penalizaciones");
+        // Calculo de Costos y Penalizaciones
+        JMenu mnCostosPenalizacionesAdministrativo = new JMenu("Calculo de Costos y Penalizaciones");
         mnAdministrativo.add(mnCostosPenalizacionesAdministrativo);
 
         JMenuItem mntmCalcularCostoProyectoAdministrativo = new JMenuItem("Calcular Costo de un Proyecto");
         mntmCalcularCostoProyectoAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para calcular el costo de un proyecto
+                // Accion para calcular el costo de un proyecto
             	abrirCostoProyecto();
             }
         });
         mnCostosPenalizacionesAdministrativo.add(mntmCalcularCostoProyectoAdministrativo);
 
-        JMenuItem mntmCalcularPenalizacionAdministrativo = new JMenuItem("Calcular Penalización por Retraso en Entrega");
+        JMenuItem mntmCalcularPenalizacionAdministrativo = new JMenuItem("Calcular Penalizacion por Retraso en Entrega");
         mntmCalcularPenalizacionAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Acción para calcular la penalización por retraso en entrega
+                // Accion para calcular la penalizacion por retraso en entrega
             	abrirPenalizacion();
             }
         });
