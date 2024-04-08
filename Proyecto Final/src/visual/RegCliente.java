@@ -1,28 +1,23 @@
 package visual;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
+import logico.Cliente;
+import logico.JJDCommunications;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-import logico.Cliente;
-import logico.JJDCommunications;
-
 public class RegCliente extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
-    private JTextField txtId;
     private JTextField txtNombre;
     private JTextField txtDireccion;
+    private JTextField txtCedula;
 
     /**
      * Launch the application.
@@ -41,7 +36,7 @@ public class RegCliente extends JDialog {
      * Create the dialog.
      */
     public RegCliente() {
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 450, 256);
         setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -49,19 +44,19 @@ public class RegCliente extends JDialog {
         contentPanel.setLayout(null);
 
         JPanel panel = new JPanel();
-        panel.setBorder(new TitledBorder(null, "Informaci\u00F3n del Cliente:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel.setBorder(new TitledBorder(null, "Información del Cliente:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         panel.setBounds(10, 11, 414, 169);
         contentPanel.add(panel);
         panel.setLayout(null);
 
-        JLabel lblId = new JLabel("ID:");
-        lblId.setBounds(10, 30, 46, 14);
+        JLabel lblId = new JLabel("Cédula:");
+        lblId.setBounds(10, 31, 64, 14);
         panel.add(lblId);
 
-        txtId = new JTextField();
-        txtId.setBounds(66, 27, 154, 20);
-        panel.add(txtId);
-        txtId.setColumns(10);
+        txtCedula = new JTextField();
+        txtCedula.setColumns(10);
+        txtCedula.setBounds(76, 28, 150, 20);
+        panel.add(txtCedula);
 
         JLabel lblNombre = new JLabel("Nombre:");
         lblNombre.setBounds(10, 70, 64, 14);
@@ -69,16 +64,16 @@ public class RegCliente extends JDialog {
 
         txtNombre = new JTextField();
         txtNombre.setColumns(10);
-        txtNombre.setBounds(66, 67, 154, 20);
+        txtNombre.setBounds(76, 67, 230, 20);
         panel.add(txtNombre);
 
-        JLabel lblDireccion = new JLabel("DirecciÃ³n:");
+        JLabel lblDireccion = new JLabel("Dirección:");
         lblDireccion.setBounds(10, 110, 64, 14);
         panel.add(lblDireccion);
 
         txtDireccion = new JTextField();
         txtDireccion.setColumns(10);
-        txtDireccion.setBounds(66, 107, 154, 20);
+        txtDireccion.setBounds(76, 107, 230, 20);
         panel.add(txtDireccion);
 
         JPanel buttonPane = new JPanel();
@@ -88,13 +83,7 @@ public class RegCliente extends JDialog {
         JButton okButton = new JButton("Registrar");
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String id = txtId.getText();
-                String nombre = txtNombre.getText();
-                String direccion = txtDireccion.getText();
-                Cliente cliente = new Cliente(id, nombre, direccion, new ArrayList<>());
-                JJDCommunications.getInstance().insertarCliente(cliente);
-                JOptionPane.showMessageDialog(null, "Cliente registrado exitosamente", "InformaciÃ³n", JOptionPane.INFORMATION_MESSAGE);
-                limpiar();
+                registrarCliente();
             }
         });
         okButton.setActionCommand("OK");
@@ -111,8 +100,31 @@ public class RegCliente extends JDialog {
         buttonPane.add(cancelButton);
     }
 
-    private void limpiar() {
-        txtId.setText("");
+    private void registrarCliente() {
+        String cedula = txtCedula.getText().trim();
+        String nombre = txtNombre.getText().trim();
+        String direccion = txtDireccion.getText().trim();
+
+        if (cedula.isEmpty() || nombre.isEmpty() || direccion.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Crear el cliente
+        Cliente cliente = new Cliente(cedula, nombre, direccion, new ArrayList<>());
+
+        // Insertar cliente en la lista
+        JJDCommunications.getInstance().insertarCliente(cliente);
+
+        // Mostrar mensaje de éxito
+        JOptionPane.showMessageDialog(null, "Cliente registrado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+
+        // Limpiar los campos de texto
+        limpiarCampos();
+    }
+
+    private void limpiarCampos() {
+        txtCedula.setText("");
         txtNombre.setText("");
         txtDireccion.setText("");
     }

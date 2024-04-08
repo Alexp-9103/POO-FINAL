@@ -8,7 +8,7 @@ public class Control implements Serializable {
     
     private static final long serialVersionUID = 1L;
     private ArrayList<User> usuarios;
-    public static Control instancia;
+    private static volatile Control instancia;
     private static User usuarioLogueado;
     
     private Control() {
@@ -17,7 +17,11 @@ public class Control implements Serializable {
     
     public static Control getInstance() {
         if (instancia == null) {
-            instancia = new Control();
+            synchronized (Control.class) { // Sincronizar el bloque para garantizar la concurrencia segura
+                if (instancia == null) {
+                    instancia = new Control();
+                }
+            }
         }
         return instancia;
     }

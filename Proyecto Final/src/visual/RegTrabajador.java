@@ -15,6 +15,8 @@ import logico.Trabajador;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class RegTrabajador extends JDialog {
@@ -37,15 +39,23 @@ public class RegTrabajador extends JDialog {
     /**
      * Launch the application.
      */
+ // Ejemplo de c�mo cargar datos al iniciar la aplicaci�n
     public static void main(String[] args) {
-        try {
-            RegTrabajador dialog = new RegTrabajador();
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            dialog.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    RegTrabajador dialog = new RegTrabajador();
+                    dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                    dialog.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
+    
+    
 
     /**
      * Create the dialog.
@@ -57,17 +67,17 @@ public class RegTrabajador extends JDialog {
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
-        // Título en negrita centrado
+        // Titulo en negrita centrado
         JLabel lblTitle = new JLabel("REGISTRO DE TRABAJADOR");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 16));
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitle.setBounds(12, 10, 479, 30);
         contentPanel.add(lblTitle);
 
-        // Agrupación de campos relacionados
+        // Agrupacion de campos relacionados
         agruparCampos();
 
-        // Botones de acción
+        // Botones de accion
         configurarBotones();
 
         // Paneles de trabajadores
@@ -77,7 +87,7 @@ public class RegTrabajador extends JDialog {
         configurarComboBox();
     }
 
-    // Método para agrupar los campos relacionados en paneles separados
+    // Metodo para agrupar los campos relacionados en paneles separados
     private void agruparCampos() {
         JPanel datosPersonalesPanel = new JPanel();
         datosPersonalesPanel.setBorder(new TitledBorder(null, "Datos Personales", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -103,8 +113,8 @@ public class RegTrabajador extends JDialog {
         datosPersonalesPanel.add(textnombre);
         textnombre.setColumns(10);
 
-        // Dirección
-        JLabel lbldireccion = new JLabel("Dirección:");
+        // Direccion
+        JLabel lbldireccion = new JLabel("Direccion:");
         lbldireccion.setBounds(12, 115, 84, 16);
         datosPersonalesPanel.add(lbldireccion);
         textdireccion = new JTextField();
@@ -155,7 +165,7 @@ public class RegTrabajador extends JDialog {
         textField.setColumns(10);
     }
 
-    // Método para configurar los botones de acción
+    // Metodo para configurar los botones de accion
     private void configurarBotones() {
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -167,7 +177,7 @@ public class RegTrabajador extends JDialog {
                 try {
                     registrarTrabajador();
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Error: Ingrese un valor numérico para el salario.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Error: Ingrese un valor numerico para el salario.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -189,7 +199,7 @@ public class RegTrabajador extends JDialog {
         // Crear y configurar el panel para Jefe de Proyecto
         configurarPanelJefeProyecto();
 
-        // Crear y configurar el panel para Diseñador
+        // Crear y configurar el panel para Dise�ador
         configurarPanelDiseniador();
 
         // Crear y configurar el panel para Programador
@@ -213,26 +223,26 @@ public class RegTrabajador extends JDialog {
         panelJefeProyecto.add(lblCantTrabajadores);
 
         spinnerTrabajadores = new JSpinner();
-        spinnerTrabajadores.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores mínimo, máximo e incremento
+        spinnerTrabajadores.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores minimo, máximo e incremento
         spinnerTrabajadores.setBounds(163, 22, 80, 22);
         panelJefeProyecto.add(spinnerTrabajadores);
     }
 
     private void configurarPanelDiseniador() {
-        // Crear panel para Diseñador
+        // Crear panel para Dise�ador
         panelDiseniador = new JPanel();
-        panelDiseniador.setBorder(new TitledBorder(null, "Diseñador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panelDiseniador.setBorder(new TitledBorder(null, "Dise�ador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         panelDiseniador.setBounds(12, 348, 467, 95);
         contentPanel.add(panelDiseniador);
         panelDiseniador.setLayout(null);
 
-        // Etiqueta y Spinner para años de experiencia
-        JLabel lblExperiencia = new JLabel("Años de experiencia:");
+        // Etiqueta y Spinner para a�os de experiencia
+        JLabel lblExperiencia = new JLabel("A�os de experiencia:");
         lblExperiencia.setBounds(12, 29, 160, 16);
         panelDiseniador.add(lblExperiencia);
 
         spinnerExperiencia = new JSpinner();
-        spinnerExperiencia.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores mínimo, máximo e incremento
+        spinnerExperiencia.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores minimo, máximo e incremento
         spinnerExperiencia.setBounds(165, 26, 80, 22);
         panelDiseniador.add(spinnerExperiencia);
     }
@@ -241,14 +251,14 @@ public class RegTrabajador extends JDialog {
         // Crear panel para Programador
         panelProgramador = new JPanel();
         panelProgramador.setBorder(new TitledBorder(null, "Programador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        panelProgramador.setBounds(12, 348, 467, 150); // Aumenté la altura del panel
+        panelProgramador.setBounds(12, 348, 467, 150); // Aumente la altura del panel
         contentPanel.add(panelProgramador);
         panelProgramador.setLayout(new BorderLayout(0, 0));
         panelProgramador.setVisible(false); // Ocultar el panel inicialmente
 
         // Create a table model to store the languages
         DefaultTableModel tableModel = new DefaultTableModel();
-        tableModel.addColumn("Lenguaje de Programación");
+        tableModel.addColumn("Lenguaje de Programacion");
         table = new JTable(tableModel); // CORREGIDO: asignar la tabla a la variable de clase
         JScrollPane scrollPane = new JScrollPane(table);
         panelProgramador.add(scrollPane, BorderLayout.CENTER);
@@ -256,14 +266,14 @@ public class RegTrabajador extends JDialog {
         // Create a panel for text field and buttons
         JPanel inputPanel = new JPanel(new FlowLayout());
         JTextField textNuevoLenguaje = new JTextField(15);
-        JButton btnAnadirLenguaje = new JButton("Añadir");
+        JButton btnAnadirLenguaje = new JButton("A�adir");
         JButton btnEliminarLenguaje = new JButton("Eliminar");
         inputPanel.add(textNuevoLenguaje);
         inputPanel.add(btnAnadirLenguaje);
         inputPanel.add(btnEliminarLenguaje);
         panelProgramador.add(inputPanel, BorderLayout.SOUTH);
 
-        // Add ActionListener to the "Añadir" button
+        // Add ActionListener to the "A�adir" button
         btnAnadirLenguaje.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -296,7 +306,7 @@ public class RegTrabajador extends JDialog {
         panelPlanificador.setLayout(null);
 
         // Label for frequency
-        JLabel lblFrecuencia = new JLabel("Frecuencia (días):");
+        JLabel lblFrecuencia = new JLabel("Frecuencia (dias):");
         lblFrecuencia.setBounds(12, 29, 160, 16);
         panelPlanificador.add(lblFrecuencia);
 
@@ -315,8 +325,8 @@ public class RegTrabajador extends JDialog {
         panel.setLayout(null);
 
         comboBox = new JComboBox<>();
-        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Seleccione un tipo de trabajador", "Jefe de proyecto", "Diseñador", "Programador", "Planificador"})); // Cambié la opción predeterminada
-        comboBox.setMaximumRowCount(5); // Aumenté el recuento máximo para incluir la opción vacía
+        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Seleccione un tipo de trabajador", "Jefe de proyecto", "Dise�ador", "Programador", "Planificador"})); // Cambie la opcion predeterminada
+        comboBox.setMaximumRowCount(5); // Aumente el recuento máximo para incluir la opcion vacia
         comboBox.setBounds(12, 24, 218, 22);
         panel.add(comboBox);
 
@@ -334,7 +344,7 @@ public class RegTrabajador extends JDialog {
                         mostrarPanel(panelJefeProyecto);
                         ocultarPaneles(panelJefeProyecto);
                         break;
-                    case "Diseñador":
+                    case "Dise�ador":
                         mostrarPanel(panelDiseniador);
                         ocultarPaneles(panelDiseniador);
                         break;
@@ -347,7 +357,7 @@ public class RegTrabajador extends JDialog {
                         ocultarPaneles(panelPlanificador);
                         break;
                     default:
-                        // Si se selecciona la opción predeterminada, ocultar todos los paneles
+                        // Si se selecciona la opcion predeterminada, ocultar todos los paneles
                         ocultarPaneles(null);
                         break;
                 }
@@ -364,7 +374,7 @@ public class RegTrabajador extends JDialog {
         }
     }
 
-    // Método para mostrar el panel seleccionado y ocultar los demás
+    // Metodo para mostrar el panel seleccionado y ocultar los demás
     private void mostrarPanel(JPanel panel) {
         panel.setVisible(true);
     }
@@ -391,7 +401,7 @@ public class RegTrabajador extends JDialog {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese un salario válido.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        String evaluacion = "Cumplidor"; // Por defecto, puedes cambiarlo según tu lógica
+        String evaluacion = "Cumplidor"; // Por defecto, puedes cambiarlo según tu logica
 
         // Validar campos obligatorios
         if (id.isEmpty() || nombre.isEmpty() || direccion.isEmpty()) {
@@ -399,19 +409,19 @@ public class RegTrabajador extends JDialog {
             return;
         }
 
-        // Validar campos específicos para cada tipo de trabajador
+        // Validar campos especificos para cada tipo de trabajador
         String selectedItem = (String) comboBox.getSelectedItem();
         switch (selectedItem) {
             case "Jefe de proyecto":
-                // Validar campos específicos del panelJefeProyecto
+                // Validar campos especificos del panelJefeProyecto
                 int cantidadTrabajadores = (int) spinnerTrabajadores.getValue();
                 if (cantidadTrabajadores < 0) {
                     JOptionPane.showMessageDialog(this, "La cantidad de trabajadores debe ser mayor o igual a cero.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 break;
-            case "Diseñador":
-                // Validar campos específicos del panelDiseniador
+            case "Dise�ador":
+                // Validar campos especificos del panelDiseniador
                 int experiencia = (int) spinnerExperiencia.getValue();
                 if (experiencia < 0) {
                     JOptionPane.showMessageDialog(this, "La experiencia debe ser mayor o igual a cero.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -419,9 +429,9 @@ public class RegTrabajador extends JDialog {
                 }
                 break;
             case "Programador":
-                // Validar campos específicos del panelProgramador
+                // Validar campos especificos del panelProgramador
                 if (table.getRowCount() == 0) {
-                    JOptionPane.showMessageDialog(this, "Por favor, ingrese al menos un lenguaje de programación.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Por favor, ingrese al menos un lenguaje de programacion.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 break;
@@ -437,13 +447,13 @@ public class RegTrabajador extends JDialog {
         // Crear el objeto del trabajador
         Trabajador nuevoTrabajador = crearTrabajador(selectedItem, id, nombre, direccion, sexo, edad, salarioHora, evaluacion);
 
-        // Insertar el trabajador a través de la instancia de JJDCommunications
+        // Insertar el trabajador a traves de la instancia de JJDCommunications
         JJDCommunications.getInstance().insertarTrabajador(nuevoTrabajador);
 
         // Mostrar mensaje de registro completado
         JOptionPane.showMessageDialog(this, "Trabajador registrado exitosamente.", "Registro completado", JOptionPane.INFORMATION_MESSAGE);
 
-        // Limpiar los campos de texto después de agregar el trabajador
+        // Limpiar los campos de texto despues de agregar el trabajador
         limpiarCampos();
     }
 
@@ -451,7 +461,7 @@ public class RegTrabajador extends JDialog {
         switch (tipo) {
             case "Jefe de proyecto":
                 return new JefeProyecto(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerTrabajadores.getValue());
-            case "Diseñador":
+            case "Dise�ador":
                 return new Disenador(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerExperiencia.getValue());
             case "Programador":
                 // Crear un ArrayList para almacenar los lenguajes especializados
@@ -471,16 +481,16 @@ public class RegTrabajador extends JDialog {
     }
 
     private void limpiarCampos() {
-        // Limpiar los campos de texto después de agregar el trabajador
+        // Limpiar los campos de texto despues de agregar el trabajador
         textid.setText("");
         textnombre.setText("");
         textdireccion.setText("");
         rdbtnmasculino.setSelected(false);
         rdbtnfemenino.setSelected(false);
-        spinneredad.setValue(0); // Otra opción sería establecer un valor por defecto
+        spinneredad.setValue(0); // Otra opcion seria establecer un valor por defecto
         textsalario.setText("0");
 
-        // Limpiar campos específicos para cada tipo de trabajador
+        // Limpiar campos especificos para cada tipo de trabajador
         limpiarCamposTipoTrabajador();
     }
 
@@ -489,20 +499,20 @@ public class RegTrabajador extends JDialog {
 
         switch (selectedItem) {
             case "Jefe de proyecto":
-                // Limpiar campos específicos del panelJefeProyecto
+                // Limpiar campos especificos del panelJefeProyecto
                 spinnerTrabajadores.setValue(0);
                 break;
-            case "Diseñador":
-                // Limpiar campos específicos del panelDiseniador
+            case "Dise�ador":
+                // Limpiar campos especificos del panelDiseniador
                 spinnerExperiencia.setValue(0);
                 break;
             case "Programador":
-                // Limpiar campos específicos del panelProgramador
+                // Limpiar campos especificos del panelProgramador
                 limpiarCamposProgramador();
                 break;
             case "Planificador":
-                // Limpiar campos específicos del panelPlanificador
-                spinnerFrecuencia.setValue(1); // Otra opción sería establecer un valor por defecto
+                // Limpiar campos especificos del panelPlanificador
+                spinnerFrecuencia.setValue(1); // Otra opcion seria establecer un valor por defecto
                 break;
             default:
                 break;
@@ -510,7 +520,7 @@ public class RegTrabajador extends JDialog {
     }
 
     private void limpiarCamposProgramador() {
-        // Limpiar la tabla de lenguajes de programación
+        // Limpiar la tabla de lenguajes de programacion
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
         tableModel.setRowCount(0);
     }

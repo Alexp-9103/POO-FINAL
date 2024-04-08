@@ -65,7 +65,7 @@ public class ListadoContrato extends JDialog {
                 JScrollPane scrollPane = new JScrollPane();
                 panel.add(scrollPane, BorderLayout.CENTER);
                 {
-                    String[] headers = {"ID Contrato", "ID Cliente", "Nombre Proyecto", "Fecha Inicio", "Fecha Entrega", "Prórroga"};
+                    String[] headers = {"ID Contrato", "ID Cliente", "Nombre Proyecto", "Fecha Inicio", "Fecha Entrega", "Prorroga"};
 
                     table = new JTable();
                     table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -106,7 +106,7 @@ public class ListadoContrato extends JDialog {
                 rows[2] = contrato.getNombreProyecto();
                 rows[3] = contrato.getFechaInicio();
                 rows[4] = contrato.getFechaEntrega();
-                rows[5] = contrato.isProrroga() ? "Sí" : "No";
+                rows[5] = contrato.isProrroga() ? "Si" : "No";
                 model.addRow(rows);
             }
         }

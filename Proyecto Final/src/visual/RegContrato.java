@@ -12,8 +12,12 @@ import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
+import logico.Cliente;
 import logico.Contrato;
+import logico.JJDCommunications;
+import logico.Proyecto;
 
 public class RegContrato extends JDialog {
 
@@ -27,9 +31,6 @@ public class RegContrato extends JDialog {
     private javax.swing.JSpinner spinnerFechaInicio;
     private javax.swing.JSpinner spinnerFechaEntrega;
 
-    /**
-     * Launch the application.
-     */
     public static void main(String[] args) {
         try {
             RegContrato dialog = new RegContrato();
@@ -40,9 +41,6 @@ public class RegContrato extends JDialog {
         }
     }
 
-    /**
-     * Create the dialog.
-     */
     public RegContrato() {
         setTitle("Registrar Contrato");
         setBounds(100, 100, 450, 300);
@@ -68,10 +66,6 @@ public class RegContrato extends JDialog {
 
         comboBoxClientes = new JComboBox<String>();
         comboBoxClientes.setBounds(127, 58, 254, 20);
-        // Aquí deberías cargar los clientes disponibles en el comboBox
-        // comboBoxClientes.addItem("Cliente 1");
-        // comboBoxClientes.addItem("Cliente 2");
-        // ...
         contentPanel.add(comboBoxClientes);
 
         JLabel lblProyecto = new JLabel("Proyecto:");
@@ -80,10 +74,6 @@ public class RegContrato extends JDialog {
 
         comboBoxProyectos = new JComboBox<String>();
         comboBoxProyectos.setBounds(127, 92, 254, 20);
-        // Aquí deberías cargar los proyectos disponibles en el comboBox
-        // comboBoxProyectos.addItem("Proyecto 1");
-        // comboBoxProyectos.addItem("Proyecto 2");
-        // ...
         contentPanel.add(comboBoxProyectos);
 
         JLabel lblFechaInicio = new JLabel("Fecha de Inicio:");
@@ -124,38 +114,49 @@ public class RegContrato extends JDialog {
         btnCancelar.setBounds(184, 228, 115, 23);
         getContentPane().add(btnCancelar);
 
-        // Generar ID automático para el contrato
+        // Generar ID autom�tico para el contrato
         generarIdContrato();
+
+        // Obtener la instancia de JJDCommunications
+        JJDCommunications jjd = JJDCommunications.getInstance();
+
+     // Obtener la lista de clientes y agregarlos al ComboBox de clientes
+        for (Cliente cliente : jjd.getListaClientes()) {
+            comboBoxClientes.addItem(cliente.getId() + " - " + cliente.getNombre());
+        }
+
+        // Obtener la lista de proyectos y agregarlos al ComboBox de proyectos
+        for (Proyecto proyecto : jjd.getListaProyectos()) {
+            comboBoxProyectos.addItem(proyecto.getNombre());
+        }
     }
 
-    // Método para generar el ID automático del contrato
     private void generarIdContrato() {
-        // Obtener el último ID de contrato registrado y generar el siguiente
-        // Se podría obtener de la base de datos, pero aquí se usa un simple contador
         ultimoIdContrato++;
-        // Formatear el ID con el formato CT-número
         String idContrato = String.format("CT-%03d", ultimoIdContrato);
-        // Mostrar el ID generado en el campo correspondiente
         textFieldIdContrato.setText(idContrato);
     }
-
+    
     private void registrarContrato() {
-        // Obtener los datos ingresados por el usuario
         String idContrato = textFieldIdContrato.getText();
         String clienteSeleccionado = (String) comboBoxClientes.getSelectedItem();
         String proyectoSeleccionado = (String) comboBoxProyectos.getSelectedItem();
         fechaInicio = (Date) spinnerFechaInicio.getValue();
         fechaEntrega = (Date) spinnerFechaEntrega.getValue();
 
-        // Aquí puedes hacer lo necesario con los datos para registrar el contrato
-        // Por ejemplo:
-        // Contrato contrato = new Contrato(idContrato, clienteSeleccionado, proyectoSeleccionado, fechaInicio, fechaEntrega);
-        // JJDCommunications.getInstance().insertarContrato(contrato);
+        JJDCommunications jjd = JJDCommunications.getInstance();
 
-        // Luego de registrar el contrato, podrías mostrar un mensaje de éxito al usuario
-        // JOptionPane.showMessageDialog(this, "Contrato registrado exitosamente.");
+        Cliente cliente = jjd.BuscarCliente(clienteSeleccionado);
+        Proyecto proyecto = jjd.BuscarProyecto(proyectoSeleccionado);
 
-        // Generar un nuevo ID automático para el próximo contrato
-        generarIdContrato();
+        if (cliente != null && proyecto != null) {
+            // Modificar la creaci�n del contrato para adaptarse al nuevo constructor
+            Contrato contrato = new Contrato(idContrato, cliente.getId(), proyecto.getNombre(), fechaInicio, fechaEntrega, false);
+            jjd.insertarContrato(contrato);
+            JOptionPane.showMessageDialog(this, "Contrato registrado exitosamente.");
+            generarIdContrato();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error: Cliente o proyecto seleccionado no encontrado.");
+        }
     }
 }

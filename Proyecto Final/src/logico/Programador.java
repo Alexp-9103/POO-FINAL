@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Programador extends Trabajador {
     private ArrayList<String> lenguajesEspecializados;
 
-    public Programador(String id, String nombre, String direccion, char sexo, int edad, double salarioHora, String evaluacion, ArrayList<String> lenguajesEspecializados, int aniosExperiencia) {
+    public Programador(String id, String nombre, String direccion, char sexo, int edad, double salarioHora, String evaluacion, ArrayList<String> lenguajesEspecializados) {
         super(id, nombre, direccion, sexo, edad, salarioHora, evaluacion);
         this.lenguajesEspecializados = lenguajesEspecializados;
     }
@@ -18,7 +18,7 @@ public class Programador extends Trabajador {
         this.lenguajesEspecializados = lenguajesEspecializados;
     }
     
- // Método para agregar un lenguaje especializado
+ // Metodo para agregar un lenguaje especializado
     public void agregarLenguajeEspecializado(String lenguaje) {
         if (lenguajesEspecializados == null) {
             lenguajesEspecializados = new ArrayList<>();

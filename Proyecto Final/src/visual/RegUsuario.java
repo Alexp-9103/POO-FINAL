@@ -135,17 +135,22 @@ public class RegUsuario extends JDialog {
         }
 
         if (!contrasena.equals(confirmarContrasena)) {
-            JOptionPane.showMessageDialog(this, "Las contrasenas no coinciden.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        User user = new User(tipoUsuario, nombreUsuario, contrasena);
+     // Verifica si el tipo de usuario seleccionado es administrador
+        boolean isAdmin = tipoUsuario.equals("Administrador");
+
+
+        // Crea el objeto User con el nuevo campo isAdmin
+        User user = new User(tipoUsuario, nombreUsuario, contrasena, isAdmin);
         Control.getInstance().registrarUsuario(user);
 
         try (FileOutputStream fileOut = new FileOutputStream("usuarios.dat");
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
             objectOut.writeObject(Control.getInstance().getUsuarios());
-            JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.", "Ã‰xito", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al registrar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
