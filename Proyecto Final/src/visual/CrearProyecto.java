@@ -20,23 +20,23 @@ import javax.swing.AbstractListModel;
 import logico.Proyecto;
 import logico.JJDCommunications;
 
-public class AddTrabajadorAProyecto extends JDialog {
+public class CrearProyecto extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
-    private JTextField textIdCliente;
-    private JTextField textNombre;
-    private JTextField textCantTrabajadores;
-    private JButton btnBuscar;
+    private JTextField textNombreProyecto;
+    private JTextField textIdProyecto;
+    private JTextField textContratoActivo;
     private JScrollPane scrollPane;
     private JList listTrabajadoresDisp;
     private JList listTrabajadoresProyecto;
+    private static int generadorProyecto = 1;
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
         try {
-            AddTrabajadorAProyecto dialog = new AddTrabajadorAProyecto();
+            CrearProyecto dialog = new CrearProyecto();
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
         } catch (Exception e) {
@@ -47,73 +47,52 @@ public class AddTrabajadorAProyecto extends JDialog {
     /**
      * Create the dialog.
      */
-    public AddTrabajadorAProyecto() {
+    public CrearProyecto() {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         JJDCommunications.getInstance().setAuxiliarListTrabajadores(new String[100]);
-        setBounds(100, 100, 600, 500); // Ajustado tamaño del diálogo
+        setBounds(100, 100, 600, 500);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
-        
-        JLabel lblIdCliente = new JLabel("ID Cliente:");
-        lblIdCliente.setBounds(10, 11, 60, 14);
-        contentPanel.add(lblIdCliente);
-        
-        textIdCliente = new JTextField();
-        textIdCliente.setBounds(80, 8, 150, 20);
-        contentPanel.add(textIdCliente);
-        textIdCliente.setColumns(10);
-        
-        JLabel lblNombre = new JLabel("Nombre:");
-        lblNombre.setBounds(10, 42, 60, 14);
-        contentPanel.add(lblNombre);
-        
-        textNombre = new JTextField();
-        textNombre.setEditable(false);
-        textNombre.setBounds(80, 39, 150, 20);
-        contentPanel.add(textNombre);
-        textNombre.setColumns(10);
-        
-        JLabel lblCantTrabajadores = new JLabel("Cantidad Trabajadores:");
-        lblCantTrabajadores.setBounds(10, 73, 150, 14);
-        contentPanel.add(lblCantTrabajadores);
-        
-        textCantTrabajadores = new JTextField();
-        textCantTrabajadores.setEditable(false);
-        textCantTrabajadores.setBounds(159, 70, 71, 20);
-        contentPanel.add(textCantTrabajadores);
-        textCantTrabajadores.setColumns(10);
-        
-        btnBuscar = new JButton("Buscar");
-        btnBuscar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String idCliente = textIdCliente.getText();
-                if(!idCliente.equals("")) {
-                    Proyecto proyecto = JJDCommunications.getInstance().BuscarProyecto(idCliente);
-                    if(proyecto != null) {
-                        textNombre.setText(proyecto.getNombre());
-                        textCantTrabajadores.setText(String.valueOf(proyecto.getCantTrabajadores()));
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Proyecto no encontrado.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Debe ingresar el ID del cliente.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        });
-        btnBuscar.setBounds(240, 7, 89, 23);
-        contentPanel.add(btnBuscar);
-        
+
+        JLabel lblIdProyecto = new JLabel("ID Proyecto:");
+        lblIdProyecto.setBounds(10, 11, 80, 14);
+        contentPanel.add(lblIdProyecto);
+
+        textIdProyecto = new JTextField();
+        textIdProyecto.setEditable(false);
+        textIdProyecto.setBounds(100, 8, 60, 20); // Reducido a la mitad el ancho del cuadro de texto del ID
+        contentPanel.add(textIdProyecto);
+        textIdProyecto.setColumns(10);
+
+        JLabel lblNombreProyecto = new JLabel("Nombre:");
+        lblNombreProyecto.setBounds(10, 42, 80, 14);
+        contentPanel.add(lblNombreProyecto);
+
+        textNombreProyecto = new JTextField();
+        textNombreProyecto.setBounds(100, 39, 225, 20); // Aumentado tamaño del cuadro de texto del nombre
+        contentPanel.add(textNombreProyecto);
+        textNombreProyecto.setColumns(10);
+
+        JLabel lblContratoActivo = new JLabel("Contrato Activo:");
+        lblContratoActivo.setBounds(10, 73, 100, 14);
+        contentPanel.add(lblContratoActivo);
+
+        textContratoActivo = new JTextField();
+        textContratoActivo.setBounds(120, 70, 100, 20);
+        contentPanel.add(textContratoActivo);
+        textContratoActivo.setColumns(10);
+
         JPanel panelTrabajadoresDisp = new JPanel();
         panelTrabajadoresDisp.setBorder(new TitledBorder(null, "Trabajadores Disponibles", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        panelTrabajadoresDisp.setBounds(10, 98, 250, 200); // Ajustado tamaño del panel
+        panelTrabajadoresDisp.setBounds(10, 98, 250, 200);
         contentPanel.add(panelTrabajadoresDisp);
         panelTrabajadoresDisp.setLayout(new BorderLayout(0, 0));
-        
+
         scrollPane = new JScrollPane();
         panelTrabajadoresDisp.add(scrollPane, BorderLayout.CENTER);
-        
+
         listTrabajadoresDisp = new JList();
         listTrabajadoresDisp.setModel(new AbstractListModel() {
             String[] values = JJDCommunications.getInstance().TrabajadoresEnLista();
@@ -125,19 +104,19 @@ public class AddTrabajadorAProyecto extends JDialog {
             }
         });
         scrollPane.setViewportView(listTrabajadoresDisp);
-        
+
         JPanel panelTrabajadoresProyecto = new JPanel();
         panelTrabajadoresProyecto.setBorder(new TitledBorder(null, "Trabajadores en Proyecto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        panelTrabajadoresProyecto.setBounds(320, 98, 250, 200); // Ajustado tamaño del panel
+        panelTrabajadoresProyecto.setBounds(320, 98, 250, 200);
         contentPanel.add(panelTrabajadoresProyecto);
         panelTrabajadoresProyecto.setLayout(new BorderLayout(0, 0));
-        
+
         JScrollPane scrollPane_1 = new JScrollPane();
         panelTrabajadoresProyecto.add(scrollPane_1, BorderLayout.CENTER);
-        
+
         listTrabajadoresProyecto = new JList();
         scrollPane_1.setViewportView(listTrabajadoresProyecto);
-        
+
         JButton btnAgregar = new JButton("Agregar >>");
         btnAgregar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -146,9 +125,9 @@ public class AddTrabajadorAProyecto extends JDialog {
                 actualizarListas();
             }
         });
-        btnAgregar.setBounds(270, 320, 100, 23); // Ajustado posición del botón
+        btnAgregar.setBounds(270, 320, 100, 23);
         contentPanel.add(btnAgregar);
-        
+
        JButton btnEliminar = new JButton("<< Eliminar");
         btnEliminar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -157,14 +136,14 @@ public class AddTrabajadorAProyecto extends JDialog {
                 actualizarListas();
             }
         });
-        btnEliminar.setBounds(390, 320, 100, 23); // Ajustado posición del botón
+        btnEliminar.setBounds(390, 320, 100, 23);
         contentPanel.add(btnEliminar);
-        
+
         JPanel buttonPane = new JPanel();
         buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);                
-        
+
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -176,7 +155,7 @@ public class AddTrabajadorAProyecto extends JDialog {
         btnGuardar.setActionCommand("OK");
         buttonPane.add(btnGuardar);
         getRootPane().setDefaultButton(btnGuardar);
-        
+
         JButton btnCancelar = new JButton("Cancelar");
         btnCancelar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -186,8 +165,10 @@ public class AddTrabajadorAProyecto extends JDialog {
         btnCancelar.setActionCommand("Cancel");
         buttonPane.add(btnCancelar);
 
+        textIdProyecto.setText("P-" + generadorProyecto);
+        generadorProyecto++;
     }
-    
+
     private void actualizarListas() {
         listTrabajadoresDisp.setModel(new AbstractListModel() {
             String[] values = JJDCommunications.getInstance().TrabajadoresEnLista();
@@ -200,7 +181,7 @@ public class AddTrabajadorAProyecto extends JDialog {
         });
         
         listTrabajadoresProyecto.setModel(new AbstractListModel() {
-            String[] values = JJDCommunications.getInstance().TrabajadoresEnListaPro(textIdCliente.getText());
+            String[] values = JJDCommunications.getInstance().TrabajadoresEnListaPro(textIdProyecto.getText());
             public int getSize() {
                 return values.length;
             }
