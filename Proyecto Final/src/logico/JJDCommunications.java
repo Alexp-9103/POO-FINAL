@@ -10,14 +10,12 @@ public class JJDCommunications {
 	public static JJDCommunications JJD = null;
     private String[] ListaSecundaria;
     private String[] auxiliarListTrabajadores;
-    private int cantTrabajador;
     
     public JJDCommunications() {
         ListaTrabajadores = new ArrayList<>();
         ListaClientes = new ArrayList<>();
         ListaProyectos = new ArrayList<>();
         ListaContratos = new ArrayList<>();
-        this.cantTrabajador = 0;
     }
 	    
     public static JJDCommunications getInstance(){
@@ -61,29 +59,33 @@ public class JJDCommunications {
     	double salarioTotal = 0.0;
         
         for (Trabajador trabajador : ListaTrabajadores) {
-            // Calculamos el salario del trabajador en el perï¿½odo y lo sumamos al total        	
+            // Calculamos el salario del trabajador en el periodo y lo sumamos al total        	
             salarioTotal += Trabajador.calcularSalarioTrabajador(trabajador, fechaInicio, fechaFin);
         }
         
         return salarioTotal;
     }    
     
-    public int getCantTrabajador() {
-		return cantTrabajador;
-	}
-   
-
-	public void setCantTrabajador(int cantTrabajador) {
-		this.cantTrabajador = cantTrabajador;
-	}
-
-	public void insertarCliente(Cliente cliente){
+    public void insertarCliente(Cliente cliente){
 		ListaClientes.add(cliente);
 	}
     
     public void insertarTrabajador(Trabajador trabajador){
-		ListaTrabajadores.add(trabajador);
-	}
+        // Agregar el trabajador a la lista
+        ListaTrabajadores.add(trabajador);
+
+        // Establecer la evaluación del trabajador como "Cumplidor"
+        trabajador.setEvaluacion("Cumplidor");
+    }
+    
+    public void eliminarTrabajador(String id) {
+        Trabajador trabajadorAEliminar = BuscarTrabajador(id);
+        if (trabajadorAEliminar != null) {
+            ListaTrabajadores.remove(trabajadorAEliminar);
+        }
+    }
+
+
 	
     public void insertarProyecto(Proyecto proyecto){
         ListaProyectos.add(proyecto);
@@ -171,13 +173,7 @@ public class JJDCommunications {
         return auxiliarListTrabajadores;
     }
 
-	public void eliminarTrabajador(String id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
+    
     
     
     //Por si se necesita
