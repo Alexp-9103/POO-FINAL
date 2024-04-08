@@ -1,12 +1,22 @@
 package logico;
 
 import java.util.Date;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
-public class JJDCommunications {
+
+public class JJDCommunications implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
     private ArrayList<Trabajador> ListaTrabajadores;
     private ArrayList<Cliente> ListaClientes;
     private ArrayList<Proyecto> ListaProyectos;
     private ArrayList<Contrato> ListaContratos;
+    private static final String FILE_NAME = "data.dat";
 	public static JJDCommunications JJD = null;
     private String[] ListaSecundaria;
     private String[] auxiliarListTrabajadores;
@@ -18,6 +28,27 @@ public class JJDCommunications {
         ListaContratos = new ArrayList<>();
     }
 	    
+
+    public void guardarDatos() {
+        try (FileOutputStream fileOut = new FileOutputStream(FILE_NAME);
+             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+            objectOut.writeObject(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static JJDCommunications cargarDatos() {
+        JJDCommunications jjd = null;
+        try (FileInputStream fileIn = new FileInputStream(FILE_NAME);
+             ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+            jjd = (JJDCommunications) objectIn.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return jjd;
+    }
+    
     public static JJDCommunications getInstance(){
 		if(JJD==null){
 			JJD = new JJDCommunications();

@@ -10,7 +10,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logico.Cliente;
-import logico.Proyecto;
 import logico.JJDCommunications;
 
 import javax.swing.JScrollPane;
@@ -86,6 +85,15 @@ public class ListadoCliente extends JDialog {
             buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
+                JButton btnEliminar = new JButton("Eliminar");
+                btnEliminar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        eliminarCliente();
+                    }
+                });
+                buttonPane.add(btnEliminar);
+            }
+            {
                 JButton btnSalir = new JButton("Salir");
                 btnSalir.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -112,6 +120,13 @@ public class ListadoCliente extends JDialog {
             }
         }
     }
+
+    private void eliminarCliente() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            String idCliente = (String) table.getValueAt(selectedRow, 0);
+            JJDCommunications.getInstance().eliminarCliente(idCliente);
+            cargarClientes();
+        }
+    }
 }
-
-

@@ -4,10 +4,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import logico.Disenador;
 import logico.JJDCommunications;
@@ -15,6 +11,13 @@ import logico.JefeProyecto;
 import logico.Planificador;
 import logico.Programador;
 import logico.Trabajador;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 public class RegTrabajador extends JDialog {
 
@@ -30,37 +33,51 @@ public class RegTrabajador extends JDialog {
     private JSpinner spinneredad;
     private JRadioButton rdbtnmasculino;
     private JRadioButton rdbtnfemenino;
-    private JComboBox comboBox;
+    private JComboBox<String> comboBox;
     private JTable table;
 
     /**
      * Launch the application.
      */
+ // Ejemplo de c�mo cargar datos al iniciar la aplicaci�n
     public static void main(String[] args) {
-        try {
-            RegTrabajador dialog = new RegTrabajador();
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            dialog.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    RegTrabajador dialog = new RegTrabajador();
+                    dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                    dialog.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
+    
+    
 
     /**
      * Create the dialog.
      */
     public RegTrabajador() {
-        setTitle("Asignar Trabador a Proyecto");
-        setBounds(100, 100, 519, 600);
+        setTitle("Registro De Trabajador");
+        setBounds(100, 100, 519, 580);
         getContentPane().setLayout(new BorderLayout());
-        contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
-        // Agrupación de campos relacionados
+        // Titulo en negrita centrado
+        JLabel lblTitle = new JLabel("REGISTRO DE TRABAJADOR");
+        lblTitle.setFont(new Font("Arial", Font.BOLD, 16));
+        lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTitle.setBounds(12, 10, 479, 30);
+        contentPanel.add(lblTitle);
+
+        // Agrupacion de campos relacionados
         agruparCampos();
 
-        // Botones de acción
+        // Botones de accion
         configurarBotones();
 
         // Paneles de trabajadores
@@ -70,76 +87,85 @@ public class RegTrabajador extends JDialog {
         configurarComboBox();
     }
 
-    // Método para agrupar los campos relacionados en paneles separados
+    // Metodo para agrupar los campos relacionados en paneles separados
     private void agruparCampos() {
+        JPanel datosPersonalesPanel = new JPanel();
+        datosPersonalesPanel.setBorder(new TitledBorder(null, "Datos Personales", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        datosPersonalesPanel.setBounds(12, 50, 479, 232);
+        contentPanel.add(datosPersonalesPanel);
+        datosPersonalesPanel.setLayout(null);
+
         // ID
         JLabel lblid = new JLabel("ID:");
-        lblid.setBounds(12, 32, 56, 16);
-        contentPanel.add(lblid);
+        lblid.setBounds(12, 25, 56, 16);
+        datosPersonalesPanel.add(lblid);
         textid = new JTextField();
-        textid.setBounds(12, 48, 265, 22);
-        contentPanel.add(textid);
+        textid.setBounds(12, 45, 127, 22);
+        datosPersonalesPanel.add(textid);
         textid.setColumns(10);
 
         // Nombre
-        JLabel lblnombre = new JLabel("Nombre:");
-        lblnombre.setBounds(12, 83, 56, 16);
-        contentPanel.add(lblnombre);
+        JLabel lblnombre = new JLabel("Nombre Completo:");
+        lblnombre.setBounds(12, 70, 127, 16);
+        datosPersonalesPanel.add(lblnombre);
         textnombre = new JTextField();
-        textnombre.setBounds(12, 112, 385, 22);
-        contentPanel.add(textnombre);
+        textnombre.setBounds(12, 90, 385, 22);
+        datosPersonalesPanel.add(textnombre);
         textnombre.setColumns(10);
 
-        // Dirección
-        JLabel lbldireccion = new JLabel("Dirección:");
-        lbldireccion.setBounds(12, 147, 84, 16);
-        contentPanel.add(lbldireccion);
+        // Direccion
+        JLabel lbldireccion = new JLabel("Direccion:");
+        lbldireccion.setBounds(12, 115, 84, 16);
+        datosPersonalesPanel.add(lbldireccion);
         textdireccion = new JTextField();
-        textdireccion.setBounds(12, 165, 453, 22);
-        contentPanel.add(textdireccion);
+        textdireccion.setBounds(12, 135, 385, 22);
+        datosPersonalesPanel.add(textdireccion);
         textdireccion.setColumns(10);
 
         // Sexo
         JLabel lblsexo = new JLabel("Sexo:");
-        lblsexo.setBounds(12, 200, 56, 16);
-        contentPanel.add(lblsexo);
+        lblsexo.setBounds(18, 172, 56, 16);
+        datosPersonalesPanel.add(lblsexo);
 
+        ButtonGroup group = new ButtonGroup(); // Agrupar los botones de radio
         rdbtnmasculino = new JRadioButton("Masculino");
-        rdbtnmasculino.setBounds(8, 218, 91, 25);
-        contentPanel.add(rdbtnmasculino);
+        rdbtnmasculino.setBounds(12, 190, 89, 25);
+        datosPersonalesPanel.add(rdbtnmasculino);
+        group.add(rdbtnmasculino);
 
         rdbtnfemenino = new JRadioButton("Femenino");
-        rdbtnfemenino.setBounds(101, 218, 127, 25);
-        contentPanel.add(rdbtnfemenino);
+        rdbtnfemenino.setBounds(103, 190, 89, 25);
+        datosPersonalesPanel.add(rdbtnfemenino);
+        group.add(rdbtnfemenino);
 
         // Edad
         JLabel lbledad = new JLabel("Edad:");
-        lbledad.setBounds(236, 200, 56, 16);
-        contentPanel.add(lbledad);
+        lbledad.setBounds(198, 173, 56, 16);
+        datosPersonalesPanel.add(lbledad);
         spinneredad = new JSpinner(); // Inicializa la variable de instancia spinneredad
-        spinneredad.setBounds(236, 219, 30, 22);
-        contentPanel.add(spinneredad);
+        spinneredad.setBounds(198, 193, 56, 22);
+        datosPersonalesPanel.add(spinneredad);
 
         // Salario
         JLabel lblsalario = new JLabel("Salario:");
-        lblsalario.setBounds(355, 200, 56, 16);
-        contentPanel.add(lblsalario);
+        lblsalario.setBounds(302, 172, 56, 16);
+        datosPersonalesPanel.add(lblsalario);
 
         textsalario = new JTextField();
         textsalario.setText("0");
-        textsalario.setBounds(329, 219, 116, 22);
-        contentPanel.add(textsalario);
+        textsalario.setBounds(312, 193, 116, 22);
+        datosPersonalesPanel.add(textsalario);
         textsalario.setColumns(10);
 
         JTextField textField = new JTextField();
         textField.setEditable(false);
         textField.setText("$");
-        textField.setBounds(309, 219, 18, 22);
-        contentPanel.add(textField);
+        textField.setBounds(295, 193, 18, 22);
+        datosPersonalesPanel.add(textField);
         textField.setColumns(10);
     }
 
-    // Método para configurar los botones de acción
+    // Metodo para configurar los botones de accion
     private void configurarBotones() {
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -151,7 +177,7 @@ public class RegTrabajador extends JDialog {
                 try {
                     registrarTrabajador();
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Error: Ingrese un valor numérico para el salario.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Error: Ingrese un valor numerico para el salario.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -173,7 +199,7 @@ public class RegTrabajador extends JDialog {
         // Crear y configurar el panel para Jefe de Proyecto
         configurarPanelJefeProyecto();
 
-        // Crear y configurar el panel para Diseñador
+        // Crear y configurar el panel para Dise�ador
         configurarPanelDiseniador();
 
         // Crear y configurar el panel para Programador
@@ -196,43 +222,43 @@ public class RegTrabajador extends JDialog {
         lblCantTrabajadores.setBounds(39, 25, 154, 16);
         panelJefeProyecto.add(lblCantTrabajadores);
 
-        spinnerTrabajadores = new JSpinner(); 
-        spinnerTrabajadores.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores mínimo, máximo e incremento
+        spinnerTrabajadores = new JSpinner();
+        spinnerTrabajadores.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores minimo, máximo e incremento
         spinnerTrabajadores.setBounds(163, 22, 80, 22);
         panelJefeProyecto.add(spinnerTrabajadores);
     }
 
     private void configurarPanelDiseniador() {
-        // Crear panel para Diseñador
+        // Crear panel para Dise�ador
         panelDiseniador = new JPanel();
-        panelDiseniador.setBorder(new TitledBorder(null, "Diseñador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panelDiseniador.setBorder(new TitledBorder(null, "Dise�ador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         panelDiseniador.setBounds(12, 348, 467, 95);
         contentPanel.add(panelDiseniador);
         panelDiseniador.setLayout(null);
 
-        // Etiqueta y Spinner para años de experiencia
-        JLabel lblExperiencia = new JLabel("Años de experiencia:");
+        // Etiqueta y Spinner para a�os de experiencia
+        JLabel lblExperiencia = new JLabel("A�os de experiencia:");
         lblExperiencia.setBounds(12, 29, 160, 16);
         panelDiseniador.add(lblExperiencia);
 
-        JSpinner spinnerAnosExperiencia = new JSpinner();
-        spinnerAnosExperiencia.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores mínimo, máximo e incremento
-        spinnerAnosExperiencia.setBounds(165, 26, 80, 22);
-        panelDiseniador.add(spinnerAnosExperiencia);
+        spinnerExperiencia = new JSpinner();
+        spinnerExperiencia.setModel(new SpinnerNumberModel(0, 0, 100, 1)); // Valores minimo, máximo e incremento
+        spinnerExperiencia.setBounds(165, 26, 80, 22);
+        panelDiseniador.add(spinnerExperiencia);
     }
 
     private void configurarPanelProgramador() {
         // Crear panel para Programador
         panelProgramador = new JPanel();
         panelProgramador.setBorder(new TitledBorder(null, "Programador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        panelProgramador.setBounds(12, 348, 467, 150); // Aumenté la altura del panel
+        panelProgramador.setBounds(12, 348, 467, 150); // Aumente la altura del panel
         contentPanel.add(panelProgramador);
         panelProgramador.setLayout(new BorderLayout(0, 0));
         panelProgramador.setVisible(false); // Ocultar el panel inicialmente
 
         // Create a table model to store the languages
         DefaultTableModel tableModel = new DefaultTableModel();
-        tableModel.addColumn("Lenguaje de Programación");
+        tableModel.addColumn("Lenguaje de Programacion");
         table = new JTable(tableModel); // CORREGIDO: asignar la tabla a la variable de clase
         JScrollPane scrollPane = new JScrollPane(table);
         panelProgramador.add(scrollPane, BorderLayout.CENTER);
@@ -240,14 +266,14 @@ public class RegTrabajador extends JDialog {
         // Create a panel for text field and buttons
         JPanel inputPanel = new JPanel(new FlowLayout());
         JTextField textNuevoLenguaje = new JTextField(15);
-        JButton btnAnadirLenguaje = new JButton("Añadir");
+        JButton btnAnadirLenguaje = new JButton("A�adir");
         JButton btnEliminarLenguaje = new JButton("Eliminar");
         inputPanel.add(textNuevoLenguaje);
         inputPanel.add(btnAnadirLenguaje);
         inputPanel.add(btnEliminarLenguaje);
         panelProgramador.add(inputPanel, BorderLayout.SOUTH);
 
-        // Add ActionListener to the "Añadir" button
+        // Add ActionListener to the "A�adir" button
         btnAnadirLenguaje.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -280,7 +306,7 @@ public class RegTrabajador extends JDialog {
         panelPlanificador.setLayout(null);
 
         // Label for frequency
-        JLabel lblFrecuencia = new JLabel("Frecuencia (días):");
+        JLabel lblFrecuencia = new JLabel("Frecuencia (dias):");
         lblFrecuencia.setBounds(12, 29, 160, 16);
         panelPlanificador.add(lblFrecuencia);
 
@@ -293,15 +319,14 @@ public class RegTrabajador extends JDialog {
 
     private void configurarComboBox() {
         JPanel panel = new JPanel();
-        panel.setBorder(new TitledBorder(null, "Tipo Trabajador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        panel.setBounds(12, 278, 477, 60);
+        panel.setBorder(new TitledBorder(null, "Tipo De Trabajador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel.setBounds(12, 290, 477, 60);
         contentPanel.add(panel);
         panel.setLayout(null);
 
-        comboBox = new JComboBox();
-        comboBox.setModel(new DefaultComboBoxModel(new String[]{"Seleccione un tipo de trabajador", "Jefe de proyecto", "Diseñador", "Programador", "Planificador"})); // Cambié la opción predeterminada
-        comboBox.setMaximumRowCount(5); // Aumenté el recuento máximo para incluir la opción vacía
-        comboBox.setEditable(false); // Deshabilitar la edición del JComboBox
+        comboBox = new JComboBox<>();
+        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Seleccione un tipo de trabajador", "Jefe de proyecto", "Dise�ador", "Programador", "Planificador"})); // Cambie la opcion predeterminada
+        comboBox.setMaximumRowCount(5); // Aumente el recuento máximo para incluir la opcion vacia
         comboBox.setBounds(12, 24, 218, 22);
         panel.add(comboBox);
 
@@ -319,7 +344,7 @@ public class RegTrabajador extends JDialog {
                         mostrarPanel(panelJefeProyecto);
                         ocultarPaneles(panelJefeProyecto);
                         break;
-                    case "Diseñador":
+                    case "Dise�ador":
                         mostrarPanel(panelDiseniador);
                         ocultarPaneles(panelDiseniador);
                         break;
@@ -332,14 +357,13 @@ public class RegTrabajador extends JDialog {
                         ocultarPaneles(panelPlanificador);
                         break;
                     default:
-                        // Si se selecciona la opción predeterminada, ocultar todos los paneles
+                        // Si se selecciona la opcion predeterminada, ocultar todos los paneles
                         ocultarPaneles(null);
                         break;
                 }
             }
         });
     }
-
 
     private void ocultarPaneles(JPanel panelActual) {
         JPanel[] paneles = {panelJefeProyecto, panelDiseniador, panelProgramador, panelPlanificador};
@@ -350,117 +374,123 @@ public class RegTrabajador extends JDialog {
         }
     }
 
-
-
-    // Método para mostrar el panel seleccionado y ocultar los demás
+    // Metodo para mostrar el panel seleccionado y ocultar los demás
     private void mostrarPanel(JPanel panel) {
         panel.setVisible(true);
     }
 
-private void registrarTrabajador() {
-    // Obtener los valores ingresados por el usuario
-    String id = textid.getText();
-    String nombre = textnombre.getText();
-    String direccion = textdireccion.getText();
-    char sexo = rdbtnmasculino.isSelected() ? 'M' : 'F'; // Verificar el botón seleccionado
-    int edad = (int) spinneredad.getValue();
-    double salarioHora = 0;
-    try {
-        salarioHora = Double.parseDouble(textsalario.getText());
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Por favor, ingrese un salario válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    String evaluacion = "cumplidor"; // Por defecto, puedes cambiarlo según tu lógica
-
-    // Validar campos obligatorios
-    if (id.isEmpty() || nombre.isEmpty() || direccion.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Validar campos específicos para cada tipo de trabajador
-    String selectedItem = (String) comboBox.getSelectedItem();
-    switch (selectedItem) {
-        case "Jefe de proyecto":
-            // Validar campos específicos del panelJefeProyecto
-            int cantidadTrabajadores = (int) spinnerTrabajadores.getValue();
-            if (cantidadTrabajadores < 0) {
-                JOptionPane.showMessageDialog(this, "La cantidad de trabajadores debe ser mayor o igual a cero.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            break;
-        case "Diseñador":
-            // Validar campos específicos del panelDiseniador
-            int experiencia = (int) spinnerExperiencia.getValue();
-            if (experiencia < 0) {
-                JOptionPane.showMessageDialog(this, "La experiencia debe ser mayor o igual a cero.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            break;
-        case "Programador":
-            // Validar campos específicos del panelProgramador
-            if (table.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese al menos un lenguaje de programación.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            break;
-        case "Planificador":
-            // No se requieren validaciones adicionales para el panelPlanificador
-            break;
-        default:
-            // Si no se selecciona un tipo de trabajador válido, mostrar un mensaje de error
-            JOptionPane.showMessageDialog(this, "Seleccione un tipo de trabajador válido.", "Error", JOptionPane.ERROR_MESSAGE);
+    private void registrarTrabajador() {
+        // Obtener los valores ingresados por el usuario
+        String id = textid.getText();
+        String nombre = textnombre.getText();
+        String direccion = textdireccion.getText();
+        char sexo;
+        if (rdbtnmasculino.isSelected()) {
+            sexo = 'M';
+        } else if (rdbtnfemenino.isSelected()) {
+            sexo = 'F';
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un sexo.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
+        }
+        int edad = (int) spinneredad.getValue();
+        double salarioHora = 0;
+        try {
+            salarioHora = Double.parseDouble(textsalario.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un salario válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String evaluacion = "Cumplidor"; // Por defecto, puedes cambiarlo según tu logica
+
+        // Validar campos obligatorios
+        if (id.isEmpty() || nombre.isEmpty() || direccion.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar campos especificos para cada tipo de trabajador
+        String selectedItem = (String) comboBox.getSelectedItem();
+        switch (selectedItem) {
+            case "Jefe de proyecto":
+                // Validar campos especificos del panelJefeProyecto
+                int cantidadTrabajadores = (int) spinnerTrabajadores.getValue();
+                if (cantidadTrabajadores < 0) {
+                    JOptionPane.showMessageDialog(this, "La cantidad de trabajadores debe ser mayor o igual a cero.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                break;
+            case "Dise�ador":
+                // Validar campos especificos del panelDiseniador
+                int experiencia = (int) spinnerExperiencia.getValue();
+                if (experiencia < 0) {
+                    JOptionPane.showMessageDialog(this, "La experiencia debe ser mayor o igual a cero.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                break;
+            case "Programador":
+                // Validar campos especificos del panelProgramador
+                if (table.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(this, "Por favor, ingrese al menos un lenguaje de programacion.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                break;
+            case "Planificador":
+                // No se requieren validaciones adicionales para el panelPlanificador
+                break;
+            default:
+                // Si no se selecciona un tipo de trabajador válido, mostrar un mensaje de error
+                JOptionPane.showMessageDialog(this, "Seleccione un tipo de trabajador válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+        }
+
+        // Crear el objeto del trabajador
+        Trabajador nuevoTrabajador = crearTrabajador(selectedItem, id, nombre, direccion, sexo, edad, salarioHora, evaluacion);
+
+        // Insertar el trabajador a traves de la instancia de JJDCommunications
+        JJDCommunications.getInstance().insertarTrabajador(nuevoTrabajador);
+
+        // Mostrar mensaje de registro completado
+        JOptionPane.showMessageDialog(this, "Trabajador registrado exitosamente.", "Registro completado", JOptionPane.INFORMATION_MESSAGE);
+
+        // Limpiar los campos de texto despues de agregar el trabajador
+        limpiarCampos();
     }
 
-    // Crear el objeto del trabajador
-    Trabajador nuevoTrabajador = crearTrabajador(selectedItem, id, nombre, direccion, sexo, edad, salarioHora, evaluacion);
-    
-    // Insertar el trabajador a través de la instancia de JJDCommunications
-    JJDCommunications.getInstance().insertarTrabajador(nuevoTrabajador);
-
-    // Mostrar mensaje de registro completado
-    JOptionPane.showMessageDialog(this, "Trabajador registrado exitosamente.", "Registro completado", JOptionPane.INFORMATION_MESSAGE);
-
-    // Limpiar los campos de texto después de agregar el trabajador
-    limpiarCampos();
-}
-
-private Trabajador crearTrabajador(String tipo, String id, String nombre, String direccion, char sexo, int edad, double salarioHora, String evaluacion) {
-    switch (tipo) {
-        case "Jefe de proyecto":
-            return new JefeProyecto(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerTrabajadores.getValue());
-        case "Diseñador":
-            return new Disenador(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerExperiencia.getValue());
-        case "Programador":
-            // Crear un ArrayList para almacenar los lenguajes especializados
-            ArrayList<String> lenguajesEspecializados = new ArrayList<>();
-            // Obtener los lenguajes desde la tabla
-            DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-            for (int i = 0; i < tableModel.getRowCount(); i++) {
-                lenguajesEspecializados.add((String) tableModel.getValueAt(i, 0));
-            }
-            // Crear el objeto Programador con los datos ingresados
-            return new Programador(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, lenguajesEspecializados);
-        case "Planificador":
-            return new Planificador(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerFrecuencia.getValue());
-        default:
-            return null;
+    private Trabajador crearTrabajador(String tipo, String id, String nombre, String direccion, char sexo, int edad, double salarioHora, String evaluacion) {
+        switch (tipo) {
+            case "Jefe de proyecto":
+                return new JefeProyecto(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerTrabajadores.getValue());
+            case "Dise�ador":
+                return new Disenador(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerExperiencia.getValue());
+            case "Programador":
+                // Crear un ArrayList para almacenar los lenguajes especializados
+                ArrayList<String> lenguajesEspecializados = new ArrayList<>();
+                // Obtener los lenguajes desde la tabla
+                DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+                for (int i = 0; i < tableModel.getRowCount(); i++) {
+                    lenguajesEspecializados.add((String) tableModel.getValueAt(i, 0));
+                }
+                // Crear el objeto Programador con los datos ingresados
+                return new Programador(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, lenguajesEspecializados);
+            case "Planificador":
+                return new Planificador(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerFrecuencia.getValue());
+            default:
+                return null;
+        }
     }
-}
 
     private void limpiarCampos() {
-        // Limpiar los campos de texto después de agregar el trabajador
+        // Limpiar los campos de texto despues de agregar el trabajador
         textid.setText("");
         textnombre.setText("");
         textdireccion.setText("");
         rdbtnmasculino.setSelected(false);
         rdbtnfemenino.setSelected(false);
-        spinneredad.setValue(0); // Otra opción sería establecer un valor por defecto
+        spinneredad.setValue(0); // Otra opcion seria establecer un valor por defecto
         textsalario.setText("0");
 
-        // Limpiar campos específicos para cada tipo de trabajador
+        // Limpiar campos especificos para cada tipo de trabajador
         limpiarCamposTipoTrabajador();
     }
 
@@ -469,20 +499,20 @@ private Trabajador crearTrabajador(String tipo, String id, String nombre, String
 
         switch (selectedItem) {
             case "Jefe de proyecto":
-                // Limpiar campos específicos del panelJefeProyecto
+                // Limpiar campos especificos del panelJefeProyecto
                 spinnerTrabajadores.setValue(0);
                 break;
-            case "Diseñador":
-                // Limpiar campos específicos del panelDiseniador
+            case "Dise�ador":
+                // Limpiar campos especificos del panelDiseniador
                 spinnerExperiencia.setValue(0);
                 break;
             case "Programador":
-                // Limpiar campos específicos del panelProgramador
+                // Limpiar campos especificos del panelProgramador
                 limpiarCamposProgramador();
                 break;
             case "Planificador":
-                // Limpiar campos específicos del panelPlanificador
-                spinnerFrecuencia.setValue(1); // Otra opción sería establecer un valor por defecto
+                // Limpiar campos especificos del panelPlanificador
+                spinnerFrecuencia.setValue(1); // Otra opcion seria establecer un valor por defecto
                 break;
             default:
                 break;
@@ -490,10 +520,8 @@ private Trabajador crearTrabajador(String tipo, String id, String nombre, String
     }
 
     private void limpiarCamposProgramador() {
-        // Limpiar la tabla de lenguajes de programación
+        // Limpiar la tabla de lenguajes de programacion
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-        tableModel.setRowCount(0); // Elimina todas las filas de la tabla
+        tableModel.setRowCount(0);
     }
-
-
 }

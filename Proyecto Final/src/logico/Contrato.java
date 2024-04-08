@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class Contrato {
     private String idContrato;
-    private int idCliente;
+    private String idCliente;
     private String nombreProyecto;
     private Date fechaInicio;
     private Date fechaEntrega;
     private boolean prorroga;
 
-    public Contrato(int identificador, int idCliente, String nombreProyecto, Date fechaInicio, Date fechaEntrega, boolean prorroga, String idContrato) {
+    public Contrato(String idContrato, String idCliente, String nombreProyecto, Date fechaInicio, Date fechaEntrega, boolean prorroga) {
         this.idContrato = idContrato;
         this.idCliente = idCliente;
         this.nombreProyecto = nombreProyecto;
@@ -28,11 +28,11 @@ public class Contrato {
 		this.idContrato = idContrato;
 	}
 
-	public int getIdCliente() {
+	public String getIdCliente() {
 		return idCliente;
 	}
 
-	public void setIdCliente(int idCliente) {
+	public void setIdCliente(String idCliente) {
 		this.idCliente = idCliente;
 	}
 

@@ -15,7 +15,7 @@ public class ListadoTrabajador extends JDialog {
     private JComboBox<String> comboBox;
     private JJDCommunications jjdCommunications;
 
-    String[] headers = {"ID", "Nombre", "DirecciÃ³n", "Sexo", "Edad", "Salario por Hora", "Tipo de Trabajador", "EvaluaciÃ³n"};
+    String[] headers = {"ID", "Nombre", "Dirección", "Sexo", "Edad", "Salario por Hora", "Tipo de Trabajador", "Evaluación"};
 
     public static void main(String[] args) {
         try {
@@ -28,7 +28,7 @@ public class ListadoTrabajador extends JDialog {
     }
 
     public ListadoTrabajador() {
-        setSize(900, 500); // TamaÃ±o ajustado para que quepa todo el contenido
+        setSize(900, 500); // Tamaño ajustado para que quepa todo el contenido
         setLocationRelativeTo(null);
 
         jjdCommunications = JJDCommunications.getInstance();
@@ -47,7 +47,7 @@ public class ListadoTrabajador extends JDialog {
 
         comboBox = new JComboBox<>();
         comboBox.addActionListener(e -> loadTrabajadores(comboBox.getSelectedIndex()));
-        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"<Todos>", "Jefe de Proyecto", "DiseÃ±ador", "Programador", "Planificador"}));
+        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"<Todos>", "Jefe de Proyecto", "Diseñador", "Programador", "Planificador"}));
         panel.add(comboBox);
 
         JPanel tablePanel = new JPanel();
@@ -76,18 +76,18 @@ public class ListadoTrabajador extends JDialog {
         }
         table.getTableHeader().setResizingAllowed(true);
 
-        // BotÃ³n de eliminar
+        // Botón de eliminar
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnEliminar = new JButton("Eliminar");
         buttonPanel.add(btnEliminar);
         contentPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // AcciÃ³n para eliminar un trabajador
+        // Acción para eliminar un trabajador
         btnEliminar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table.getSelectedRow();
                 if (selectedRow != -1) {
-                    int option = JOptionPane.showConfirmDialog(null, "Â¿EstÃ¡ seguro de que desea eliminar este trabajador?", "ConfirmaciÃ³n de eliminaciÃ³n", JOptionPane.YES_NO_OPTION);
+                    int option = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea eliminar este trabajador?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
                     if (option == JOptionPane.YES_OPTION) {
                         String id = (String) model.getValueAt(selectedRow, 0);
                         jjdCommunications.eliminarTrabajador(id);
@@ -105,7 +105,7 @@ public class ListadoTrabajador extends JDialog {
         // Limpiar modelo de tabla antes de cargar nuevos datos
         model.setRowCount(0);
 
-        // Cargar datos de trabajadores segÃºn el tipo seleccionado
+        // Cargar datos de trabajadores según el tipo seleccionado
         for (Trabajador trabajador : jjdCommunications.getListaTrabajadores()) {
             boolean agregar = false;
             switch (index) {
@@ -115,7 +115,7 @@ public class ListadoTrabajador extends JDialog {
                 case 1: // Jefe de Proyecto
                     agregar = trabajador instanceof JefeProyecto;
                     break;
-                case 2: // DiseÃ±ador
+                case 2: // Diseñador
                     agregar = trabajador instanceof Disenador;
                     break;
                 case 3: // Programador
@@ -131,13 +131,12 @@ public class ListadoTrabajador extends JDialog {
                 if (trabajador instanceof JefeProyecto) {
                     tipoTrabajador = "Jefe de Proyecto";
                 } else if (trabajador instanceof Disenador) {
-                    tipoTrabajador = "DiseÃ±ador";
+                    tipoTrabajador = "Diseñador";
                 } else if (trabajador instanceof Programador) {
                     tipoTrabajador = "Programador";
                 } else if (trabajador instanceof Planificador) {
                     tipoTrabajador = "Planificador";
                 }
-                
 
                 model.addRow(new Object[]{
                         trabajador.getId(),

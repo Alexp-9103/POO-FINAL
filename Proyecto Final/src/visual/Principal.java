@@ -1,86 +1,210 @@
 package visual;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import logico.JJDCommunications;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Principal extends JFrame {
 
     private JPanel contentPane;
+    private boolean isAdmin;
+    private Dimension dim;
+
 
     /**
      * Launch the application.
      */
+    
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Principal frame = new Principal();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        try {
+            // Inicializar la clase controladora
+        	JJDCommunications controlador = new JJDCommunications();
+
+            // Cargar datos desde el controlador
+        	JJDCommunications.cargarDatos();
+
+            // Mostrar el diálogo de inicio de sesión
+            Principal dialog = new Principal(true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            dialog.setVisible(true);
+
+            // Guardar datos al cerrar la aplicación
+            dialog.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    // Guardar datos a través del controlador
+                	controlador.guardarDatos();
                 }
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     /**
      * Create the frame.
      */
-    public Principal() {
+    public Principal(boolean isAdmin) {
         setTitle("Principal");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 550, 400);
-
+        dim = getToolkit().getScreenSize();
+        setSize(dim.width, dim.height - 50);
+        setLocationRelativeTo(null);
+        
         JMenuBar menuBar = new JMenuBar();
-        menuBar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        menuBar.setFont(new Font("Arial", Font.BOLD, 16));
         setJMenuBar(menuBar);
 
-        JMenu mnTrabajadore = new JMenu("Trabajadores");
-        menuBar.add(mnTrabajadore);
+        // Menú Usuario
+        JMenu mnUsuario = new JMenu("Menú Usuario");
+        menuBar.add(mnUsuario);
 
-        JMenuItem mntmRegistrarTrabajador = new JMenuItem("Registrar Trabajador");
-        mntmRegistrarTrabajador.addActionListener(e -> {
-            RegTrabajador registroTrabajador = new RegTrabajador();
-            registroTrabajador.setModal(true);
-            registroTrabajador.setVisible(true);
+        // Gestión de Proyectos
+        JMenu mnProyectosUsuario = new JMenu("Gestión de Proyectos");
+        mnUsuario.add(mnProyectosUsuario);
+
+        JMenuItem mntmCrearProyectoUsuario = new JMenuItem("Crear Nuevo Proyecto");
+        mntmCrearProyectoUsuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para crear un nuevo proyecto
+            	abrirCrearProyecto();
+            }
         });
-        mnTrabajadore.add(mntmRegistrarTrabajador);
+        mnProyectosUsuario.add(mntmCrearProyectoUsuario);
 
-        JSeparator separator = new JSeparator();
-        mnTrabajadore.add(separator);
-
-        JMenuItem mntmListadoTrabajador = new JMenuItem("Listado de Trabajadores");
-        mntmListadoTrabajador.addActionListener(e -> {
-        	ListadoTrabajador ListadoTrabajador = new ListadoTrabajador();
-        	ListadoTrabajador.setModal(true);
-        	ListadoTrabajador.setVisible(true);
+        JMenuItem mntmVerDetallesProyectoUsuario = new JMenuItem("Ver Detalles de un Proyecto Existente");
+        mntmVerDetallesProyectoUsuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para ver detalles de un proyecto existente
+            }
         });
-        mnTrabajadore.add(mntmListadoTrabajador);
+        mnProyectosUsuario.add(mntmVerDetallesProyectoUsuario);
+
+        JMenuItem mntmListarProyectosUsuario = new JMenuItem("Listar Todos los Proyectos");
+        mntmListarProyectosUsuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para listar todos los proyectos
+            	abrirListadoProyecto();
+            }
+        });
+        mnProyectosUsuario.add(mntmListarProyectosUsuario);
+
+        // Gestión de Contratos
+        JMenu mnContratosUsuario = new JMenu("Gestión de Contratos");
+        mnUsuario.add(mnContratosUsuario);
+
+        JMenuItem mntmNuevoContratoUsuario = new JMenuItem("Nuevo Contrato");
+        mntmNuevoContratoUsuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para crear un nuevo contrato
+            	abrirRegContrato();
+            }
+        });
+        mnContratosUsuario.add(mntmNuevoContratoUsuario);
+
+        JMenuItem mntmProrrogarContratoUsuario = new JMenuItem("Prorrogar Contrato");
+        mntmProrrogarContratoUsuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para prorrogar un contrato
+            	abrirProrrogarContrato();
+            }
+        });
+        mnContratosUsuario.add(mntmProrrogarContratoUsuario);
+
+        JMenuItem mntmListarContratosUsuario = new JMenuItem("Listar Todos los Contratos");
+        mntmListarContratosUsuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para listar todos los contratos
+            	abrirListadoContrato();
+            }
+        });
+        mnContratosUsuario.add(mntmListarContratosUsuario);
+
+        // Cálculo de Costos y Penalizaciones
+        JMenu mnCostosPenalizacionesUsuario = new JMenu("Cálculo de Costos y Penalizaciones");
+        mnUsuario.add(mnCostosPenalizacionesUsuario);
+
+        JMenuItem mntmCalcularCostoProyectoUsuario = new JMenuItem("Calcular Costo de un Proyecto");
+        mntmCalcularCostoProyectoUsuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para calcular el costo de un proyecto
+            	abrirCostoProyecto();
+            }
+        });
+        mnCostosPenalizacionesUsuario.add(mntmCalcularCostoProyectoUsuario);
+
+        JMenuItem mntmCalcularPenalizacionUsuario = new JMenuItem("Calcular Penalización por Retraso en Entrega");
+        mntmCalcularPenalizacionUsuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para calcular la penalización por retraso en entrega
+            	abrirPenalizacion();
+            }
+        });
+        mnCostosPenalizacionesUsuario.add(mntmCalcularPenalizacionUsuario);
         
+<<<<<<< HEAD
         JSeparator separator_4 = new JSeparator();
         mnTrabajadore.add(separator_4); 
 
+=======
 
-        JMenu mnProyecto = new JMenu("Proyectos");
-        menuBar.add(mnProyecto);
+        // Menú Administrativo
+        JMenu mnAdministrativo = new JMenu("Menú Administrativo");
+        menuBar.add(mnAdministrativo);
+        
+        // Código agregado para habilitar/deshabilitar menú "Menú Administrativo"
+        if (isAdmin) {
+            mnAdministrativo.setEnabled(true);
+        } else {
+            mnAdministrativo.setEnabled(false);
+            // Cambia el tono de color del menú administrativo
+            mnAdministrativo.setForeground(Color.LIGHT_GRAY);
+        }
 
-        JMenuItem mntmListadoProyecto = new JMenuItem("Listado Proyecto");
-        mnProyecto.add(mntmListadoProyecto);
-        mntmListadoProyecto.addActionListener(e -> {
-            ListadoProyecto ListadoProyecto = new ListadoProyecto();
-            ListadoProyecto.setModal(true);
-            ListadoProyecto.setVisible(true);
+        // Gestión de Trabajadores
+        JMenu mnTrabajadoresAdministrativo = new JMenu("Gestión de Trabajadores");
+        mnAdministrativo.add(mnTrabajadoresAdministrativo);
+
+        JMenuItem mntmAgregarTrabajadorAdministrativo = new JMenuItem("Agregar Nuevo Trabajador");
+        mntmAgregarTrabajadorAdministrativo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para agregar un nuevo trabajador
+            	abrirRegTrabajador();
+            }
         });
+        mnTrabajadoresAdministrativo.add(mntmAgregarTrabajadorAdministrativo);
+>>>>>>> branch 'master' of https://github.com/Alexp-9103/POO-FINAL.git
 
+        JMenuItem mntmListarTrabajadoresAdministrativo = new JMenuItem("Listar Todos los Trabajadores");
+        mntmListarTrabajadoresAdministrativo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para listar todos los trabajadores
+            	abrirListadoTrabajador();
+            }
+        });
+        mnTrabajadoresAdministrativo.add(mntmListarTrabajadoresAdministrativo);
+
+<<<<<<< HEAD
         JMenuItem mntmCrearProyecto = new JMenuItem("Crear Proyecto");
         mnProyecto.add(mntmCrearProyecto);
         mntmCrearProyecto.addActionListener(e -> {
@@ -91,65 +215,192 @@ public class Principal extends JFrame {
 
         JMenu mnCliente = new JMenu("Clientes");
         menuBar.add(mnCliente);
+=======
+        // Gestión de Proyectos
+        JMenu mnProyectosAdministrativo = new JMenu("Gestión de Proyectos");
+        mnAdministrativo.add(mnProyectosAdministrativo);
+>>>>>>> branch 'master' of https://github.com/Alexp-9103/POO-FINAL.git
 
-        JMenuItem mntmRegistrarCliente = new JMenuItem("Registrar Cliente");
-        mnCliente.add(mntmRegistrarCliente);
-        mntmRegistrarCliente.addActionListener(e -> {
-            RegCliente registroCliente = new RegCliente();
-            registroCliente.setModal(true);
-            registroCliente.setVisible(true);
+        JMenuItem mntmCrearProyectoAdministrativo = new JMenuItem("Crear Nuevo Proyecto");
+        mntmCrearProyectoAdministrativo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para crear un nuevo proyecto
+            	abrirCrearProyecto();
+            }
         });
+        mnProyectosAdministrativo.add(mntmCrearProyectoAdministrativo);
 
-        JSeparator separator_1 = new JSeparator();
-        mnCliente.add(separator_1);
-
-        JMenuItem mntmListadoCliente = new JMenuItem("Listado de Clientes");
-        mntmListadoCliente.addActionListener(e -> {
-            ListadoCliente ListadoCliente = new ListadoCliente();
-            ListadoCliente.setModal(true);
-            ListadoCliente.setVisible(true);
+        JMenuItem mntmVerDetallesProyectoAdministrativo = new JMenuItem("Ver Detalles de un Proyecto Existente");
+        mntmVerDetallesProyectoAdministrativo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para ver detalles de un proyecto existente
+            	abrirDetallesProyecto();
+            }
         });
-        mnCliente.add(mntmListadoCliente);
+        mnProyectosAdministrativo.add(mntmVerDetallesProyectoAdministrativo);
 
-        JMenu mnContrato = new JMenu("Contratos");
-        menuBar.add(mnContrato);
-
-        JMenuItem mntmNuevoContrato = new JMenuItem("Nuevo Contrato");
-        mntmNuevoContrato.addActionListener(e -> {
-            RegContrato RegContrato = new RegContrato();
-            RegContrato.setModal(true);
-            RegContrato.setVisible(true);
+        JMenuItem mntmListarProyectosAdministrativo = new JMenuItem("Listar Todos los Proyectos");
+        mntmListarProyectosAdministrativo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para listar todos los proyectos
+            	abrirListadoProyecto();
+            }
         });
-        mnContrato.add(mntmNuevoContrato);
+        mnProyectosAdministrativo.add(mntmListarProyectosAdministrativo);
 
-        JMenuItem mntmListadoContrato = new JMenuItem("Listado de Contratos");
-        mntmListadoContrato.addActionListener(e -> {
-            ListadoContrato ListadoContrato = new ListadoContrato();
-            ListadoContrato.setModal(true);
-            ListadoContrato.setVisible(true);
+        // Gestión de Clientes
+        JMenu mnClientesAdministrativo = new JMenu("Gestión de Clientes");
+        mnAdministrativo.add(mnClientesAdministrativo);
+
+        JMenuItem mntmAgregarClienteAdministrativo = new JMenuItem("Agregar Nuevo Cliente");
+        mntmAgregarClienteAdministrativo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para agregar un nuevo cliente
+            	abrirRegCliente();
+            }
         });
+        mnClientesAdministrativo.add(mntmAgregarClienteAdministrativo);
+
+        JMenuItem mntmListarClientesAdministrativo = new JMenuItem("Listar Todos los Clientes");
+        mntmListarClientesAdministrativo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para listar todos los clientes
+            	abrirListadoCliente();
+            }
+        });
+        mnClientesAdministrativo.add(mntmListarClientesAdministrativo);
+
+        // Gestión de Contratos
+        JMenu mnContratosAdministrativo = new JMenu("Gestión de Contratos");
+        mnAdministrativo.add(mnContratosAdministrativo);
+
+        JMenuItem mntmNuevoContratoAdministrativo = new JMenuItem("Nuevo Contrato");
+        mntmNuevoContratoAdministrativo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para crear un nuevo contrato
+            	abrirRegContrato();
+            }
+        });
+        mnContratosAdministrativo.add(mntmNuevoContratoAdministrativo);
+
+        JMenuItem mntmProrrogarContratoAdministrativo = new JMenuItem("Prorrogar Contrato");
+        mntmProrrogarContratoAdministrativo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para prorrogar un contrato
+            	abrirProrrogarContrato();
+            }
+        });
+        mnContratosAdministrativo.add(mntmProrrogarContratoAdministrativo);
+
+        JMenuItem mntmListarContratosAdministrativo = new JMenuItem("Listar Todos los Contratos");
+        mntmListarContratosAdministrativo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para listar todos los contratos
+            	abrirListadoContrato();
+            }
+        });
+        mnContratosAdministrativo.add(mntmListarContratosAdministrativo);
+
+        // Cálculo de Costos y Penalizaciones
+        JMenu mnCostosPenalizacionesAdministrativo = new JMenu("Cálculo de Costos y Penalizaciones");
+        mnAdministrativo.add(mnCostosPenalizacionesAdministrativo);
+
+        JMenuItem mntmCalcularCostoProyectoAdministrativo = new JMenuItem("Calcular Costo de un Proyecto");
+        mntmCalcularCostoProyectoAdministrativo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para calcular el costo de un proyecto
+            	abrirCostoProyecto();
+            }
+        });
+        mnCostosPenalizacionesAdministrativo.add(mntmCalcularCostoProyectoAdministrativo);
+
+        JMenuItem mntmCalcularPenalizacionAdministrativo = new JMenuItem("Calcular Penalización por Retraso en Entrega");
+        mntmCalcularPenalizacionAdministrativo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para calcular la penalización por retraso en entrega
+            	abrirPenalizacion();
+            }
+        });
+        mnCostosPenalizacionesAdministrativo.add(mntmCalcularPenalizacionAdministrativo);
         
-        JSeparator separator_2 = new JSeparator();
-        mnContrato.add(separator_2);
-        mnContrato.add(mntmListadoContrato);
 
-        JMenuItem mntmProrrogar = new JMenuItem("Prorrogar Contrato");
-        mntmProrrogar.addActionListener(e -> {
-            ProrrogarContrato ProrrogarContrato = new ProrrogarContrato();
-            ProrrogarContrato.setModal(true);
-            ProrrogarContrato.setVisible(true);
-        });
-        
-        JSeparator separator_3 = new JSeparator();
-        mnContrato.add(separator_3);
-        mnContrato.add(mntmProrrogar);
-
-        JMenu mnAdmin = new JMenu("Administracion");
-        menuBar.add(mnAdmin);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
     }
+
+    private void abrirRegTrabajador() {
+        RegTrabajador registroTrabajador = new RegTrabajador();
+        registroTrabajador.setModal(true);
+        registroTrabajador.setVisible(true);
+    }
+
+    private void abrirListadoTrabajador() {
+        ListadoTrabajador listadoTrabajador = new ListadoTrabajador();
+        listadoTrabajador.setModal(true);
+        listadoTrabajador.setVisible(true);
+    }
+
+    private void abrirCrearProyecto() {
+        CrearProyecto crearProyecto = new CrearProyecto();
+        crearProyecto.setModal(true);
+        crearProyecto.setVisible(true);
+    }
+
+    private void abrirListadoProyecto() {
+        ListadoProyecto listadoProyecto = new ListadoProyecto();
+        listadoProyecto.setModal(true);
+        listadoProyecto.setVisible(true);
+    }
+
+    private void abrirRegCliente() {
+        RegCliente registroCliente = new RegCliente();
+        registroCliente.setModal(true);
+        registroCliente.setVisible(true);
+    }
+
+    private void abrirListadoCliente() {
+        ListadoCliente listadoCliente = new ListadoCliente();
+        listadoCliente.setModal(true);
+        listadoCliente.setVisible(true);
+    }
+
+    private void abrirRegContrato() {
+        RegContrato regContrato = new RegContrato();
+        regContrato.setModal(true);
+        regContrato.setVisible(true);
+    }
+
+    private void abrirListadoContrato() {
+        ListadoContrato listadoContrato = new ListadoContrato();
+        listadoContrato.setModal(true);
+        listadoContrato.setVisible(true);
+    }
+    
+    private void abrirProrrogarContrato() {
+        ProrrogarContrato prorrogarContrato = new ProrrogarContrato();
+        prorrogarContrato.setModal(true);
+        prorrogarContrato.setVisible(true);
+    }
+
+    private void abrirDetallesProyecto() {
+        DetallesProyecto detallesProyecto = new DetallesProyecto();
+        detallesProyecto.setModal(true);
+        detallesProyecto.setVisible(true);
+    }
+
+    private void abrirCostoProyecto() {
+        CostoProyecto costoProyecto = new CostoProyecto();
+        costoProyecto.setModal(true);
+        costoProyecto.setVisible(true);
+    }
+
+    private void abrirPenalizacion() {
+        Penalizacion penalizacion = new Penalizacion();
+        penalizacion.setModal(true);
+        penalizacion.setVisible(true);
+    }
+
 }

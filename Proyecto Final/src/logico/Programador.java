@@ -18,14 +18,13 @@ public class Programador extends Trabajador {
         this.lenguajesEspecializados = lenguajesEspecializados;
     }
     
-    // Método para agregar un lenguaje especializado
+ // Metodo para agregar un lenguaje especializado
     public void agregarLenguajeEspecializado(String lenguaje) {
         if (lenguajesEspecializados == null) {
             lenguajesEspecializados = new ArrayList<>();
         }
         lenguajesEspecializados.add(lenguaje);
     }
-    
     @Override
     public boolean estaDisponible() {
         return getCantidadProyectos() < 1;

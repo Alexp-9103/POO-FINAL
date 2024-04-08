@@ -43,11 +43,11 @@ public class ProrrogarContrato extends JDialog {
 
         comboBoxContratos = new JComboBox<>();
         comboBoxContratos.setBounds(170, 29, 200, 20);
-        // AquÃ­ deberÃ­as cargar los contratos disponibles en el comboBox
+        // Aquí deberías cargar los contratos disponibles en el comboBox
         // cargarContratosDisponibles();
         contentPanel.add(comboBoxContratos);
 
-        JLabel lblDiasDeProrroga = new JLabel("DÃ­as de PrÃ³rroga:");
+        JLabel lblDiasDeProrroga = new JLabel("Días de Prórroga:");
         lblDiasDeProrroga.setBounds(10, 70, 150, 14);
         contentPanel.add(lblDiasDeProrroga);
 
@@ -82,18 +82,18 @@ public class ProrrogarContrato extends JDialog {
             if (contratoSeleccionado != null) {
                 // Obtener la fecha de entrega actual del contrato
                 Date fechaEntregaActual = contratoSeleccionado.getFechaEntrega();
-                // Calcular la nueva fecha de entrega sumando los dÃ­as de prorroga
+                // Calcular la nueva fecha de entrega sumando los días de prorroga
                 long tiempoEnMilisegundos = fechaEntregaActual.getTime() + (diasProrroga * 24L * 60 * 60 * 1000);
                 Date nuevaFechaEntrega = new Date(tiempoEnMilisegundos);
                 // Actualizar la fecha de entrega del contrato
                 contratoSeleccionado.setFechaEntrega(nuevaFechaEntrega);
-                JOptionPane.showMessageDialog(this, "Contrato prorrogado exitosamente.\nNueva fecha de entrega: " + nuevaFechaEntrega, "PrÃ³rroga Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Contrato prorrogado exitosamente.\nNueva fecha de entrega: " + nuevaFechaEntrega, "Prórroga Exitosa", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Seleccione un contrato antes de continuar.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Ingrese un nÃºmero vÃ¡lido de dÃ­as de prorroga.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ingrese un número válido de días de prorroga.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
