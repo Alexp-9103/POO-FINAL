@@ -3,14 +3,14 @@ package logico;
 import java.util.Date;
 
 public class Contrato {
-    private int idContrato;
+    private String idContrato;
     private int idCliente;
     private String nombreProyecto;
     private Date fechaInicio;
     private Date fechaEntrega;
     private boolean prorroga;
 
-    public Contrato(int identificador, int idCliente, String nombreProyecto, Date fechaInicio, Date fechaEntrega, boolean prorroga, int idContrato) {
+    public Contrato(int identificador, int idCliente, String nombreProyecto, Date fechaInicio, Date fechaEntrega, boolean prorroga, String idContrato) {
         this.idContrato = idContrato;
         this.idCliente = idCliente;
         this.nombreProyecto = nombreProyecto;
@@ -20,11 +20,11 @@ public class Contrato {
        
     }
 
-	public int getIdContrato() {
+	public String getIdContrato() {
 		return idContrato;
 	}
 
-	public void setIdContrato(int idContrato) {
+	public void setIdContrato(String idContrato) {
 		this.idContrato = idContrato;
 	}
 
