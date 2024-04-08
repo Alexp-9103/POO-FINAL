@@ -71,7 +71,7 @@ public class Principal extends JFrame {
         
         JMenuItem mntmAsignarTrabajadorProyecto = new JMenuItem("Asignar Trabajadores Al Proyecto");
         mntmAsignarTrabajadorProyecto.addActionListener(e -> {
-        	AddTrabajadorAProyecto AsignarTrabajadorProyecto = new AddTrabajadorAProyecto();
+        	CrearProyecto AsignarTrabajadorProyecto = new CrearProyecto();
         	AsignarTrabajadorProyecto.setModal(true);
         	AsignarTrabajadorProyecto.setVisible(true);
         });
