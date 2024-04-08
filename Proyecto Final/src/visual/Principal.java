@@ -65,20 +65,15 @@ public class Principal extends JFrame {
         	ListadoTrabajador.setVisible(true);
         });
         mnTrabajadore.add(mntmListadoTrabajador);
-        
-        JSeparator separator_4 = new JSeparator();
-        mnTrabajadore.add(separator_4);
-        
-        JMenuItem mntmAsignarTrabajadorProyecto = new JMenuItem("Asignar Trabajadores Al Proyecto");
-        mntmAsignarTrabajadorProyecto.addActionListener(e -> {
-        	CrearProyecto AsignarTrabajadorProyecto = new CrearProyecto();
-        	AsignarTrabajadorProyecto.setModal(true);
-        	AsignarTrabajadorProyecto.setVisible(true);
-        });
-        mnTrabajadore.add(mntmAsignarTrabajadorProyecto);
 
         JMenu mnProyecto = new JMenu("Proyectos");
         menuBar.add(mnProyecto);
+        
+        JMenuItem mntmCrearProyecto = new JMenuItem("Crear Proyecto");
+        mnProyecto.add(mntmCrearProyecto);
+        
+        JSeparator separator_4 = new JSeparator();
+        mnProyecto.add(separator_4);
 
         JMenuItem mntmListadoProyecto = new JMenuItem("Listado Proyecto");
         mnProyecto.add(mntmListadoProyecto);
