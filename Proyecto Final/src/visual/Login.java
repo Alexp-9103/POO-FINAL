@@ -51,15 +51,15 @@ public class Login extends JFrame {
         });
     }
     
-    // Método para cargar usuarios desde el archivo usuarios.dat
+    // MÃ©todo para cargar usuarios desde el archivo usuarios.dat
     private static void cargarUsuariosDesdeArchivo() {
         try (FileInputStream fileIn = new FileInputStream("usuarios.dat");
              ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
             ArrayList<User> usuarios = (ArrayList<User>) objectIn.readObject();
             Control.getInstance().setUsuarios(usuarios); // Establecer los usuarios en la instancia de Control
         } catch (FileNotFoundException e) {
-            // Manejar la excepción si el archivo no existe
-            System.out.println("El archivo 'usuarios.dat' no se encontró. Se creará uno nuevo.");
+            // Manejar la excepciÃ³n si el archivo no existe
+            System.out.println("El archivo 'usuarios.dat' no se encontrÃ³. Se crearÃ¡ uno nuevo.");
             // No es necesario establecer la instancia de Control, ya que getInstance() crea la instancia si es null
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -118,10 +118,10 @@ public class Login extends JFrame {
                     if (usuarioValido.isPresent()) {
                         Principal frame;
                         if (usuarioValido.get().isAdmin()) {
-                            // Usuario es administrador, activar el menú administrativo
+                            // Usuario es administrador, activar el menÃº administrativo
                             frame = new Principal(true);
                         } else {
-                            // Usuario no es administrador, desactivar el menú administrativo
+                            // Usuario no es administrador, desactivar el menÃº administrativo
                             frame = new Principal(false);
                         }
                         Control.setUsuarioLogueado(usuarioValido.get());
@@ -129,12 +129,12 @@ public class Login extends JFrame {
                         frame.setVisible(true);
                     } else {
                         // Mostrar mensaje de advertencia y sugerir registro
-                        int opcion = JOptionPane.showConfirmDialog(null, "Usuario no encontrado. ¿Desea registrarse?", "Advertencia", JOptionPane.YES_NO_OPTION);
+                        int opcion = JOptionPane.showConfirmDialog(null, "Usuario no encontrado. Â¿Desea registrarse?", "Advertencia", JOptionPane.YES_NO_OPTION);
                         if (opcion == JOptionPane.YES_OPTION) {
                             // Abre la ventana de registro
-                            RegUsuario registroUsuario = new RegUsuario(); // Pasar la referencia de la ventana de inicio de sesión al registro
+                            RegUsuario registroUsuario = new RegUsuario(); // Pasar la referencia de la ventana de inicio de sesiÃ³n al registro
                             registroUsuario.setVisible(true);
-                            dispose(); // Cerrar la ventana de inicio de sesión
+                            dispose(); // Cerrar la ventana de inicio de sesiÃ³n
                         }
                     }
                 }
@@ -148,9 +148,9 @@ public class Login extends JFrame {
         btnRegistro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Abrir la ventana de registro
-                RegUsuario registroUsuario = new RegUsuario(); // Pasar la referencia de la ventana de inicio de sesiï¿½n al registro
+                RegUsuario registroUsuario = new RegUsuario(); // Pasar la referencia de la ventana de inicio de sesiÃ¯Â¿Â½n al registro
                 registroUsuario.setVisible(true);
-                dispose(); // Cerrar la ventana de inicio de sesiï¿½n
+                dispose(); // Cerrar la ventana de inicio de sesiÃ¯Â¿Â½n
             }
         });
         btnRegistro.setBounds(141, 187, 89, 23);
