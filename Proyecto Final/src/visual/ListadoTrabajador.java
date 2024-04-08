@@ -137,6 +137,7 @@ public class ListadoTrabajador extends JDialog {
                 } else if (trabajador instanceof Planificador) {
                     tipoTrabajador = "Planificador";
                 }
+                
 
                 model.addRow(new Object[]{
                         trabajador.getId(),
