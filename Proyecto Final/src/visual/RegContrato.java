@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -120,7 +119,7 @@ public class RegContrato extends JDialog {
         // Obtener la instancia de JJDCommunications
         JJDCommunications jjd = JJDCommunications.getInstance();
 
-     // Obtener la lista de clientes y agregarlos al ComboBox de clientes
+        // Obtener la lista de clientes y agregarlos al ComboBox de clientes
         for (Cliente cliente : jjd.getListaClientes()) {
             comboBoxClientes.addItem(cliente.getId() + " - " + cliente.getNombre());
         }
@@ -136,7 +135,7 @@ public class RegContrato extends JDialog {
         String idContrato = String.format("CT-%03d", ultimoIdContrato);
         textFieldIdContrato.setText(idContrato);
     }
-    
+
     private void registrarContrato() {
         String idContrato = textFieldIdContrato.getText();
         String clienteSeleccionado = (String) comboBoxClientes.getSelectedItem();
@@ -147,11 +146,11 @@ public class RegContrato extends JDialog {
         JJDCommunications jjd = JJDCommunications.getInstance();
 
         Cliente cliente = jjd.BuscarCliente(clienteSeleccionado);
-        Proyecto proyecto = jjd.BuscarProyecto(proyectoSeleccionado);
+        Proyecto proyecto = jjd.buscarProyecto(proyectoSeleccionado);
 
         if (cliente != null && proyecto != null) {
             // Modificar la creación del contrato para adaptarse al nuevo constructor
-            Contrato contrato = new Contrato(idContrato, cliente.getId(), proyecto.getNombre(), fechaInicio, fechaEntrega, false);
+            Contrato contrato = new Contrato(idContrato, cliente.getId(), proyecto.getIdProyecto(), proyecto.getNombre(), fechaInicio, fechaEntrega, false);
             jjd.insertarContrato(contrato);
             JOptionPane.showMessageDialog(this, "Contrato registrado exitosamente.");
             generarIdContrato();

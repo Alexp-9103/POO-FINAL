@@ -31,6 +31,7 @@ public class Principal extends JFrame {
 
     /**
      * Launch the application.
+     * 
      */
     
     public static void main(String[] args) {
@@ -211,15 +212,6 @@ public class Principal extends JFrame {
         });
         mnProyectosAdministrativo.add(mntmCrearProyectoAdministrativo);
 
-        JMenuItem mntmVerDetallesProyectoAdministrativo = new JMenuItem("Ver Detalles de un Proyecto Existente");
-        mntmVerDetallesProyectoAdministrativo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Accion para ver detalles de un proyecto existente
-            	abrirDetallesProyecto();
-            }
-        });
-        mnProyectosAdministrativo.add(mntmVerDetallesProyectoAdministrativo);
-
         JMenuItem mntmListarProyectosAdministrativo = new JMenuItem("Listar Todos los Proyectos");
         mntmListarProyectosAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -363,12 +355,6 @@ public class Principal extends JFrame {
         ProrrogarContrato prorrogarContrato = new ProrrogarContrato();
         prorrogarContrato.setModal(true);
         prorrogarContrato.setVisible(true);
-    }
-
-    private void abrirDetallesProyecto() {
-        DetallesProyecto detallesProyecto = new DetallesProyecto();
-        detallesProyecto.setModal(true);
-        detallesProyecto.setVisible(true);
     }
 
     private void abrirCostoProyecto() {

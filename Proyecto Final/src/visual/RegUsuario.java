@@ -95,7 +95,7 @@ public class RegUsuario extends JDialog {
         tipoUsuarioComboBox.setBounds(169, 177, 160, 20);
         tipoUsuarioComboBox.addItem("<Seleccione>");
         tipoUsuarioComboBox.addItem("Administrador");
-        tipoUsuarioComboBox.addItem("Usuario Regular");
+        tipoUsuarioComboBox.addItem("Usuario");
         contentPanel.add(tipoUsuarioComboBox);
 
         JPanel botonesPanel = new JPanel();

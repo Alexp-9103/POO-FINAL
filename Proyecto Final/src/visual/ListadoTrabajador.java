@@ -1,11 +1,12 @@
 package visual;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
 import logico.*;
 
@@ -14,8 +15,6 @@ public class ListadoTrabajador extends JDialog {
     private DefaultTableModel model;
     private JComboBox<String> comboBox;
     private JJDCommunications jjdCommunications;
-
-    String[] headers = {"ID", "Nombre", "Dirección", "Sexo", "Edad", "Salario por Hora", "Tipo de Trabajador", "Evaluación"};
 
     public static void main(String[] args) {
         try {
@@ -28,6 +27,7 @@ public class ListadoTrabajador extends JDialog {
     }
 
     public ListadoTrabajador() {
+    	setTitle("Listado De Trabajador");
         setSize(900, 500); // Tamaño ajustado para que quepa todo el contenido
         setLocationRelativeTo(null);
 
@@ -49,6 +49,7 @@ public class ListadoTrabajador extends JDialog {
         comboBox.addActionListener(e -> loadTrabajadores(comboBox.getSelectedIndex()));
         comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"<Todos>", "Jefe de Proyecto", "Diseñador", "Programador", "Planificador"}));
         panel.add(comboBox);
+        
 
         JPanel tablePanel = new JPanel();
         tablePanel.setLayout(new BorderLayout(0, 0));
@@ -56,31 +57,42 @@ public class ListadoTrabajador extends JDialog {
 
         JScrollPane scrollPane = new JScrollPane();
         tablePanel.add(scrollPane, BorderLayout.CENTER);
+        
+        String[] headers = {"ID", "Nombre", "Dirección", "Sexo", "Edad", "Salario por Hora", "Tipo de Trabajador", "Evaluación"};
 
-        model = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        model.setColumnIdentifiers(headers);
-        JTable table = new JTable(model);
+        JTable table = new JTable();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        table.getTableHeader().setReorderingAllowed(false);
         scrollPane.setViewportView(table);
 
-        // Ajuste del ancho de las columnas y permitir redimensionarlas
-        for (int i = 0; i < headers.length; i++) {
-            table.getColumnModel().getColumn(i).setPreferredWidth(100);
-        }
-        table.getTableHeader().setResizingAllowed(true);
+        model = new DefaultTableModel();
+        model.setColumnIdentifiers(headers);
+        table.setModel(model);
 
-        // Botón de eliminar
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+     // Ajuste del ancho de las columnas y permitir redimensionarlas
+        int[] columnWidths = {70, 150, 150, 30, 30, 90, 120, 80}; // Ancho de las columnas
+        for (int i = 0; i < headers.length; i++) {
+            table.getColumnModel().getColumn(i).setPreferredWidth(columnWidths[i]);
+        }
+
+        // Alinear texto en las celdas a la izquierda
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.LEFT);
+        for (int i = 0; i < headers.length; i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // Usar FlowLayout con alineación centrada
+        contentPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        // Agregar el botón de detalles al panel de botones
+        JButton btnDetalles = new JButton("Detalle de Trabajador");
+        buttonPanel.add(btnDetalles);
+
+        // Agregar el botón de eliminar al panel de botones
         JButton btnEliminar = new JButton("Eliminar");
         buttonPanel.add(btnEliminar);
-        contentPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+
 
         // Acción para eliminar un trabajador
         btnEliminar.addActionListener(new ActionListener() {
@@ -93,6 +105,23 @@ public class ListadoTrabajador extends JDialog {
                         jjdCommunications.eliminarTrabajador(id);
                         loadTrabajadores(comboBox.getSelectedIndex());
                     }
+                }else {
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una opcion");
+                }
+            }
+        });
+
+        
+        // Acción para ver detalles de un trabajador
+        btnDetalles.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    String idTrabajador = (String) model.getValueAt(selectedRow, 0);
+                    DetallesTrabajador detallesTrabajador = new DetallesTrabajador(idTrabajador);
+                    detallesTrabajador.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione una opcion");
                 }
             }
         });

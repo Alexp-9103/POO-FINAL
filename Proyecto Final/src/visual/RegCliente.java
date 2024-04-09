@@ -36,6 +36,7 @@ public class RegCliente extends JDialog {
      * Create the dialog.
      */
     public RegCliente() {
+        setTitle("Registrar Cliente");
         setBounds(100, 100, 450, 256);
         setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());

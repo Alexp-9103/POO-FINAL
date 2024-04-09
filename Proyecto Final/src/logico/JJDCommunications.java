@@ -179,46 +179,33 @@ public class JJDCommunications implements Serializable {
         return null;
     }
     
-    public Proyecto BuscarProyecto(String id) {
+    public void eliminarProyecto(String idProyecto) {
+        Proyecto proyectoAEliminar = buscarProyecto(idProyecto);
+        if (proyectoAEliminar != null) {
+            ListaProyectos.remove(proyectoAEliminar);
+        }
+    }
+
+    public Proyecto buscarProyecto(String idProyecto) {
         for (Proyecto proyecto : ListaProyectos) {
-            if (proyecto.getIdCliente().equalsIgnoreCase(id)) {
+            if (proyecto.getIdCliente().equalsIgnoreCase(idProyecto)) {
                 return proyecto;
             }
         }
-        
         return null;
     }
-    
-    public String[] TrabajadoresEnLista() {
-      int ind = 0;
-        for (Trabajador trabajador : ListaTrabajadores) {
-            if (trabajador.estaDisponible() == true) {
-                auxiliarListTrabajadores[ind] = trabajador.getId() + " | " + trabajador.getNombre() + " "  + " | " + trabajador.getSalarioHora();
-                ind++;
+
+
+    public Contrato obtenerContratoPorProyecto(String idProyecto) {
+        for (Contrato contrato : ListaContratos) {
+            if (contrato.getIdProyecto().equals(idProyecto)) {
+                return contrato;
             }
         }
-       return auxiliarListTrabajadores; 
-        
-    }
-    public String[] TrabajadoresEnListaPro(String string) {
-        int ind = 0, cont = 0;
-        for (ind = 0; ListaSecundaria[ind] != null; ind++) {
-            cont++;
-        }
-        ListaSecundaria[cont] = string;
-        ListaSecundaria[cont + 1] = null;
-        return ListaSecundaria;
+        return null; // Si no se encuentra ningún contrato con el ID de proyecto proporcionado
     }
 
-    public String[] TrabajadoresEnListaDisp(String string) {
-        int ind = 0, cont = 0;
-        for (ind = 0; auxiliarListTrabajadores[ind] != null; ind++) {
-            cont++;
-        }
-        auxiliarListTrabajadores[cont] = string;
-        auxiliarListTrabajadores[cont + 1] = null;
-        return auxiliarListTrabajadores;
-    }
+
 
     
     

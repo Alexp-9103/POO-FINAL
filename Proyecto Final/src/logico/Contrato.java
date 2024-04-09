@@ -5,14 +5,16 @@ import java.util.Date;
 public class Contrato {
     private String idContrato;
     private String idCliente;
+    private String idProyecto;
     private String nombreProyecto;
     private Date fechaInicio;
     private Date fechaEntrega;
     private boolean prorroga;
 
-    public Contrato(String idContrato, String idCliente, String nombreProyecto, Date fechaInicio, Date fechaEntrega, boolean prorroga) {
+    public Contrato(String idContrato, String idCliente, String idProyecto, String nombreProyecto, Date fechaInicio, Date fechaEntrega, boolean prorroga) {
         this.idContrato = idContrato;
         this.idCliente = idCliente;
+        this.idProyecto = idProyecto;
         this.nombreProyecto = nombreProyecto;
         this.fechaInicio = fechaInicio;
         this.fechaEntrega = fechaEntrega;
@@ -34,6 +36,14 @@ public class Contrato {
 
 	public void setIdCliente(String idCliente) {
 		this.idCliente = idCliente;
+	}
+
+	public String getIdProyecto() {
+		return idProyecto;
+	}
+	
+	public void setIdProyecto(String idProyecto) {
+		this.idProyecto = idProyecto;
 	}
 
 	public String getNombreProyecto() {

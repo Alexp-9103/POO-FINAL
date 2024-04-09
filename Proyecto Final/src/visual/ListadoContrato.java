@@ -45,6 +45,7 @@ public class ListadoContrato extends JDialog {
      * Create the dialog.
      */
     public ListadoContrato() {
+    	setTitle("Listado De Contrato");
         setBounds(100, 100, 670, 400);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
