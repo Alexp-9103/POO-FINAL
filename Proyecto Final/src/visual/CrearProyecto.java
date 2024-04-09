@@ -4,26 +4,34 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
+
+import logico.Disenador;
 import logico.JJDCommunications;
+import logico.JefeProyecto;
+import logico.Planificador;
+import logico.Programador;
 import logico.Trabajador;
 
 public class CrearProyecto extends JFrame {
     private JTextField textIdProyecto;
     private JTextField textNombreProyecto;
-    private JTextField textContratoActivo;
+    private JTextField textIdCliente;
     private JList<String> listTrabajadoresDisp;
     private JList<String> listTrabajadoresProyecto;
     private DefaultListModel<String> modelTrabajadoresDisp;
     private DefaultListModel<String> modelTrabajadoresProyecto;
+    private JLabel labelContadorTrabajadoresDisp;
+    private JLabel labelContadorTrabajadoresProyecto;
+    private int cantidadTrabajadoresDisp = 0;
+    private int cantidadTrabajadoresProyecto = 0;
     private static int generadorProyecto = 1;
 
     public CrearProyecto() {
         setTitle("Crear Proyecto");
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setSize(600, 500);
-        setLocationRelativeTo(null); // Center the frame on the screen
+        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
         JPanel panelDatos = new JPanel(new GridBagLayout());
@@ -46,23 +54,35 @@ public class CrearProyecto extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        panelDatos.add(new JLabel("Contrato Activo:"), gbc);
-        textContratoActivo = new JTextField(10);
+        panelDatos.add(new JLabel("ID del Cliente:"), gbc);
+        textIdCliente = new JTextField(10);
         gbc.gridx = 1;
-        panelDatos.add(textContratoActivo, gbc);
+        panelDatos.add(textIdCliente, gbc);
 
         add(panelDatos, BorderLayout.NORTH);
 
         JPanel panelListas = new JPanel(new GridLayout(1, 2, 10, 10));
+        panelListas.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JPanel panelTrabajadoresDisp = new JPanel(new BorderLayout());
+        panelTrabajadoresDisp.setBorder(BorderFactory.createTitledBorder("Trabajadores Disponibles"));
         modelTrabajadoresDisp = new DefaultListModel<>();
         listTrabajadoresDisp = new JList<>(modelTrabajadoresDisp);
         JScrollPane scrollPaneDisp = new JScrollPane(listTrabajadoresDisp);
-        panelListas.add(scrollPaneDisp);
+        panelTrabajadoresDisp.add(scrollPaneDisp, BorderLayout.CENTER);
+        labelContadorTrabajadoresDisp = new JLabel("Cantidad: 0");
+        panelTrabajadoresDisp.add(labelContadorTrabajadoresDisp, BorderLayout.SOUTH);
+        panelListas.add(panelTrabajadoresDisp);
 
+        JPanel panelTrabajadoresProyecto = new JPanel(new BorderLayout());
+        panelTrabajadoresProyecto.setBorder(BorderFactory.createTitledBorder("Trabajadores en Proyecto"));
         modelTrabajadoresProyecto = new DefaultListModel<>();
         listTrabajadoresProyecto = new JList<>(modelTrabajadoresProyecto);
         JScrollPane scrollPaneProyecto = new JScrollPane(listTrabajadoresProyecto);
-        panelListas.add(scrollPaneProyecto);
+        panelTrabajadoresProyecto.add(scrollPaneProyecto, BorderLayout.CENTER);
+        labelContadorTrabajadoresProyecto = new JLabel("Cantidad: 0");
+        panelTrabajadoresProyecto.add(labelContadorTrabajadoresProyecto, BorderLayout.SOUTH);
+        panelListas.add(panelTrabajadoresProyecto);
 
         add(panelListas, BorderLayout.CENTER);
 
@@ -74,6 +94,9 @@ public class CrearProyecto extends JFrame {
                 if (selectedWorker != null) {
                     modelTrabajadoresProyecto.addElement(selectedWorker);
                     modelTrabajadoresDisp.removeElement(selectedWorker);
+                    cantidadTrabajadoresProyecto++;
+                    cantidadTrabajadoresDisp--;
+                    actualizarContadorTrabajadores();
                 }
             }
         });
@@ -86,6 +109,9 @@ public class CrearProyecto extends JFrame {
                 if (selectedWorker != null) {
                     modelTrabajadoresDisp.addElement(selectedWorker);
                     modelTrabajadoresProyecto.removeElement(selectedWorker);
+                    cantidadTrabajadoresDisp++;
+                    cantidadTrabajadoresProyecto--;
+                    actualizarContadorTrabajadores();
                 }
             }
         });
@@ -112,30 +138,51 @@ public class CrearProyecto extends JFrame {
 
         generarIDProyecto();
 
-        // Cargar trabajadores disponibles
         cargarTrabajadoresDisponibles();
 
         textNombreProyecto.setText("Proyecto-" + generadorProyecto);
-        generadorProyecto++;
     }
 
-
-	private void generarIDProyecto() {
+    private void generarIDProyecto() {
         textIdProyecto.setText("P-" + String.valueOf(generadorProyecto));
     }
 
-	private void cargarTrabajadoresDisponibles() {
-	    List<Trabajador> trabajadores = JJDCommunications.getInstance().getListaTrabajadores();
-	    for (Trabajador trabajador : trabajadores) {
-	        if (trabajador.estaDisponible()) {
-	            modelTrabajadoresDisp.addElement(trabajador.getNombre());
-	        }
-	    }
-	}
+    private void cargarTrabajadoresDisponibles() {
+        List<Trabajador> trabajadores = JJDCommunications.getInstance().getListaTrabajadores();
+        for (Trabajador trabajador : trabajadores) {
+            if (trabajador.estaDisponible()) {
+                cantidadTrabajadoresDisp++;
+                String workerDetails = trabajador.getId() + "| " +
+                        trabajador.getNombre() + "| " +
+                        trabajador.getSexo() + "| ";
+
+                if (trabajador instanceof JefeProyecto) {
+                    workerDetails += "Jefe de Proyecto";
+                } else if (trabajador instanceof Programador) {
+                    workerDetails += "Programador";
+                } else if (trabajador instanceof Disenador) {
+                    workerDetails += "Disenador";
+                } else if (trabajador instanceof Planificador) {
+                    workerDetails += "Planificador";
+                } else {
+                    workerDetails += "Tipo desconocido";
+                }
+
+                modelTrabajadoresDisp.addElement(workerDetails);
+            }
+        }
+        labelContadorTrabajadoresDisp.setText("Cantidad: " + cantidadTrabajadoresDisp);
+    }
+
+    private void actualizarContadorTrabajadores() {
+        labelContadorTrabajadoresDisp.setText("Cantidad: " + cantidadTrabajadoresDisp);
+        labelContadorTrabajadoresProyecto.setText("Cantidad: " + cantidadTrabajadoresProyecto);
+    }
 
     private void guardarProyecto() {
         JOptionPane.showMessageDialog(this, "Proyecto guardado exitosamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
         dispose();
+        generadorProyecto++;
     }
 
     public static void main(String[] args) {
@@ -145,5 +192,4 @@ public class CrearProyecto extends JFrame {
             }
         });
     }
-
 }

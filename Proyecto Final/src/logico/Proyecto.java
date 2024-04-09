@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Proyecto {
 	
 	String idCliente;
+	String idProyecto;
 	String nombre;
 	int cantTrabajadores;
 	boolean contratoActivo;
