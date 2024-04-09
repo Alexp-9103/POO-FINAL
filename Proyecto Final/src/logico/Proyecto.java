@@ -10,9 +10,10 @@ public class Proyecto {
 	boolean contratoActivo;
 	ArrayList <Trabajador> losTrabajadores;
 	
-	public Proyecto(String idCliente, String nombre, int cantTrabajadores, boolean contratoActivo,
+	public Proyecto(String idProyecto, String nombre, int cantTrabajadores, boolean contratoActivo,
 			ArrayList<Trabajador> losTrabajadores) {
 		super();
+		this.idProyecto = idProyecto;
 		this.nombre = nombre;
 		this.cantTrabajadores = cantTrabajadores;
 		this.contratoActivo = contratoActivo;
