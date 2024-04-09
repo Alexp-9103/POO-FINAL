@@ -60,6 +60,15 @@ public class Proyecto {
 	public void setLosTrabajadores(ArrayList<Trabajador> losTrabajadores) {
 		this.losTrabajadores = losTrabajadores;
 	}
+
+	public String getIdProyecto() {
+		return idProyecto;
+	}
+
+	public void setIdProyecto(String idProyecto) {
+		this.idProyecto = idProyecto;
+	}
+	
 		
 	
 
