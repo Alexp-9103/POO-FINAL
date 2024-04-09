@@ -57,4 +57,8 @@ public class Cliente {
 		this.misProyectos = misProyectos;
 	}
 	
+    public ArrayList<Proyecto> buscarProyectosAsociados() {
+        return misProyectos;
+    }
+	
 }

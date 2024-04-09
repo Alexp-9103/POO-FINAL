@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Proyecto {
 	
-	String idCliente;
 	String idProyecto;
 	String nombre;
 	int cantTrabajadores;
@@ -14,19 +13,10 @@ public class Proyecto {
 	public Proyecto(String idCliente, String nombre, int cantTrabajadores, boolean contratoActivo,
 			ArrayList<Trabajador> losTrabajadores) {
 		super();
-		this.idCliente = idCliente;
 		this.nombre = nombre;
 		this.cantTrabajadores = cantTrabajadores;
 		this.contratoActivo = contratoActivo;
 		this.losTrabajadores = losTrabajadores;
-	}
-
-	public String getIdCliente() {
-		return idCliente;
-	}
-
-	public void setIdCliente(String idCliente) {
-		this.idCliente = idCliente;
 	}
 
 	public String getNombre() {

@@ -53,7 +53,7 @@ public class DetallesCliente extends JDialog {
         proyectosPanel.add(new JScrollPane(proyectosTable), BorderLayout.CENTER);
 
         // Obtener los proyectos asociados al cliente
-        ArrayList<Proyecto> proyectosAsociados = obtenerProyectosAsociados(cliente);
+        ArrayList<Proyecto> proyectosAsociados = cliente.buscarProyectosAsociados();
 
         // Llenar la tabla con los proyectos asociados
         DefaultTableModel model = (DefaultTableModel) proyectosTable.getModel();
@@ -72,16 +72,7 @@ public class DetallesCliente extends JDialog {
         }
     }
 
-    // Método para obtener los proyectos asociados a un cliente
-    private ArrayList<Proyecto> obtenerProyectosAsociados(Cliente cliente) {
-        ArrayList<Proyecto> proyectosAsociados = new ArrayList<>();
-        for (Proyecto proyecto : JJDCommunications.getInstance().getListaProyectos()) {
-            if (proyecto.getIdCliente().equals(cliente.getId())) {
-                proyectosAsociados.add(proyecto);
-            }
-        }
-        return proyectosAsociados;
-    }
+
 
     // Método para agregar detalles al panel
     private void agregarDetalle(JPanel panel, String labelText, String value) {

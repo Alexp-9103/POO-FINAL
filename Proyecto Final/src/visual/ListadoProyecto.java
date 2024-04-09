@@ -114,7 +114,7 @@ public class ListadoProyecto extends JDialog {
         JScrollPane scrollPane = new JScrollPane();
         tablePanel.add(scrollPane, BorderLayout.CENTER);
 
-        String[] headers = {"Nombre", "ID Cliente", "Cantidad de Trabajadores", "Contrato Activo"};
+        String[] headers = {"ID Proyecto", " Nombre", "Cantidad de Trabajadores", "Contrato Activo"};
 
         JTable table = new JTable();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -147,8 +147,8 @@ public class ListadoProyecto extends JDialog {
             }
             if (agregar) {
                 model.addRow(new Object[]{
+                		proyecto.getIdProyecto(),
                         proyecto.getNombre(),
-                        proyecto.getIdCliente(),
                         proyecto.getCantTrabajadores(),
                         proyecto.isContratoActivo() ? "Si" : "No"
                 });
