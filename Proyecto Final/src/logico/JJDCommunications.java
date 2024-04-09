@@ -227,7 +227,25 @@ public class JJDCommunications implements Serializable {
         }
     }
 
-    
+    public static void removeTrabajador(String selectedWorker) {
+        String[] details = selectedWorker.split("\\|");
+        String tipoTrabajador = details[3].trim();
+        switch (tipoTrabajador) {
+            case "Jefe de Proyecto":
+                cantidadJefeProyecto--;
+                break;
+            case "Programador":
+                cantidadProgramador--;
+                break;
+            case "Disenador":
+                cantidadDisenador--;
+                break;
+            case "Planificador":
+                cantidadPlanificador--;
+                break;
+        }
+    }
+
     
     
     //Por si se necesita
