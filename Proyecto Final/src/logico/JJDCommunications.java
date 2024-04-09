@@ -18,8 +18,15 @@ public class JJDCommunications implements Serializable {
     private ArrayList<Contrato> ListaContratos;
     private static final String FILE_NAME = "data.dat";
 	public static JJDCommunications JJD = null;
-    private String[] ListaSecundaria;
-    private String[] auxiliarListTrabajadores;
+    private static final int MAX_JEFE_PROYECTO = 1;
+    private static final int MAX_PROGRAMADOR = 3;
+    private static final int MAX_DISENADOR = 2;
+    private static final int MAX_PLANIFICADOR = 1;
+
+    private static int cantidadJefeProyecto = 0;
+    private static int cantidadProgramador = 0;
+    private static int cantidadDisenador = 0;
+    private static int cantidadPlanificador = 0;
     
     public JJDCommunications() {
         ListaTrabajadores = new ArrayList<>();
@@ -138,25 +145,6 @@ public class JJDCommunications implements Serializable {
         ListaProyectos.add(proyecto);
     }
     
-    public void insertarContrato(Contrato contrato){
-        ListaContratos.add(contrato);
-    }
-    public String[] getListaSecundaria() {
-  		return ListaSecundaria;
-  	}
-
-  	public void setListaSecundaria(String[] listaSecundaria) {
-  		ListaSecundaria = listaSecundaria;
-  	}
-
-  	public String[] getAuxiliarListTrabajadores() {
-  		return auxiliarListTrabajadores;
-  	}
-
-  	public void setAuxiliarListTrabajadores(String[] auxiliarListTrabajadores) {
-  		this.auxiliarListTrabajadores = auxiliarListTrabajadores;
-  	}
-
     
 	public Cliente BuscarCliente(String id) {
 			for(Cliente cliente : ListaClientes) {
@@ -188,7 +176,7 @@ public class JJDCommunications implements Serializable {
 
     public Proyecto buscarProyecto(String idProyecto) {
         for (Proyecto proyecto : ListaProyectos) {
-            if (proyecto.getIdCliente().equalsIgnoreCase(idProyecto)) {
+            if (proyecto.getIdProyecto().equalsIgnoreCase(idProyecto)) {
                 return proyecto;
             }
         }
@@ -202,10 +190,42 @@ public class JJDCommunications implements Serializable {
                 return contrato;
             }
         }
-        return null; // Si no se encuentra ningún contrato con el ID de proyecto proporcionado
+        return null; // Si no se encuentra ningï¿½n contrato con el ID de proyecto proporcionado
     }
 
+    public static boolean puedeAgregarTrabajador(String tipoTrabajador) {
+        switch (tipoTrabajador) {
+            case "Jefe de Proyecto":
+                return cantidadJefeProyecto < MAX_JEFE_PROYECTO;
+            case "Programador":
+                return cantidadProgramador < MAX_PROGRAMADOR;
+            case "Disenador":
+                return cantidadDisenador < MAX_DISENADOR;
+            case "Planificador":
+                return cantidadPlanificador < MAX_PLANIFICADOR;
+            default:
+                return false;
+        }
+    }
 
+    public static void agregarTrabajador(String workerDetails) {
+        String[] details = workerDetails.split("\\|");
+        String tipoTrabajador = details[3].trim();
+        switch (tipoTrabajador) {
+            case "Jefe de Proyecto":
+                cantidadJefeProyecto++;
+                break;
+            case "Programador":
+                cantidadProgramador++;
+                break;
+            case "Disenador":
+                cantidadDisenador++;
+                break;
+            case "Planificador":
+                cantidadPlanificador++;
+                break;
+        }
+    }
 
     
     
