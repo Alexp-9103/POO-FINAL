@@ -2,6 +2,7 @@ package logico;
 
 import java.util.Date;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -50,6 +51,9 @@ public class JJDCommunications implements Serializable {
         try (FileInputStream fileIn = new FileInputStream(FILE_NAME);
              ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
             jjd = (JJDCommunications) objectIn.readObject();
+        } catch (FileNotFoundException e) {
+            // El archivo no existe, puede ser la primera ejecución
+            System.out.println("No se encontró el archivo de datos. Se creará uno nuevo.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -248,17 +252,23 @@ public class JJDCommunications implements Serializable {
 
     
     
-    //Por si se necesita
+
     
-/*    public Contrato BuscarContrato(String id) {
+    public Contrato BuscarContrato(String idContrato) {
         for (Contrato contrato : ListaContratos) {
-            if (contrato.getId().equalsIgnoreCase(id)) {
+            if (contrato.getIdContrato().equalsIgnoreCase(idContrato)) {
                 return contrato;
             }
         }
         
         return null;
-    } */ 
+    }
+
+
+    public void insertarContrato(Contrato contrato) {
+        ListaContratos.add(contrato);
+    }
+
     	
 
 }

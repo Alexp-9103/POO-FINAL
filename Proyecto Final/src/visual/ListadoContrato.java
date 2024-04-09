@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.BorderLayout;
@@ -82,16 +84,58 @@ public class ListadoContrato extends JDialog {
         }
         {
             JPanel buttonPane = new JPanel();
-            buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+            buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
             {
-                JButton btnSalir = new JButton("Salir");
-                btnSalir.addActionListener(new ActionListener() {
+                JButton btnVerDetalles = new JButton("Ver Detalles");
+                btnVerDetalles.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        dispose();
+                        int selectedRow = table.getSelectedRow();
+                        if (selectedRow != -1) {
+                            String idContrato = (String) model.getValueAt(selectedRow, 0);
+                            DetallesContrato detallesContrato = new DetallesContrato(idContrato);
+                            detallesContrato.setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Por favor, seleccione un Contrato para ver los detalles.");
+                        }
                     }
                 });
-                buttonPane.add(btnSalir);
+                buttonPane.add(btnVerDetalles);
+            }
+            {
+                JButton btnFinalizar = new JButton("Finalizar");
+                btnFinalizar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        int selectedRow = table.getSelectedRow();
+                        if (selectedRow != -1) {
+                            String idContrato = (String) model.getValueAt(selectedRow, 0);
+                            // Implementa la lógica para finalizar el contrato con el idContrato
+                            cargarContratos(); // Recargar la tabla después de finalizar
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Por favor, seleccione un contrato para finalizar.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                });
+                buttonPane.add(btnFinalizar);
+            }
+            {
+                JButton btnEliminar = new JButton("Eliminar");
+                btnEliminar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        int selectedRow = table.getSelectedRow();
+                        if (selectedRow != -1) {
+                            int option = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea eliminar este contrato?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
+                            if (option == JOptionPane.YES_OPTION) {
+                                String idContrato = (String) model.getValueAt(selectedRow, 0);
+                                // Implementa la lógica para eliminar el contrato con el idContrato
+                                cargarContratos(); // Recargar la tabla después de eliminar
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Por favor, seleccione un contrato para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                });
+                buttonPane.add(btnEliminar);
             }
         }
     }

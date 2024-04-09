@@ -156,6 +156,7 @@ public class ListadoProyecto extends JDialog {
         }
     }
     
+    
     // Método para abrir la interfaz de detalles del proyecto
     private void abrirDetallesProyecto(String nombreProyecto) {
         // Crear una instancia de la clase DetallesProyecto y pasar el nombre del proyecto como parámetro
