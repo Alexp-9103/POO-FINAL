@@ -58,9 +58,7 @@ public class ListadoTrabajador extends JDialog {
         JScrollPane scrollPane = new JScrollPane();
         tablePanel.add(scrollPane, BorderLayout.CENTER);
         
-
-        String[] headers = {"ID", "Nombre", "Apellido", "Direcci�n", "Sexo", "Edad", "Salario por Hora", "Tipo de Trabajador", "Evaluaci�n"};
-
+        String[] headers = {"ID", "Nombre", "Apellido", "Dirección", "Sexo", "Edad", "Salario por Hora", "Tipo de Trabajador", "Evaluación"};
 
         JTable table = new JTable();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
