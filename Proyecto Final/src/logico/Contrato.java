@@ -82,6 +82,11 @@ public class Contrato implements Serializable {
 
 	}
 	
+	@Override
+	public String toString() {
+	    return "ID: " + getIdContrato() + " - Proyecto: " + getNombreProyecto();
+	}
+
     public double calcularPenalizacion(Date fechaActual) {
         long diasRetraso = (fechaActual.getTime() - fechaEntrega.getTime()) / (1000 * 60 * 60 * 24);
         double penalizacion = 0.01 * diasRetraso;

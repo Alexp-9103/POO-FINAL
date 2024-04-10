@@ -69,21 +69,21 @@ public class JJDCommunications implements Serializable {
         File archivoDatos = new File(FILE_NAME);
         if (!archivoDatos.exists()) {
             System.out.println("El archivo 'data.dat' no existe.");
-            return; // Terminar el método si el archivo no existe
+            return; // Terminar el mï¿½todo si el archivo no existe
         }
 
         try (FileInputStream fileIn = new FileInputStream(archivoDatos);
              ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
             JJDCommunications instancia = (JJDCommunications) objectIn.readObject();
-            // Copiar los datos de la instancia leída al objeto actual
+            // Copiar los datos de la instancia leï¿½da al objeto actual
             this.ListaTrabajadores = instancia.ListaTrabajadores;
             this.ListaClientes = instancia.ListaClientes;
             this.ListaProyectos = instancia.ListaProyectos;
             this.ListaContratos = instancia.ListaContratos;
-            // También puedes copiar otras variables de instancia si es necesario
+            // Tambiï¿½n puedes copiar otras variables de instancia si es necesario
         } catch (FileNotFoundException e) {
-            // Manejar la excepción si el archivo no existe
-            System.out.println("El archivo 'data.dat' no se encontró.");
+            // Manejar la excepciï¿½n si el archivo no existe
+            System.out.println("El archivo 'data.dat' no se encontrï¿½.");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error al leer los datos desde el archivo 'data.dat'");
             e.printStackTrace();
@@ -100,13 +100,13 @@ public class JJDCommunications implements Serializable {
             } catch (IOException e) {
                 System.out.println("Error al crear el archivo 'usuarios.dat'");
                 e.printStackTrace();
-                return; // Terminar el método si ocurre un error al crear el archivo
+                return; // Terminar el mï¿½todo si ocurre un error al crear el archivo
             }
         }
 
         if (archivoUsuarios.length() == 0) {
-            System.out.println("El archivo 'usuarios.dat' está vacío.");
-            return; // Terminar el método si el archivo está vacío
+            System.out.println("El archivo 'usuarios.dat' estï¿½ vacï¿½o.");
+            return; // Terminar el mï¿½todo si el archivo estï¿½ vacï¿½o
         }
 
         try (FileInputStream fileIn = new FileInputStream(archivoUsuarios);
@@ -114,8 +114,8 @@ public class JJDCommunications implements Serializable {
             ArrayList<User> usuarios = (ArrayList<User>) objectIn.readObject();
             Control.getInstance().setUsuarios(usuarios);
         } catch (FileNotFoundException e) {
-            // Manejar la excepción si el archivo no existe
-            System.out.println("El archivo 'usuarios.dat' no se encontró.");
+            // Manejar la excepciï¿½n si el archivo no existe
+            System.out.println("El archivo 'usuarios.dat' no se encontrï¿½.");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error al leer los usuarios desde el archivo 'usuarios.dat'");
             e.printStackTrace();
@@ -270,7 +270,7 @@ public class JJDCommunications implements Serializable {
                 // Obtener el proyecto asociado al contrato
                 Proyecto proyecto = buscarProyecto(contrato.getIdProyecto());
                 if (proyecto != null && !proyectos.contains(proyecto)) {
-                    // Si el proyecto no está en la lista de proyectos asociados al cliente, agregarlo
+                    // Si el proyecto no estï¿½ en la lista de proyectos asociados al cliente, agregarlo
                     proyectos.add(proyecto);
                 }
             }
@@ -394,8 +394,19 @@ public class JJDCommunications implements Serializable {
         }
         return null;
     }
+    
+    
 
 
+    public void prorrogarContrato(Contrato contrato, int diasProrroga) {
+        // Obtener la fecha de entrega actual del contrato
+        Date fechaEntregaActual = contrato.getFechaEntrega();
+        // Calcular la nueva fecha de entrega sumando los dÃ­as de prÃ³rroga
+        long tiempoEnMilisegundos = fechaEntregaActual.getTime() + (diasProrroga * 24L * 60 * 60 * 1000);
+        Date nuevaFechaEntrega = new Date(tiempoEnMilisegundos);
+        // Actualizar la fecha de entrega del contrato
+        contrato.setFechaEntrega(nuevaFechaEntrega);
+    }
 
 
     

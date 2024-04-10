@@ -6,18 +6,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
 import logico.Contrato;
 import logico.JJDCommunications;
 import logico.Proyecto;
-
-import java.util.ArrayList;
 
 public class ProrrogarContrato extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
     private JComboBox<Contrato> comboBoxContratos;
     private JSpinner spinnerDiasProrroga;
+    private JJDCommunications jjd;
 
     /**
      * Launch the application.
@@ -31,12 +29,13 @@ public class ProrrogarContrato extends JDialog {
             e.printStackTrace();
         }
     }
+
     /**
      * Create the dialog.
      */
     public ProrrogarContrato() {
         setTitle("Prorrogar Contrato");
-        setBounds(100, 100, 400, 200);
+        setBounds(100, 100, 500, 200); // Ajustar el ancho del JFrame
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -47,12 +46,10 @@ public class ProrrogarContrato extends JDialog {
         contentPanel.add(lblContratoAProrrogar);
 
         comboBoxContratos = new JComboBox<>();
-        comboBoxContratos.setBounds(170, 29, 200, 20);
-        // Aquí deberías cargar los contratos disponibles en el comboBox
-        // cargarContratosDisponibles();
+        comboBoxContratos.setBounds(170, 29, 300, 20); // Ajustar el ancho del JComboBox
         contentPanel.add(comboBoxContratos);
 
-        JLabel lblDiasDeProrroga = new JLabel("Días de Prórroga:");
+        JLabel lblDiasDeProrroga = new JLabel("DÃ­as de PrÃ³rroga:");
         lblDiasDeProrroga.setBounds(10, 70, 150, 14);
         contentPanel.add(lblDiasDeProrroga);
 
@@ -76,8 +73,27 @@ public class ProrrogarContrato extends JDialog {
                 dispose();
             }
         });
-        btnCancelar.setBounds(85, 110, 89, 23);
+        btnCancelar.setBounds(310, 110, 89, 23); // Ajustar la posiciÃ³n del botÃ³n Cancelar
         contentPanel.add(btnCancelar);
+
+        // Inicializar la instancia de JJDCommunications
+        jjd = JJDCommunications.getInstance();
+        // Cargar los contratos disponibles
+        cargarContratosDisponibles();
+    }
+
+
+    private void cargarContratosDisponibles() {
+        comboBoxContratos.removeAllItems();
+
+        ArrayList<Proyecto> listaProyectos = jjd.getListaProyectos();
+
+        for (Proyecto proyecto : listaProyectos) {
+            if (proyecto.isContratoActivo()) {
+                Contrato contrato = jjd.obtenerContratoPorProyecto(proyecto.getIdProyecto());
+                comboBoxContratos.addItem(contrato);
+            }
+        }
     }
 
     private void prorrogarContrato() {
@@ -85,49 +101,15 @@ public class ProrrogarContrato extends JDialog {
             int diasProrroga = (int) spinnerDiasProrroga.getValue();
             Contrato contratoSeleccionado = (Contrato) comboBoxContratos.getSelectedItem();
             if (contratoSeleccionado != null) {
-                // Obtener la fecha de entrega actual del contrato
-                Date fechaEntregaActual = contratoSeleccionado.getFechaEntrega();
-                // Calcular la nueva fecha de entrega sumando los días de prorroga
-                long tiempoEnMilisegundos = fechaEntregaActual.getTime() + (diasProrroga * 24L * 60 * 60 * 1000);
-                Date nuevaFechaEntrega = new Date(tiempoEnMilisegundos);
-                // Actualizar la fecha de entrega del contrato
-                contratoSeleccionado.setFechaEntrega(nuevaFechaEntrega);
-                JOptionPane.showMessageDialog(this, "Contrato prorrogado exitosamente.\nNueva fecha de entrega: " + nuevaFechaEntrega, "Prórroga Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                // Prorrogar el contrato
+                jjd.prorrogarContrato(contratoSeleccionado, diasProrroga);
+                JOptionPane.showMessageDialog(this, "Contrato prorrogado exitosamente.\nNueva fecha de entrega: " + contratoSeleccionado.getFechaEntrega(), "PrÃ³rroga Exitosa", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Seleccione un contrato antes de continuar.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Ingrese un número válido de días de prorroga.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ingrese un nÃºmero vÃ¡lido de dÃ­as de prorroga.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    private void cargarContratosDisponibles() {
-        // Limpiar el combo box antes de cargar los contratos
-        comboBoxContratos.removeAllItems();
-        
-        // Obtener la instancia de JJDCommunications para acceder a la lista de proyectos
-        JJDCommunications jjd = JJDCommunications.getInstance();
-        // Obtener la lista de proyectos
-        ArrayList<Proyecto> proyectos = jjd.getListaProyectos();
-        
-        // Iterar sobre la lista de proyectos
-        for (Proyecto proyecto : proyectos) {
-            // Verificar si el proyecto está activo
-            if (proyecto.isContratoActivo()) { // Suponiendo que tienes un método isContratoActivo en la clase Proyecto
-                // Obtener el contrato asociado al proyecto
-                Contrato contrato = jjd.obtenerContratoPorProyecto(proyecto.getIdProyecto());
-                // Verificar si se encontró un contrato asociado al proyecto y si está en prórroga
-                if (contrato != null && contrato.isProrroga()) { 
-                    // Agregar el contrato al combo box
-                    comboBoxContratos.addItem(contrato);
-                }
-            }
-        }
-    }
-
-
-
-
-
 }
