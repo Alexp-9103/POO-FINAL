@@ -69,11 +69,11 @@ public class Proyecto implements Serializable {
 	public boolean isEntregado() {
 	    return Entregado;
 	}
-
-
-
 	
-		
-	
+    @Override
+    public String toString() {
+        return nombre;
+    }
+			
 
 }
