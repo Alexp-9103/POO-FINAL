@@ -60,8 +60,8 @@ public class JJDCommunications implements Serializable {
              ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
             jjd = (JJDCommunications) objectIn.readObject();
         } catch (FileNotFoundException e) {
-            // El archivo no existe, puede ser la primera ejecución
-            System.out.println("No se encontró el archivo de datos. Se creará uno nuevo.");
+            // El archivo no existe, puede ser la primera ejecuciÃ³n
+            System.out.println("No se encontrÃ³ el archivo de datos. Se crearÃ¡ uno nuevo.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -202,7 +202,7 @@ public class JJDCommunications implements Serializable {
                 return contrato;
             }
         }
-        return null; // Si no se encuentra ningï¿½n contrato con el ID de proyecto proporcionado
+        return null; // Si no se encuentra ningÃ¯Â¿Â½n contrato con el ID de proyecto proporcionado
     }
 
     public static boolean puedeAgregarTrabajador(String tipoTrabajador) {
@@ -279,16 +279,24 @@ public class JJDCommunications implements Serializable {
 
 
     public boolean existeTrabajadorConIdentificacion(String id) {
-        // Iterar sobre la lista de trabajadores para verificar si hay alguno con la misma identificación
+        // Iterar sobre la lista de trabajadores para verificar si hay alguno con la misma identificaciÃ³n
         for (Trabajador trabajador : ListaTrabajadores) { // Supongamos que listaTrabajadores es tu lista de trabajadores
-            if (trabajador.getId().equals(id)) { // Comparar la identificación del trabajador con la identificación proporcionada
-                return true; // Si se encuentra un trabajador con la misma identificación, retornar true
+            if (trabajador.getId().equals(id)) { // Comparar la identificaciÃ³n del trabajador con la identificaciÃ³n proporcionada
+                return true; // Si se encuentra un trabajador con la misma identificaciÃ³n, retornar true
             }
         }
-        return false; // Si no se encuentra ningún trabajador con la misma identificación, retornar false
+        return false; // Si no se encuentra ningÃºn trabajador con la misma identificaciÃ³n, retornar false
     }
 
-
+    public Trabajador buscarTrabajadorPorId(String workerId) {
+        for (Trabajador trabajador : ListaTrabajadores) {
+            if (trabajador.getId().equals(workerId)) {
+                return trabajador; 
+            }
+        }
+        return null;
+    }
+    
     	
 
 }
