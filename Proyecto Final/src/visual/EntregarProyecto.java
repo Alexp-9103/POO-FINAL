@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import logico.Cliente;
 import logico.JJDCommunications;
 import logico.Proyecto;
 
@@ -41,10 +44,17 @@ public class EntregarProyecto extends JDialog {
 
     private void cargarProyectos() {
         JJDCommunications jjd = JJDCommunications.getInstance();
-        for (Proyecto proyecto : jjd.getListaProyectos()) {
-            proyectosComboBox.addItem(proyecto);
+      
+        ArrayList<Cliente> clientes = jjd.getListaClientes();
+        proyectosComboBox.removeAllItems();
+        for (Cliente cliente : clientes) {
+            ArrayList<Proyecto> proyectosCliente = cliente.getMisProyectos();
+            for (Proyecto proyecto : proyectosCliente) {
+                proyectosComboBox.addItem(proyecto);
+            }
         }
     }
+
 
     private void confirmarEntregaProyecto() {
         Proyecto proyectoSeleccionado = (Proyecto) proyectosComboBox.getSelectedItem();
@@ -58,12 +68,14 @@ public class EntregarProyecto extends JDialog {
         int confirmacion = JOptionPane.showConfirmDialog(this,
                 "¿Estás seguro de que deseas entregar el proyecto \"" + nombreProyecto + "\"?",
                 "Confirmar Entrega de Proyecto", JOptionPane.YES_NO_OPTION);
-        
+
         if (confirmacion == JOptionPane.YES_OPTION) {
+            proyectoSeleccionado.setEntregado(true); 
             JOptionPane.showMessageDialog(this, "¡El proyecto \"" + nombreProyecto + "\" ha sido entregado con éxito!",
                     "Proyecto Entregado", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
