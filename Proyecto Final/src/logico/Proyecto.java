@@ -10,9 +10,10 @@ public class Proyecto implements Serializable {
 	String nombre;
 	int cantTrabajadores;
 	boolean contratoActivo;
+	boolean Entregado;
 	ArrayList <Trabajador> losTrabajadores;
 	
-	public Proyecto(String idProyecto, String nombre, int cantTrabajadores, boolean contratoActivo,
+	public Proyecto(String idProyecto, String nombre, int cantTrabajadores, boolean contratoActivo, boolean Entregado,
 			ArrayList<Trabajador> losTrabajadores) {
 		super();
 		this.idProyecto = idProyecto;
@@ -45,6 +46,9 @@ public class Proyecto implements Serializable {
 	public void setContratoActivo(boolean contratoActivo) {
 		this.contratoActivo = contratoActivo;
 	}
+	public void setEntregado(boolean Entregado) {
+		this.Entregado = Entregado;
+	}
 
 	public ArrayList<Trabajador> getLosTrabajadores() {
 		return losTrabajadores;
@@ -61,6 +65,11 @@ public class Proyecto implements Serializable {
 	public void setIdProyecto(String idProyecto) {
 		this.idProyecto = idProyecto;
 	}
+
+	public boolean isEntregado() {
+	    return Entregado;
+	}
+
 	
 		
 	

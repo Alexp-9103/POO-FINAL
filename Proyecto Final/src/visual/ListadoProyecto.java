@@ -55,7 +55,7 @@ public class ListadoProyecto extends JDialog {
 
         comboBox = new JComboBox<>();
         comboBox.addActionListener(e -> loadProyectos(comboBox.getSelectedIndex()));
-        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"<Todos>", "En Progreso", "Finalizado", "Pendiente"}));
+        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"<Todos>", "En Progreso", "No Entregado", "Entregado"}));
         panel.add(comboBox);
 
         JPanel buttonPanel = new JPanel();
@@ -103,8 +103,11 @@ public class ListadoProyecto extends JDialog {
                 case 1: // En Progreso
                     agregar = proyecto.isContratoActivo();
                     break;
-                case 2: // Finalizado
-                    agregar = !proyecto.isContratoActivo();
+                case 2: // Finalizado (No Entregado)
+                    agregar = !proyecto.isContratoActivo() && !proyecto.isEntregado();
+                    break;
+                case 3: // Entregado
+                    agregar = proyecto.isEntregado();
                     break;
             }
             if (agregar) {
@@ -117,6 +120,7 @@ public class ListadoProyecto extends JDialog {
             }
         }
     }
+
 
     private void verDetallesProyecto() {
         int selectedRow = table.getSelectedRow();

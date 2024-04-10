@@ -162,6 +162,9 @@ public class RegContrato extends JDialog {
 
             JOptionPane.showMessageDialog(this, "Contrato registrado exitosamente.");
             generarIdContrato();
+         // Actualizar el estado del proyecto a "Activo"
+            proyecto.setContratoActivo(true);
+
         } else {
             JOptionPane.showMessageDialog(this, "Error: Cliente o proyecto seleccionado no encontrado.");
         }

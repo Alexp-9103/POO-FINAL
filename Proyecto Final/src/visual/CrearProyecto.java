@@ -214,7 +214,7 @@ public class CrearProyecto extends JFrame {
         }
         
         if (!trabajadoresProyecto.isEmpty()) {
-            Proyecto proyecto = new Proyecto(idProyecto, nombreProyecto, trabajadoresProyecto.size(), false, trabajadoresProyecto);     JJDCommunications.getInstance().insertarProyecto(proyecto);
+            Proyecto proyecto = new Proyecto(idProyecto, nombreProyecto, trabajadoresProyecto.size(), false, false, trabajadoresProyecto);     JJDCommunications.getInstance().insertarProyecto(proyecto);
 
             JOptionPane.showMessageDialog(this, "Proyecto guardado exitosamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
             dispose();

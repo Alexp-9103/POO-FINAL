@@ -25,6 +25,7 @@ public class RegTrabajador extends JDialog {
     private JPanel panelJefeProyecto, panelDiseniador, panelProgramador, panelPlanificador;
     private JTextField textid;
     private JTextField textnombre;
+    private JTextField textApellido;
     private JTextField textdireccion;
     private JTextField textsalario;
     private JSpinner spinnerTrabajadores;
@@ -105,20 +106,29 @@ public class RegTrabajador extends JDialog {
         textid.setColumns(10);
 
         // Nombre
-        JLabel lblnombre = new JLabel("Nombre Completo:");
+        JLabel lblnombre = new JLabel("Nombre:");
         lblnombre.setBounds(12, 70, 127, 16);
         datosPersonalesPanel.add(lblnombre);
         textnombre = new JTextField();
-        textnombre.setBounds(12, 90, 385, 22);
+        textnombre.setBounds(12, 90, 193, 22);
         datosPersonalesPanel.add(textnombre);
         textnombre.setColumns(10);
+        
+     // Apellido
+        JLabel lblApellido = new JLabel("Apellido:");
+        lblApellido.setBounds(229, 70, 84, 16);
+        datosPersonalesPanel.add(lblApellido);
+        textApellido = new JTextField();
+        textApellido.setBounds(229, 90, 205, 22);
+        datosPersonalesPanel.add(textApellido);
+        textApellido.setColumns(10);
 
         // Direccion
         JLabel lbldireccion = new JLabel("Direccion:");
         lbldireccion.setBounds(12, 115, 84, 16);
         datosPersonalesPanel.add(lbldireccion);
         textdireccion = new JTextField();
-        textdireccion.setBounds(12, 135, 385, 22);
+        textdireccion.setBounds(12, 135, 422, 22);
         datosPersonalesPanel.add(textdireccion);
         textdireccion.setColumns(10);
 
@@ -134,16 +144,16 @@ public class RegTrabajador extends JDialog {
         group.add(rdbtnmasculino);
 
         rdbtnfemenino = new JRadioButton("Femenino");
-        rdbtnfemenino.setBounds(103, 190, 89, 25);
+        rdbtnfemenino.setBounds(98, 190, 89, 25);
         datosPersonalesPanel.add(rdbtnfemenino);
         group.add(rdbtnfemenino);
 
         // Edad
         JLabel lbledad = new JLabel("Edad:");
-        lbledad.setBounds(198, 173, 56, 16);
+        lbledad.setBounds(208, 172, 56, 16);
         datosPersonalesPanel.add(lbledad);
         spinneredad = new JSpinner(); // Inicializa la variable de instancia spinneredad
-        spinneredad.setBounds(198, 193, 56, 22);
+        spinneredad.setBounds(208, 193, 56, 22);
         datosPersonalesPanel.add(spinneredad);
 
         // Salario
@@ -153,7 +163,7 @@ public class RegTrabajador extends JDialog {
 
         textsalario = new JTextField();
         textsalario.setText("0");
-        textsalario.setBounds(312, 193, 116, 22);
+        textsalario.setBounds(312, 193, 122, 22);
         datosPersonalesPanel.add(textsalario);
         textsalario.setColumns(10);
 
@@ -384,6 +394,7 @@ private void registrarTrabajador() {
     // Obtener los valores ingresados por el usuario
     String id = textid.getText();
     String nombre = textnombre.getText();
+    String apellido = textApellido.getText(); // Obtener el valor del campo de apellido
     String direccion = textdireccion.getText();
     char sexo;
     if (rdbtnmasculino.isSelected()) {
