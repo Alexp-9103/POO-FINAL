@@ -107,6 +107,11 @@ public abstract class Trabajador implements Serializable {
     public void aumentarProyectos() {
         cantidadProyectos++;
     }
+    
+    public void desasociarProyecto() {
+        cantidadProyectos--;
+    }
+
 	
     public abstract boolean estaDisponible();
     

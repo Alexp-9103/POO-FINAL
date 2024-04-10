@@ -217,6 +217,23 @@ public class JJDCommunications implements Serializable {
 			return null;
 		}
 	
+	public void desasociarTrabajadoresProyecto(String idProyecto) {
+	    for (Proyecto proyecto : ListaProyectos) {
+	        if (proyecto.getIdProyecto().equals(idProyecto)) {
+	            // Obtener la lista de trabajadores asociados al proyecto
+	            ArrayList<Trabajador> trabajadoresProyecto = proyecto.getTrabajadores();
+	            // Establecer el estado de disponibilidad de los trabajadores asociados a true
+	            for (Trabajador trabajador : trabajadoresProyecto) {
+	                trabajador.estaDisponible(true);
+	            }
+	            // Eliminar el proyecto de la lista de proyectos
+	            ListaProyectos.remove(proyecto);
+	            break;
+	        }
+	    }
+	}
+
+	
     public Trabajador BuscarTrabajador(String id) {
         for (Trabajador trabajador : ListaTrabajadores) {
             if (trabajador.getId().equalsIgnoreCase(id)) {
