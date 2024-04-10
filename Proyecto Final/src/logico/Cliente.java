@@ -64,9 +64,14 @@ public class Cliente implements Serializable {
     }
 	
     public void agregarProyecto(Proyecto proyecto) {
-        if (!misProyectos.contains(proyecto)) { // Verificar si el proyecto ya está en la lista
+        if (!misProyectos.contains(proyecto)) { // Verificar si el proyecto ya estï¿½ en la lista
             misProyectos.add(proyecto); // Agregar el proyecto a la lista de proyectos asociados al cliente
         }
+    }
+    
+    @Override
+    public String toString() {
+        return nombre;
     }
 
 }
