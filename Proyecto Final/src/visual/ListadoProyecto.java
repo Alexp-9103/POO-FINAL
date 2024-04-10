@@ -4,9 +4,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-
-import logico.Proyecto;
 import logico.JJDCommunications;
+import logico.Proyecto;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +17,7 @@ public class ListadoProyecto extends JDialog {
     private DefaultTableModel model;
     private JComboBox<String> comboBox;
     private JTable table;
-
+    
     /**
      * Launch the application.
      */
@@ -27,20 +26,17 @@ public class ListadoProyecto extends JDialog {
             ListadoProyecto dialog = new ListadoProyecto();
             dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             dialog.setVisible(true);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+   }
 
 
-    /**
-     * Create the dialog.
-     */
     public ListadoProyecto() {
-    	setTitle("Listado De Proyecto");
+        setTitle("Listado De Proyecto");
         setSize(841, 400);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         JPanel contentPanel = new JPanel();
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -51,8 +47,7 @@ public class ListadoProyecto extends JDialog {
         panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         contentPanel.add(panel, BorderLayout.NORTH);
         panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 15));
-        
-        
+
         JLabel lblEstadoDelProyecto = new JLabel("Estado del Proyecto:");
         lblEstadoDelProyecto.setHorizontalAlignment(SwingConstants.LEFT);
         panel.add(lblEstadoDelProyecto);
@@ -66,45 +61,12 @@ public class ListadoProyecto extends JDialog {
         contentPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         JButton btnVerDetalles = new JButton("Ver Detalles");
-        btnVerDetalles.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow == -1) {
-                    JOptionPane.showMessageDialog(ListadoProyecto.this, "Debe seleccionar un proyecto de la tabla", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    // Obtener el nombre del proyecto seleccionado
-                    String nombreProyecto = (String) table.getValueAt(selectedRow, 0);
-                    // Llamar al método para abrir la interfaz de detalles del proyecto
-                    abrirDetallesProyecto(nombreProyecto);
-                }
-            }
-        });
+        btnVerDetalles.addActionListener(e -> verDetallesProyecto());
         buttonPanel.add(btnVerDetalles);
 
-
-
-
         JButton btnEliminarProyecto = new JButton("Eliminar Proyecto");
-        btnEliminarProyecto.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow == -1) {
-                    JOptionPane.showMessageDialog(ListadoProyecto.this, "Debe seleccionar un proyecto de la tabla", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    int confirm = JOptionPane.showConfirmDialog(ListadoProyecto.this, "¿Está seguro que desea eliminar el proyecto?", "Confirmación", JOptionPane.YES_NO_OPTION);
-                    if (confirm == JOptionPane.YES_OPTION) {
-                        // Obtener el ID del proyecto seleccionado en la tabla
-                        String idProyecto = (String) model.getValueAt(selectedRow, 0);
-                        // Eliminar el proyecto utilizando el método eliminarProyecto de JJDCommunications
-                        JJDCommunications.getInstance().eliminarProyecto(idProyecto);
-                        // Actualizar la tabla
-                        loadProyectos(comboBox.getSelectedIndex());
-                    }
-                }
-            }
-        });
+        btnEliminarProyecto.addActionListener(e -> eliminarProyecto());
         buttonPanel.add(btnEliminarProyecto);
-
 
         JPanel tablePanel = new JPanel();
         tablePanel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -116,7 +78,7 @@ public class ListadoProyecto extends JDialog {
 
         String[] headers = {"ID Proyecto", " Nombre", "Cantidad de Trabajadores", "Contrato Activo"};
 
-        JTable table = new JTable();
+        table = new JTable();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(table);
 
@@ -130,7 +92,7 @@ public class ListadoProyecto extends JDialog {
     private void loadProyectos(int index) {
         model.setRowCount(0);
         ArrayList<Proyecto> proyectos = JJDCommunications.getInstance().getListaProyectos();
-        
+
         for (Proyecto proyecto : proyectos) {
             boolean agregar = false;
             switch (index) {
@@ -143,28 +105,41 @@ public class ListadoProyecto extends JDialog {
                 case 2: // Finalizado
                     agregar = !proyecto.isContratoActivo();
                     break;
-
             }
             if (agregar) {
                 model.addRow(new Object[]{
-                		proyecto.getIdProyecto(),
+                        proyecto.getIdProyecto(),
                         proyecto.getNombre(),
                         proyecto.getCantTrabajadores(),
-                        proyecto.isContratoActivo() ? "Si" : "No"
+                        proyecto.isContratoActivo() ? "Sí" : "No"
                 });
             }
         }
     }
-    
-    
-    // Método para abrir la interfaz de detalles del proyecto
-    private void abrirDetallesProyecto(String nombreProyecto) {
-        // Crear una instancia de la clase DetallesProyecto y pasar el nombre del proyecto como parámetro
-        DetallesProyecto detallesProyecto = new DetallesProyecto();
-        // Configurar la ventana de detalles del proyecto
-        detallesProyecto.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        detallesProyecto.setVisible(true);
-        detallesProyecto.pack();
-        detallesProyecto.setLocationRelativeTo(null); // Centrar la ventana en la pantalla
+
+    private void verDetallesProyecto() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un proyecto de la tabla", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String nombreProyecto = (String) table.getValueAt(selectedRow, 1);
+            DetallesProyecto detallesProyecto = new DetallesProyecto(nombreProyecto);
+            detallesProyecto.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            detallesProyecto.setVisible(true);
+        }
+    }
+
+    private void eliminarProyecto() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un proyecto de la tabla", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar el proyecto?", "Confirmación", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                String idProyecto = (String) model.getValueAt(selectedRow, 0);
+                JJDCommunications.getInstance().eliminarProyecto(idProyecto);
+                loadProyectos(comboBox.getSelectedIndex());
+            }
+        }
     }
 }
