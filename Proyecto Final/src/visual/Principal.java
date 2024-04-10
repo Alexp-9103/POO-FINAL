@@ -153,15 +153,6 @@ public class Principal extends JFrame {
             }
         });
         mnCostosPenalizacionesUsuario.add(mntmCalcularCostoProyectoUsuario);
-
-        JMenuItem mntmCalcularPenalizacionUsuario = new JMenuItem("Calcular Penalizacion por Retraso en Entrega");
-        mntmCalcularPenalizacionUsuario.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Accion para calcular la penalizacion por retraso en entrega
-            	abrirPenalizacion();
-            }
-        });
-        mnCostosPenalizacionesUsuario.add(mntmCalcularPenalizacionUsuario);
         
 
         // Menu Administrativo
@@ -287,16 +278,6 @@ public class Principal extends JFrame {
         });
         mnCostosPenalizacionesAdministrativo.add(mntmCalcularCostoProyectoAdministrativo);
 
-        JMenuItem mntmCalcularPenalizacionAdministrativo = new JMenuItem("Calcular Penalizacion por Retraso en Entrega");
-        mntmCalcularPenalizacionAdministrativo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Accion para calcular la penalizacion por retraso en entrega
-            	abrirPenalizacion();
-            }
-        });
-        mnCostosPenalizacionesAdministrativo.add(mntmCalcularPenalizacionAdministrativo);
-        
-
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -363,10 +344,5 @@ public class Principal extends JFrame {
         costoProyecto.setVisible(true);
     }
 
-    private void abrirPenalizacion() {
-        Penalizacion penalizacion = new Penalizacion();
-        penalizacion.setModal(true);
-        penalizacion.setVisible(true);
-    }
 
 }

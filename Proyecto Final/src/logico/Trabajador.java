@@ -101,6 +101,10 @@ public abstract class Trabajador {
 		this.cantidadProyectos = cantidadProyectos;
 	}
 	
+    public void aumentarProyectos() {
+        cantidadProyectos++;
+    }
+	
     public abstract boolean estaDisponible();
     
 	public static double calcularSalarioTrabajador(Trabajador trabajador, Date fechaInicio, Date fechaFin) {
@@ -118,7 +122,7 @@ public abstract class Trabajador {
 
         return salarioTotal;
     }
-    
-    
+
+        
 
 }
