@@ -106,7 +106,7 @@ public class CrearProyecto extends JFrame {
                         modelTrabajadoresProyecto.addElement(selectedWorker); 
                         actualizarContadorTrabajadores();
                     } else {
-                        JOptionPane.showMessageDialog(CrearProyecto.this, "Se ha alcanzado la cantidad m·xima de trabajadores de este tipo.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(CrearProyecto.this, "Se ha alcanzado la cantidad m√°xima de trabajadores de este tipo.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -188,11 +188,15 @@ public class CrearProyecto extends JFrame {
         }
         labelContadorTrabajadoresDisp.setText("Cantidad: " + cantidadTrabajadoresDisp);
     }
-
+    
     private void actualizarContadorTrabajadores() {
+        cantidadTrabajadoresDisp = modelTrabajadoresDisp.getSize();
         labelContadorTrabajadoresDisp.setText("Cantidad: " + cantidadTrabajadoresDisp);
+        
+        cantidadTrabajadoresProyecto = modelTrabajadoresProyecto.getSize();
         labelContadorTrabajadoresProyecto.setText("Cantidad: " + cantidadTrabajadoresProyecto);
     }
+
 
     private void guardarProyecto() {
         String idProyecto = textIdProyecto.getText();
@@ -213,7 +217,7 @@ public class CrearProyecto extends JFrame {
             Proyecto proyecto = new Proyecto(idProyecto, nombreProyecto, trabajadoresProyecto.size(), false, trabajadoresProyecto);     
             JJDCommunications.getInstance().insertarProyecto(proyecto);
 
-            JOptionPane.showMessageDialog(this, "Proyecto guardado exitosamente.", "InformaciÛn", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Proyecto guardado exitosamente.", "Informaci√≥n", JOptionPane.INFORMATION_MESSAGE);
             dispose();
             generadorProyecto++;
             JJDCommunications.StartAgain();

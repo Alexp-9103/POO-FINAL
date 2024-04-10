@@ -221,10 +221,10 @@ public class JJDCommunications implements Serializable {
 	    for (Proyecto proyecto : ListaProyectos) {
 	        if (proyecto.getIdProyecto().equals(idProyecto)) {
 	            // Obtener la lista de trabajadores asociados al proyecto
-	            ArrayList<Trabajador> trabajadoresProyecto = proyecto.getTrabajadores();
+	            ArrayList<Trabajador> trabajadoresProyecto = proyecto.getLosTrabajadores();
 	            // Establecer el estado de disponibilidad de los trabajadores asociados a true
 	            for (Trabajador trabajador : trabajadoresProyecto) {
-	                trabajador.estaDisponible(true);
+	                trabajador.estaDisponible();
 	            }
 	            // Eliminar el proyecto de la lista de proyectos
 	            ListaProyectos.remove(proyecto);
