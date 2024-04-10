@@ -153,7 +153,7 @@ public class RegContrato extends JDialog {
         Proyecto proyecto = jjd.buscarProyecto(proyectoSeleccionado);
 
         if (cliente != null && proyecto != null) {
-            // Modificar la creación del contrato para adaptarse al nuevo constructor
+            // Modificar la creaciï¿½n del contrato para adaptarse al nuevo constructor
             Contrato contrato = new Contrato(idContrato, cliente.getId(), proyecto.getIdProyecto(), proyecto.getNombre(), fechaInicio, fechaEntrega, false);
             jjd.insertarContrato(contrato);
 
