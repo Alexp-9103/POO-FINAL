@@ -3,58 +3,64 @@ package logico;
 import java.util.ArrayList;
 
 public class Proyecto {
+	
+	String idProyecto;
+	String nombre;
+	int cantTrabajadores;
+	boolean contratoActivo;
+	ArrayList <Trabajador> losTrabajadores;
+	
+	public Proyecto(String idProyecto, String nombre, int cantTrabajadores, boolean contratoActivo,
+			ArrayList<Trabajador> losTrabajadores) {
+		super();
+		this.idProyecto = idProyecto;
+		this.nombre = nombre;
+		this.cantTrabajadores = cantTrabajadores;
+		this.contratoActivo = contratoActivo;
+		this.losTrabajadores = losTrabajadores;
+	}
 
-    String idProyecto;
-    String nombre;
-    int cantTrabajadores;
-    boolean contratoActivo;
-    ArrayList<Trabajador> losTrabajadores;
+	public String getNombre() {
+		return nombre;
+	}
 
-    public Proyecto(String idProyecto, String nombre, int cantTrabajadores, boolean contratoActivo, ArrayList<Trabajador> losTrabajadores) {
-        this.idProyecto = idProyecto;
-        this.nombre = nombre;
-        this.cantTrabajadores = cantTrabajadores;
-        this.contratoActivo = contratoActivo;
-        this.losTrabajadores = losTrabajadores;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public int getCantTrabajadores() {
+		return cantTrabajadores;
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	public void setCantTrabajadores(int cantTrabajadores) {
+		this.cantTrabajadores = cantTrabajadores;
+	}
 
-    public int getCantTrabajadores() {
-        return cantTrabajadores;
-    }
+	public boolean isContratoActivo() {
+		return contratoActivo;
+	}
 
-    public void setCantTrabajadores(int cantTrabajadores) {
-        this.cantTrabajadores = cantTrabajadores;
-    }
+	public void setContratoActivo(boolean contratoActivo) {
+		this.contratoActivo = contratoActivo;
+	}
 
-    public boolean isContratoActivo() {
-        return contratoActivo;
-    }
+	public ArrayList<Trabajador> getLosTrabajadores() {
+		return losTrabajadores;
+	}
 
-    public void setContratoActivo(boolean contratoActivo) {
-        this.contratoActivo = contratoActivo;
-    }
+	public void setLosTrabajadores(ArrayList<Trabajador> losTrabajadores) {
+		this.losTrabajadores = losTrabajadores;
+	}
 
-    public ArrayList<Trabajador> getLosTrabajadores() {
-        return losTrabajadores;
-    }
+	public String getIdProyecto() {
+		return idProyecto;
+	}
 
-    public void setLosTrabajadores(ArrayList<Trabajador> losTrabajadores) {
-        this.losTrabajadores = losTrabajadores;
-    }
+	public void setIdProyecto(String idProyecto) {
+		this.idProyecto = idProyecto;
+	}
+	
+		
+	
 
-    public String getIdProyecto() {
-        return idProyecto;
-    }
-
-    public void setIdProyecto(String idProyecto) {
-        this.idProyecto = idProyecto;
-    }
 }
