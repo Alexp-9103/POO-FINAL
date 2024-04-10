@@ -18,7 +18,7 @@ public abstract class Trabajador implements Serializable {
     private int cantidadProyectos;
 
 
-    public Trabajador(String id, String Nombre, String Direccion, char Sexo, int Edad, double salarioHora, String Evaluacion) {
+    public Trabajador(String id, String Nombre, String Apellido, String Direccion, char Sexo, int Edad, double salarioHora, String Evaluacion) {
         this.id = id;
         this.Nombre = Nombre;
         this.Direccion = Direccion;

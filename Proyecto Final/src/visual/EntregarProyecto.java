@@ -22,71 +22,9 @@ public class EntregarProyecto extends JDialog {
 
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        JLabel lblSeleccioneProyecto = new JLabel("Seleccione el proyecto a entregar:");
-        panel.add(lblSeleccioneProyecto, BorderLayout.NORTH);
-
-        proyectosComboBox = new JComboBox<>();
-        cargarProyectos();
-        panel.add(proyectosComboBox, BorderLayout.CENTER);
-
-        entregarButton = new JButton("Entregar Proyecto");
-        entregarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                confirmarEntregaProyecto();
-            }
-        });
-        panel.add(entregarButton, BorderLayout.SOUTH);
-
-        add(panel);
+        
     }
-
-    private void cargarProyectos() {
-        JJDCommunications jjd = null;
-        try {
-            jjd = JJDCommunications.getInstance();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al obtener datos del sistema.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        ArrayList<Cliente> clientes = jjd.getListaClientes();
-        proyectosComboBox.removeAllItems();
-        for (Cliente cliente : clientes) {
-            ArrayList<Proyecto> proyectosCliente = cliente.getMisProyectos();
-            for (Proyecto proyecto : proyectosCliente) {
-                if (!proyecto.isContratoActivo()) {
-                    proyectosComboBox.addItem(proyecto);
-                }
-            }
-        }
-        if (proyectosComboBox.getItemCount() == 0) {
-            entregarButton.setEnabled(false);
-        }
-    }
-
-
-
-    private void confirmarEntregaProyecto() {
-        Proyecto proyectoSeleccionado = (Proyecto) proyectosComboBox.getSelectedItem();
-        if (proyectoSeleccionado == null) {
-            JOptionPane.showMessageDialog(this, "No hay proyectos disponibles para entregar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        String nombreProyecto = proyectoSeleccionado.getNombre();
-
-        int confirmacion = JOptionPane.showConfirmDialog(this,
-                "¿Estás seguro de que deseas entregar el proyecto \"" + nombreProyecto + "\"?",
-                "Confirmar Entrega de Proyecto", JOptionPane.YES_NO_OPTION);
-
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            proyectoSeleccionado.setContratoActivo(true); 
-            JOptionPane.showMessageDialog(this, "¡El proyecto \"" + nombreProyecto + "\" ha sido entregado con éxito!",
-                    "Proyecto Entregado", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
+        
 
 
     public static void main(String[] args) {
