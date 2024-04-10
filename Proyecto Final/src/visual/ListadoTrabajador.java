@@ -61,7 +61,7 @@ public class ListadoTrabajador extends JDialog {
         JScrollPane scrollPane = new JScrollPane();
         tablePanel.add(scrollPane, BorderLayout.CENTER);
         
-        String[] headers = {"ID", "Nombre", "Apellido", "Dirección", "Sexo", "Edad", "Salario por Hora", "Tipo de Trabajador", "Evaluación"};
+        String[] headers = {"ID", "Nombre", "Dirección", "Sexo", "Edad", "Salario por Hora", "Tipo de Trabajador", "Evaluación"};
 
         JTable table = new JTable();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -72,7 +72,7 @@ public class ListadoTrabajador extends JDialog {
         table.setModel(model);
 
      // Ajuste del ancho de las columnas y permitir redimensionarlas
-        int[] columnWidths = {70, 100, 100, 150, 30, 30, 90, 120, 80}; // Ancho de las columnas
+        int[] columnWidths = {70, 100, 150, 30, 30, 90, 120, 80}; // Ancho de las columnas
         for (int i = 0; i < headers.length; i++) {
             table.getColumnModel().getColumn(i).setPreferredWidth(columnWidths[i]);
         }
@@ -174,7 +174,6 @@ public class ListadoTrabajador extends JDialog {
                 model.addRow(new Object[]{
                     trabajador.getId(),
                     trabajador.getNombre(),
-                    trabajador.getApellido(), // Aquí se agrega el apellido
                     trabajador.getDireccion(),
                     trabajador.getSexo(),
                     trabajador.getEdad(),

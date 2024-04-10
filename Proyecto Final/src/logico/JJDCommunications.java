@@ -361,6 +361,26 @@ public class JJDCommunications implements Serializable {
         }
         return null;
     }
+
+    public void eliminarContrato(String idContrato) {
+        Contrato contratoAEliminar = buscarContrato(idContrato);
+        if (contratoAEliminar != null) {
+            ListaContratos.remove(contratoAEliminar);
+        }
+    }
+
+    public Contrato buscarContrato(String idContrato) {
+        for (Contrato contrato : ListaContratos) {
+            if (contrato.getIdContrato().equalsIgnoreCase(idContrato)) {
+                return contrato;
+            }
+        }
+        return null;
+    }
+
+
+
+
     
     	
 

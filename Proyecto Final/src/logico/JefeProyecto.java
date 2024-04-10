@@ -7,8 +7,8 @@ public class JefeProyecto extends Trabajador implements Serializable {
     private int cantidadTrabajadores;
 
 
-    public JefeProyecto(String id, String nombre, String direccion, char sexo, int edad, double salarioHora, String evaluacion, int cantidadTrabajadores) {
-        super(id, nombre, direccion, sexo, edad, salarioHora, evaluacion);
+    public JefeProyecto(String id, String nombre, String apellido, String direccion, char sexo, int edad, double salarioHora, String evaluacion, int cantidadTrabajadores) {
+        super(id, nombre, apellido, direccion, sexo, edad, salarioHora, evaluacion);
         this.cantidadTrabajadores = cantidadTrabajadores;
     }
 

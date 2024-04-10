@@ -8,8 +8,8 @@ public class Programador extends Trabajador implements Serializable {
     
     private ArrayList<String> lenguajesEspecializados;
 
-    public Programador(String id, String nombre, String direccion, char sexo, int edad, double salarioHora, String evaluacion, ArrayList<String> lenguajesEspecializados) {
-        super(id, nombre, direccion, sexo, edad, salarioHora, evaluacion);
+    public Programador(String id, String nombre, String apellido, String direccion, char sexo, int edad, double salarioHora, String evaluacion, ArrayList<String> lenguajesEspecializados) {
+        super(id, nombre, apellido, direccion, sexo, edad, salarioHora, evaluacion);
         this.lenguajesEspecializados = lenguajesEspecializados;
     }
 

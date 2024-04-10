@@ -481,7 +481,7 @@ private void registrarTrabajador() {
     }
 
     // Crear el objeto del trabajador
-    Trabajador nuevoTrabajador = crearTrabajador(selectedItem, id, nombre, direccion, sexo, edad, salarioHora, evaluacion);
+    Trabajador nuevoTrabajador = crearTrabajador(selectedItem, id, nombre, apellido, direccion, sexo, edad, salarioHora, evaluacion);
 
     // Insertar el trabajador a traves de la instancia de JJDCommunications
     JJDCommunications.getInstance().insertarTrabajador(nuevoTrabajador);
@@ -494,12 +494,12 @@ private void registrarTrabajador() {
 }
 
     
-    private Trabajador crearTrabajador(String tipo, String id, String nombre, String direccion, char sexo, int edad, double salarioHora, String evaluacion) {
+    private Trabajador crearTrabajador(String tipo, String id, String nombre, String apellido, String direccion, char sexo, int edad, double salarioHora, String evaluacion) {
         switch (tipo) {
             case "Jefe de proyecto":
-                return new JefeProyecto(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerTrabajadores.getValue());
+                return new JefeProyecto(id, nombre, apellido, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerTrabajadores.getValue());
             case "Diseñador":
-                return new Disenador(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerExperiencia.getValue());
+                return new Disenador(id, nombre, apellido, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerExperiencia.getValue());
             case "Programador":
                 // Crear un ArrayList para almacenar los lenguajes especializados
                 ArrayList<String> lenguajesEspecializados = new ArrayList<>();
@@ -509,9 +509,9 @@ private void registrarTrabajador() {
                     lenguajesEspecializados.add((String) tableModel.getValueAt(i, 0));
                 }
                 // Crear el objeto Programador con los datos ingresados
-                return new Programador(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, lenguajesEspecializados);
+                return new Programador(id, nombre, apellido, direccion, sexo, edad, salarioHora, evaluacion, lenguajesEspecializados);
             case "Planificador":
-                return new Planificador(id, nombre, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerFrecuencia.getValue());
+                return new Planificador(id, nombre, apellido, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerFrecuencia.getValue());
             default:
                 return null;
         }

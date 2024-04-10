@@ -6,8 +6,8 @@ public class Planificador extends Trabajador implements Serializable {
     private static final long serialVersionUID = 1L;
     private int frecuenciaPlanificacion;
 
-    public Planificador(String id, String nombre, String direccion, char sexo, int edad, double salarioHora, String evaluacion, int frecuenciaPlanificacion) {
-        super(id, nombre, direccion, sexo, edad, salarioHora, evaluacion);
+    public Planificador(String id, String nombre, String apellido, String direccion, char sexo, int edad, double salarioHora, String evaluacion, int frecuenciaPlanificacion) {
+        super(id, nombre, apellido, direccion, sexo, edad, salarioHora, evaluacion);
         this.frecuenciaPlanificacion = frecuenciaPlanificacion;
     }
     public int getFrecuenciaPlanificacion() {
