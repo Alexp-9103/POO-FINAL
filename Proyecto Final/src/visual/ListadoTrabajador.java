@@ -167,18 +167,20 @@ public class ListadoTrabajador extends JDialog {
                     tipoTrabajador = "Planificador";
                 }
 
+                // Agregar fila con los datos del trabajador, incluyendo el apellido
                 model.addRow(new Object[]{
-                        trabajador.getId(),
-                        trabajador.getNombre(),
-                        trabajador.getApellido(),
-                        trabajador.getDireccion(),
-                        trabajador.getSexo(),
-                        trabajador.getEdad(),
-                        trabajador.getSalarioHora(),
-                        tipoTrabajador,
-                        trabajador.getEvaluacion()
+                    trabajador.getId(),
+                    trabajador.getNombre(),
+                    trabajador.getApellido(), // Aquí se agrega el apellido
+                    trabajador.getDireccion(),
+                    trabajador.getSexo(),
+                    trabajador.getEdad(),
+                    trabajador.getSalarioHora(),
+                    tipoTrabajador,
+                    trabajador.getEvaluacion()
                 });
             }
         }
     }
+
 }
