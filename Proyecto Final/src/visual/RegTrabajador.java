@@ -152,7 +152,8 @@ public class RegTrabajador extends JDialog {
         JLabel lbledad = new JLabel("Edad:");
         lbledad.setBounds(208, 172, 56, 16);
         datosPersonalesPanel.add(lbledad);
-        spinneredad = new JSpinner(); // Inicializa la variable de instancia spinneredad
+        SpinnerNumberModel modeloEdad = new SpinnerNumberModel(1, 1, null, 1);
+        spinneredad = new JSpinner(modeloEdad);
         spinneredad.setBounds(208, 193, 56, 22);
         datosPersonalesPanel.add(spinneredad);
 
@@ -521,6 +522,7 @@ private void registrarTrabajador() {
         // Limpiar los campos de texto despues de agregar el trabajador
         textid.setText("");
         textnombre.setText("");
+        textApellido.setText("");
         textdireccion.setText("");
         rdbtnmasculino.setSelected(false);
         rdbtnfemenino.setSelected(false);
@@ -554,6 +556,12 @@ private void registrarTrabajador() {
             default:
                 break;
         }
+     // Establecer el valor mínimo del spinner de edad en 1
+        SpinnerNumberModel modeloEdad = new SpinnerNumberModel(1, 1, null, 1);
+        spinneredad.setModel(modeloEdad);
+
+        // Establecer el valor del spinner de edad en 1
+        spinneredad.setValue(1);
     }
 
     private void limpiarCamposProgramador() {

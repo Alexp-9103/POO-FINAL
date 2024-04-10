@@ -134,10 +134,9 @@ public class Login extends JFrame {
         JButton btnRegistro = new JButton("Registro");
         btnRegistro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Abrir la ventana de registro
-                RegUsuario registroUsuario = new RegUsuario(); // Pasar la referencia de la ventana de inicio de sesiï¿½n al registro
+                RegUsuario registroUsuario = new RegUsuario(); 
                 registroUsuario.setVisible(true);
-                dispose(); // Cerrar la ventana de inicio de sesiï¿½n
+                dispose(); 
             }
         });
         btnRegistro.setBounds(141, 187, 89, 23);

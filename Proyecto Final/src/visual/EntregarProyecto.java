@@ -63,11 +63,9 @@ public class EntregarProyecto extends JDialog {
                 "Confirmar Entrega de Proyecto", JOptionPane.YES_NO_OPTION);
 
         if (confirmacion == JOptionPane.YES_OPTION) {
-            // Cambiar el estado del contrato a inactivo
             proyectoSeleccionado.setContratoActivo(false);
             JOptionPane.showMessageDialog(this, "¡El proyecto \"" + nombreProyecto + "\" ha sido entregado con éxito!",
                     "Proyecto Entregado", JOptionPane.INFORMATION_MESSAGE);
-            // Actualizar la lista de proyectos
             proyectosComboBox.removeItem(proyectoSeleccionado);
         }
     }

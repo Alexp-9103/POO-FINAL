@@ -260,6 +260,26 @@ public class JJDCommunications implements Serializable {
         return null;
     }
 
+    
+    public ArrayList<Proyecto> obtenerProyectosPorCliente(String idCliente) {
+        ArrayList<Proyecto> proyectos = new ArrayList<>();
+        // Recorrer todos los contratos para buscar los proyectos asociados al cliente
+        for (Contrato contrato : ListaContratos) {
+            // Verificar si el contrato pertenece al cliente con el ID proporcionado
+            if (contrato.getIdCliente().equalsIgnoreCase(idCliente)) {
+                // Obtener el proyecto asociado al contrato
+                Proyecto proyecto = buscarProyecto(contrato.getIdProyecto());
+                if (proyecto != null && !proyectos.contains(proyecto)) {
+                    // Si el proyecto no est� en la lista de proyectos asociados al cliente, agregarlo
+                    proyectos.add(proyecto);
+                }
+            }
+        }
+        return proyectos;
+    }
+
+
+
 
     public Contrato obtenerContratoPorProyecto(String idProyecto) {
         for (Contrato contrato : ListaContratos) {
@@ -377,8 +397,19 @@ public class JJDCommunications implements Serializable {
         }
         return null;
     }
+    
+    
 
 
+    public void prorrogarContrato(Contrato contrato, int diasProrroga) {
+        // Obtener la fecha de entrega actual del contrato
+        Date fechaEntregaActual = contrato.getFechaEntrega();
+        // Calcular la nueva fecha de entrega sumando los días de prórroga
+        long tiempoEnMilisegundos = fechaEntregaActual.getTime() + (diasProrroga * 24L * 60 * 60 * 1000);
+        Date nuevaFechaEntrega = new Date(tiempoEnMilisegundos);
+        // Actualizar la fecha de entrega del contrato
+        contrato.setFechaEntrega(nuevaFechaEntrega);
+    }
 
 
     

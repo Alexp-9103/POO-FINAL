@@ -123,21 +123,10 @@ public abstract class Trabajador implements Serializable {
     public abstract boolean estaDisponible();
     
 	public static double calcularSalarioTrabajador(Trabajador trabajador, Date fechaInicio, Date fechaFin) {
-        // Calculamos el n�mero de milisegundos entre las fechas de inicio y fin
         long milisegundosTrabajados = fechaFin.getTime() - fechaInicio.getTime();
-        
-        // Convertimos milisegundos a d�as
         int diasTrabajados = (int) (milisegundosTrabajados / (1000 * 60 * 60 * 24));
-
-        // Suponiendo que el trabajador trabaja exactamente 6 horas por d�a
         int horasTrabajadasPorDia = 6;
-
-        // Calculamos el salario total multiplicando el salario por hora por el n�mero de d�as trabajados y horas trabajadas por d�a
         double salarioTotal = trabajador.getSalarioHora() * diasTrabajados * horasTrabajadasPorDia;
-
         return salarioTotal;
-    }
-
-        
-
+    }        
 }
