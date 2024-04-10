@@ -8,6 +8,7 @@ public abstract class Trabajador implements Serializable {
     
     private String id;
     private String Nombre;
+    private String Apellido;
     private String Direccion;
     private char Sexo;
     private int Edad;
@@ -44,7 +45,13 @@ public abstract class Trabajador implements Serializable {
 		Nombre = nombre;
 	}
 
-	
+	public String getApellido() {
+		return Apellido;
+	}
+
+	public void setApellido(String apellido) {
+		Apellido = apellido;
+	}
 
 	public String getDireccion() {
 		return Direccion;

@@ -102,22 +102,7 @@ public class ListadoContrato extends JDialog {
                 });
                 buttonPane.add(btnVerDetalles);
             }
-            {
-                JButton btnFinalizar = new JButton("Finalizar");
-                btnFinalizar.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        int selectedRow = table.getSelectedRow();
-                        if (selectedRow != -1) {
-                            String idContrato = (String) model.getValueAt(selectedRow, 0);
-                            // Implementa la lógica para finalizar el contrato con el idContrato
-                            cargarContratos(); // Recargar la tabla después de finalizar
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Por favor, seleccione un contrato para finalizar.", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                });
-                buttonPane.add(btnFinalizar);
-            }
+
             {
                 JButton btnEliminar = new JButton("Eliminar");
                 btnEliminar.addActionListener(new ActionListener() {

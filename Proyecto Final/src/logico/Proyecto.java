@@ -65,6 +65,11 @@ public class Proyecto implements Serializable {
 	public void setIdProyecto(String idProyecto) {
 		this.idProyecto = idProyecto;
 	}
+
+	public boolean isEntregado() {
+	    return Entregado;
+	}
+
 	
 		
 	
