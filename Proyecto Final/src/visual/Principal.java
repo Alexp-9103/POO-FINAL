@@ -66,14 +66,6 @@ public class Principal extends JFrame {
         });
         mnProyectosUsuario.add(mntmCrearProyectoUsuario);
 
-        JMenuItem mntmVerDetallesProyectoUsuario = new JMenuItem("Ver Detalles de un Proyecto Existente");
-        mntmVerDetallesProyectoUsuario.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Accion para ver detalles de un proyecto existente
-            }
-        });
-        mnProyectosUsuario.add(mntmVerDetallesProyectoUsuario);
-
         JMenuItem mntmListarProyectosUsuario = new JMenuItem("Listar Todos los Proyectos");
         mntmListarProyectosUsuario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
