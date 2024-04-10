@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import logico.Disenador;
@@ -11,12 +14,12 @@ import logico.JJDCommunications;
 import logico.JefeProyecto;
 import logico.Planificador;
 import logico.Programador;
+import logico.Proyecto;
 import logico.Trabajador;
 
 public class CrearProyecto extends JFrame {
     private JTextField textIdProyecto;
     private JTextField textNombreProyecto;
-    private JTextField textIdCliente;
     private JList<String> listTrabajadoresDisp;
     private JList<String> listTrabajadoresProyecto;
     private DefaultListModel<String> modelTrabajadoresDisp;
@@ -26,8 +29,17 @@ public class CrearProyecto extends JFrame {
     private int cantidadTrabajadoresDisp = 0;
     private int cantidadTrabajadoresProyecto = 0;
     private static int generadorProyecto = 1;
+    
 
     public CrearProyecto() {
+    	addWindowListener(new WindowAdapter() {
+    	    @Override
+    	    public void windowClosing(WindowEvent e) {
+    	        JJDCommunications.StartAgain();
+    	    }
+    	});
+
+    	
         setTitle("Crear Proyecto");
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setSize(600, 500);
@@ -51,13 +63,6 @@ public class CrearProyecto extends JFrame {
         textNombreProyecto = new JTextField(20);
         gbc.gridx = 1;
         panelDatos.add(textNombreProyecto, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        panelDatos.add(new JLabel("ID del Cliente:"), gbc);
-        textIdCliente = new JTextField(10);
-        gbc.gridx = 1;
-        panelDatos.add(textIdCliente, gbc);
 
         add(panelDatos, BorderLayout.NORTH);
 
@@ -92,14 +97,21 @@ public class CrearProyecto extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String selectedWorker = listTrabajadoresDisp.getSelectedValue();
                 if (selectedWorker != null) {
-                    modelTrabajadoresProyecto.addElement(selectedWorker);
-                    modelTrabajadoresDisp.removeElement(selectedWorker);
-                    cantidadTrabajadoresProyecto++;
-                    cantidadTrabajadoresDisp--;
-                    actualizarContadorTrabajadores();
+                    String[] workerDetails = selectedWorker.split("\\|");
+                    String tipoTrabajador = workerDetails[3].trim();
+                    
+                    if (JJDCommunications.puedeAgregarTrabajador(tipoTrabajador)) {
+                    	JJDCommunications.agregarTrabajador(selectedWorker);
+                        modelTrabajadoresDisp.removeElement(selectedWorker);
+                        modelTrabajadoresProyecto.addElement(selectedWorker); 
+                        actualizarContadorTrabajadores();
+                    } else {
+                        JOptionPane.showMessageDialog(CrearProyecto.this, "Se ha alcanzado la cantidad máxima de trabajadores de este tipo.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
+        panelBotones.add(btnAgregar);
         panelBotones.add(btnAgregar);
 
         JButton btnEliminar = new JButton("<< Eliminar");
@@ -107,16 +119,18 @@ public class CrearProyecto extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String selectedWorker = listTrabajadoresProyecto.getSelectedValue();
                 if (selectedWorker != null) {
-                    modelTrabajadoresDisp.addElement(selectedWorker);
+                    String[] workerDetails = selectedWorker.split("\\|");
+                    String tipoTrabajador = workerDetails[3].trim();
+                    
+                    JJDCommunications.removeTrabajador(selectedWorker);
                     modelTrabajadoresProyecto.removeElement(selectedWorker);
-                    cantidadTrabajadoresDisp++;
-                    cantidadTrabajadoresProyecto--;
+                    modelTrabajadoresDisp.addElement(selectedWorker); 
                     actualizarContadorTrabajadores();
                 }
             }
         });
         panelBotones.add(btnEliminar);
-
+        panelBotones.add(btnEliminar);
         add(panelBotones, BorderLayout.EAST);
 
         JButton btnGuardar = new JButton("Guardar");
@@ -174,16 +188,42 @@ public class CrearProyecto extends JFrame {
         }
         labelContadorTrabajadoresDisp.setText("Cantidad: " + cantidadTrabajadoresDisp);
     }
-
+    
     private void actualizarContadorTrabajadores() {
+        cantidadTrabajadoresDisp = modelTrabajadoresDisp.getSize();
         labelContadorTrabajadoresDisp.setText("Cantidad: " + cantidadTrabajadoresDisp);
+        
+        cantidadTrabajadoresProyecto = modelTrabajadoresProyecto.getSize();
         labelContadorTrabajadoresProyecto.setText("Cantidad: " + cantidadTrabajadoresProyecto);
     }
 
+
     private void guardarProyecto() {
-        JOptionPane.showMessageDialog(this, "Proyecto guardado exitosamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
-        dispose();
-        generadorProyecto++;
+        String idProyecto = textIdProyecto.getText();
+        String nombreProyecto = textNombreProyecto.getText();
+        ArrayList<Trabajador> trabajadoresProyecto = new ArrayList<>();
+        for (int i = 0; i < modelTrabajadoresProyecto.size(); i++) {
+            String workerDetails = modelTrabajadoresProyecto.getElementAt(i);
+            String[] workerInfo = workerDetails.split("\\|");
+            String workerId = workerInfo[0].trim();
+            Trabajador trabajador = JJDCommunications.getInstance().buscarTrabajadorPorId(workerId);
+            if (trabajador != null) {
+            	trabajador.aumentarProyectos();
+                trabajadoresProyecto.add(trabajador);
+            }
+        }
+        
+        if (!trabajadoresProyecto.isEmpty()) {
+            Proyecto proyecto = new Proyecto(idProyecto, nombreProyecto, trabajadoresProyecto.size(), false, trabajadoresProyecto);     
+            JJDCommunications.getInstance().insertarProyecto(proyecto);
+
+            JOptionPane.showMessageDialog(this, "Proyecto guardado exitosamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            generadorProyecto++;
+            JJDCommunications.StartAgain();
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay trabajadores en el proyecto.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public static void main(String[] args) {
