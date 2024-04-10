@@ -128,6 +128,7 @@ public class CrearProyecto extends JFrame {
         JButton btnCancelar = new JButton("Cancelar");
         btnCancelar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	JJDCommunications.StartAgain();
                 dispose();
             }
         });
