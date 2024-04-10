@@ -19,6 +19,7 @@ public class JJDCommunications implements Serializable {
     private ArrayList<Contrato> ListaContratos;
     private static final String FILE_NAME = "data.dat";
 	public static JJDCommunications JJD = null;
+	
     private static final int MAX_JEFE_PROYECTO = 1;
     private static final int MAX_PROGRAMADOR = 3;
     private static final int MAX_DISENADOR = 2;
@@ -28,6 +29,13 @@ public class JJDCommunications implements Serializable {
     private static int cantidadProgramador = 0;
     private static int cantidadDisenador = 0;
     private static int cantidadPlanificador = 0;
+    
+    public static void StartAgain() {
+    	cantidadJefeProyecto = 0;
+    	cantidadProgramador = 0;
+    	cantidadDisenador = 0;
+    	cantidadPlanificador= 0;
+    }
     
     public JJDCommunications() {
         ListaTrabajadores = new ArrayList<>();
@@ -268,6 +276,18 @@ public class JJDCommunications implements Serializable {
     public void insertarContrato(Contrato contrato) {
         ListaContratos.add(contrato);
     }
+
+
+    public boolean existeTrabajadorConIdentificacion(String id) {
+        // Iterar sobre la lista de trabajadores para verificar si hay alguno con la misma identificación
+        for (Trabajador trabajador : ListaTrabajadores) { // Supongamos que listaTrabajadores es tu lista de trabajadores
+            if (trabajador.getId().equals(id)) { // Comparar la identificación del trabajador con la identificación proporcionada
+                return true; // Si se encuentra un trabajador con la misma identificación, retornar true
+            }
+        }
+        return false; // Si no se encuentra ningún trabajador con la misma identificación, retornar false
+    }
+
 
     	
 

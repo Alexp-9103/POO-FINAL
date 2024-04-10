@@ -379,84 +379,110 @@ public class RegTrabajador extends JDialog {
         panel.setVisible(true);
     }
 
-    private void registrarTrabajador() {
-        // Obtener los valores ingresados por el usuario
-        String id = textid.getText();
-        String nombre = textnombre.getText();
-        String direccion = textdireccion.getText();
-        char sexo;
-        if (rdbtnmasculino.isSelected()) {
-            sexo = 'M';
-        } else if (rdbtnfemenino.isSelected()) {
-            sexo = 'F';
-        } else {
-            JOptionPane.showMessageDialog(this, "Seleccione un sexo.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int edad = (int) spinneredad.getValue();
-        double salarioHora = 0;
-        try {
-            salarioHora = Double.parseDouble(textsalario.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un salario valido.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        String evaluacion = "Cumplidor"; // Por defecto, puedes cambiarlo segun tu logica
+    
+private void registrarTrabajador() {
+    // Obtener los valores ingresados por el usuario
+    String id = textid.getText();
+    String nombre = textnombre.getText();
+    String direccion = textdireccion.getText();
+    char sexo;
+    if (rdbtnmasculino.isSelected()) {
+        sexo = 'M';
+    } else if (rdbtnfemenino.isSelected()) {
+        sexo = 'F';
+    } else {
+        JOptionPane.showMessageDialog(this, "Seleccione un sexo.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    int edad = (int) spinneredad.getValue();
+    double salarioHora = 0;
+    try {
+        salarioHora = Double.parseDouble(textsalario.getText());
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese un salario valido.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    String evaluacion = "Cumplidor"; // Por defecto, puedes cambiarlo segun tu logica
 
-        // Validar campos obligatorios
-        if (id.isEmpty() || nombre.isEmpty() || direccion.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Validar campos especificos para cada tipo de trabajador
-        String selectedItem = (String) comboBox.getSelectedItem();
-        switch (selectedItem) {
-            case "Jefe de proyecto":
-                // Validar campos especificos del panelJefeProyecto
-                int cantidadTrabajadores = (int) spinnerTrabajadores.getValue();
-                if (cantidadTrabajadores < 0) {
-                    JOptionPane.showMessageDialog(this, "La cantidad de trabajadores debe ser mayor o igual a cero.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                break;
-            case "Diseñador":
-                // Validar campos especificos del panelDiseniador
-                int experiencia = (int) spinnerExperiencia.getValue();
-                if (experiencia < 0) {
-                    JOptionPane.showMessageDialog(this, "La experiencia debe ser mayor o igual a cero.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                break;
-            case "Programador":
-                // Validar campos especificos del panelProgramador
-                if (table.getRowCount() == 0) {
-                    JOptionPane.showMessageDialog(this, "Por favor, ingrese al menos un lenguaje de programacion.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                break;
-            case "Planificador":
-                // No se requieren validaciones adicionales para el panelPlanificador
-                break;
-            default:
-                // Si no se selecciona un tipo de trabajador valido, mostrar un mensaje de error
-                JOptionPane.showMessageDialog(this, "Seleccione un tipo de trabajador valido.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-        }
-
-        // Crear el objeto del trabajador
-        Trabajador nuevoTrabajador = crearTrabajador(selectedItem, id, nombre, direccion, sexo, edad, salarioHora, evaluacion);
-
-        // Insertar el trabajador a traves de la instancia de JJDCommunications
-        JJDCommunications.getInstance().insertarTrabajador(nuevoTrabajador);
-
-        // Mostrar mensaje de registro completado
-        JOptionPane.showMessageDialog(this, "Trabajador registrado exitosamente.", "Registro completado", JOptionPane.INFORMATION_MESSAGE);
-
-        // Limpiar los campos de texto despues de agregar el trabajador
-        limpiarCampos();
+    // Validar campos obligatorios
+    if (id.isEmpty() || nombre.isEmpty() || direccion.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos obligatorios.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
 
+    // Validar longitud de identificación
+    if (id.length() != 11) {
+        JOptionPane.showMessageDialog(this, "El número de identificación debe tener 11 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validar que el número de identificación no se repita entre los trabajadores
+    if (JJDCommunications.getInstance().existeTrabajadorConIdentificacion(id)) {
+        JOptionPane.showMessageDialog(this, "El número de identificación ya existe para otro trabajador.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validar edad dentro del rango válido
+    if (edad < 18 || edad > 65) {
+        JOptionPane.showMessageDialog(this, "La edad debe estar entre 18 y 65 años.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validar que el salario sea positivo
+    if (salarioHora <= 0) {
+        JOptionPane.showMessageDialog(this, "El salario debe ser un valor numérico positivo.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validar campos especificos para cada tipo de trabajador
+    String selectedItem = (String) comboBox.getSelectedItem();
+    switch (selectedItem) {
+        case "Jefe de proyecto":
+            // Validar campos especificos del panelJefeProyecto
+            int cantidadTrabajadores = (int) spinnerTrabajadores.getValue();
+            if (cantidadTrabajadores < 0) {
+                JOptionPane.showMessageDialog(this, "La cantidad de trabajadores debe ser mayor o igual a cero.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            break;
+        case "Diseñador":
+            // Validar campos especificos del panelDiseniador
+            int experiencia = (int) spinnerExperiencia.getValue();
+            if (experiencia < 0) {
+                JOptionPane.showMessageDialog(this, "La experiencia debe ser mayor o igual a cero.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            break;
+        case "Programador":
+            // Validar campos especificos del panelProgramador
+            if (table.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese al menos un lenguaje de programación.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            break;
+        case "Planificador":
+            // No se requieren validaciones adicionales para el panelPlanificador
+            break;
+        default:
+            // Si no se selecciona un tipo de trabajador valido, mostrar un mensaje de error
+            JOptionPane.showMessageDialog(this, "Seleccione un tipo de trabajador valido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+    }
+
+    // Crear el objeto del trabajador
+    Trabajador nuevoTrabajador = crearTrabajador(selectedItem, id, nombre, direccion, sexo, edad, salarioHora, evaluacion);
+
+    // Insertar el trabajador a traves de la instancia de JJDCommunications
+    JJDCommunications.getInstance().insertarTrabajador(nuevoTrabajador);
+
+    // Mostrar mensaje de registro completado
+    JOptionPane.showMessageDialog(this, "Trabajador registrado exitosamente.", "Registro completado", JOptionPane.INFORMATION_MESSAGE);
+
+    // Limpiar los campos de texto despues de agregar el trabajador
+    limpiarCampos();
+}
+
+    
     private Trabajador crearTrabajador(String tipo, String id, String nombre, String direccion, char sexo, int edad, double salarioHora, String evaluacion) {
         switch (tipo) {
             case "Jefe de proyecto":
