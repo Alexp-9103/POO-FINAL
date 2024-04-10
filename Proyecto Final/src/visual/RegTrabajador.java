@@ -40,7 +40,7 @@ public class RegTrabajador extends JDialog {
     /**
      * Launch the application.
      */
- // Ejemplo de cómo cargar datos al iniciar la aplicación
+ // Ejemplo de cï¿½mo cargar datos al iniciar la aplicaciï¿½n
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -209,7 +209,7 @@ public class RegTrabajador extends JDialog {
         // Crear y configurar el panel para Jefe de Proyecto
         configurarPanelJefeProyecto();
 
-        // Crear y configurar el panel para Diseñador
+        // Crear y configurar el panel para Diseï¿½ador
         configurarPanelDiseniador();
 
         // Crear y configurar el panel para Programador
@@ -239,15 +239,15 @@ public class RegTrabajador extends JDialog {
     }
 
     private void configurarPanelDiseniador() {
-        // Crear panel para Diseñador
+        // Crear panel para Diseï¿½ador
         panelDiseniador = new JPanel();
-        panelDiseniador.setBorder(new TitledBorder(null, "Diseñador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panelDiseniador.setBorder(new TitledBorder(null, "Diseï¿½ador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         panelDiseniador.setBounds(12, 348, 467, 95);
         contentPanel.add(panelDiseniador);
         panelDiseniador.setLayout(null);
 
-        // Etiqueta y Spinner para años de experiencia
-        JLabel lblExperiencia = new JLabel("Años de experiencia:");
+        // Etiqueta y Spinner para aï¿½os de experiencia
+        JLabel lblExperiencia = new JLabel("Aï¿½os de experiencia:");
         lblExperiencia.setBounds(12, 29, 160, 16);
         panelDiseniador.add(lblExperiencia);
 
@@ -276,14 +276,14 @@ public class RegTrabajador extends JDialog {
         // Create a panel for text field and buttons
         JPanel inputPanel = new JPanel(new FlowLayout());
         JTextField textNuevoLenguaje = new JTextField(15);
-        JButton btnAnadirLenguaje = new JButton("Añadir");
+        JButton btnAnadirLenguaje = new JButton("Aï¿½adir");
         JButton btnEliminarLenguaje = new JButton("Eliminar");
         inputPanel.add(textNuevoLenguaje);
         inputPanel.add(btnAnadirLenguaje);
         inputPanel.add(btnEliminarLenguaje);
         panelProgramador.add(inputPanel, BorderLayout.SOUTH);
 
-        // Add ActionListener to the "Añadir" button
+        // Add ActionListener to the "Aï¿½adir" button
         btnAnadirLenguaje.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -335,7 +335,7 @@ public class RegTrabajador extends JDialog {
         panel.setLayout(null);
 
         comboBox = new JComboBox<>();
-        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Seleccione un tipo de trabajador", "Jefe de proyecto", "Diseñador", "Programador", "Planificador"})); // Cambie la opcion predeterminada
+        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"Seleccione un tipo de trabajador", "Jefe de proyecto", "Diseï¿½ador", "Programador", "Planificador"})); // Cambie la opcion predeterminada
         comboBox.setMaximumRowCount(5); // Aumente el recuento maximo para incluir la opcion vacia
         comboBox.setBounds(12, 24, 218, 22);
         panel.add(comboBox);
@@ -354,7 +354,7 @@ public class RegTrabajador extends JDialog {
                         mostrarPanel(panelJefeProyecto);
                         ocultarPaneles(panelJefeProyecto);
                         break;
-                    case "Diseñador":
+                    case "Diseï¿½ador":
                         mostrarPanel(panelDiseniador);
                         ocultarPaneles(panelDiseniador);
                         break;
@@ -421,27 +421,27 @@ private void registrarTrabajador() {
         return;
     }
 
-    // Validar longitud de identificación
+    // Validar longitud de identificaciï¿½n
     if (id.length() != 11) {
-        JOptionPane.showMessageDialog(this, "El número de identificación debe tener 11 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "El nï¿½mero de identificaciï¿½n debe tener 11 dï¿½gitos.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // Validar que el número de identificación no se repita entre los trabajadores
+    // Validar que el nï¿½mero de identificaciï¿½n no se repita entre los trabajadores
     if (JJDCommunications.getInstance().existeTrabajadorConIdentificacion(id)) {
-        JOptionPane.showMessageDialog(this, "El número de identificación ya existe para otro trabajador.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "El nï¿½mero de identificaciï¿½n ya existe para otro trabajador.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // Validar edad dentro del rango válido
+    // Validar edad dentro del rango vï¿½lido
     if (edad < 18 || edad > 65) {
-        JOptionPane.showMessageDialog(this, "La edad debe estar entre 18 y 65 años.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "La edad debe estar entre 18 y 65 aï¿½os.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
     // Validar que el salario sea positivo
     if (salarioHora <= 0) {
-        JOptionPane.showMessageDialog(this, "El salario debe ser un valor numérico positivo.", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "El salario debe ser un valor numï¿½rico positivo.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -456,7 +456,7 @@ private void registrarTrabajador() {
                 return;
             }
             break;
-        case "Diseñador":
+        case "Diseï¿½ador":
             // Validar campos especificos del panelDiseniador
             int experiencia = (int) spinnerExperiencia.getValue();
             if (experiencia < 0) {
@@ -467,7 +467,7 @@ private void registrarTrabajador() {
         case "Programador":
             // Validar campos especificos del panelProgramador
             if (table.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese al menos un lenguaje de programación.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese al menos un lenguaje de programaciï¿½n.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             break;
@@ -498,7 +498,7 @@ private void registrarTrabajador() {
         switch (tipo) {
             case "Jefe de proyecto":
                 return new JefeProyecto(id, nombre, apellido, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerTrabajadores.getValue());
-            case "Diseñador":
+            case "Diseï¿½ador":
                 return new Disenador(id, nombre, apellido, direccion, sexo, edad, salarioHora, evaluacion, (int) spinnerExperiencia.getValue());
             case "Programador":
                 // Crear un ArrayList para almacenar los lenguajes especializados
@@ -539,7 +539,7 @@ private void registrarTrabajador() {
                 // Limpiar campos especificos del panelJefeProyecto
                 spinnerTrabajadores.setValue(0);
                 break;
-            case "Diseñador":
+            case "Diseï¿½ador":
                 // Limpiar campos especificos del panelDiseniador
                 spinnerExperiencia.setValue(0);
                 break;
