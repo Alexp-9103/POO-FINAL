@@ -31,6 +31,8 @@ public class Principal extends JFrame {
      */
     public Principal(boolean isAdmin) {
     	
+    	JJDCommunications.getInstance().cargarDatos();
+    	
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

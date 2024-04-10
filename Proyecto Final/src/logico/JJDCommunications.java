@@ -1,8 +1,12 @@
 package logico;
 
 import java.util.Date;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,7 +47,7 @@ public class JJDCommunications implements Serializable {
     
     public static JJDCommunications getInstance() {
         if (JJD == null) {
-            synchronized (Control.class) { // Sincronizar el bloque para garantizar la concurrencia segura
+            synchronized (JJDCommunications.class) { // Sincronizar el bloque para garantizar la concurrencia segura
                 if (JJD == null) {
                 	JJD = new JJDCommunications();
                 }
@@ -60,7 +64,63 @@ public class JJDCommunications implements Serializable {
             e.printStackTrace();
         }
     }
+    
+    public void cargarDatos() {
+        File archivoDatos = new File(FILE_NAME);
+        if (!archivoDatos.exists()) {
+            System.out.println("El archivo 'data.dat' no existe.");
+            return; // Terminar el método si el archivo no existe
+        }
 
+        try (FileInputStream fileIn = new FileInputStream(archivoDatos);
+             ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+            JJDCommunications instancia = (JJDCommunications) objectIn.readObject();
+            // Copiar los datos de la instancia leída al objeto actual
+            this.ListaTrabajadores = instancia.ListaTrabajadores;
+            this.ListaClientes = instancia.ListaClientes;
+            this.ListaProyectos = instancia.ListaProyectos;
+            this.ListaContratos = instancia.ListaContratos;
+            // También puedes copiar otras variables de instancia si es necesario
+        } catch (FileNotFoundException e) {
+            // Manejar la excepción si el archivo no existe
+            System.out.println("El archivo 'data.dat' no se encontró.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error al leer los datos desde el archivo 'data.dat'");
+            e.printStackTrace();
+        }
+    }
+
+
+    public void cargarUsuariosDesdeArchivo() {
+        File archivoUsuarios = new File("usuarios.dat");
+        if (!archivoUsuarios.exists()) {
+            try {
+                archivoUsuarios.createNewFile();
+                System.out.println("Se ha creado un nuevo archivo 'usuarios.dat'");
+            } catch (IOException e) {
+                System.out.println("Error al crear el archivo 'usuarios.dat'");
+                e.printStackTrace();
+                return; // Terminar el método si ocurre un error al crear el archivo
+            }
+        }
+
+        if (archivoUsuarios.length() == 0) {
+            System.out.println("El archivo 'usuarios.dat' está vacío.");
+            return; // Terminar el método si el archivo está vacío
+        }
+
+        try (FileInputStream fileIn = new FileInputStream(archivoUsuarios);
+             ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+            ArrayList<User> usuarios = (ArrayList<User>) objectIn.readObject();
+            Control.getInstance().setUsuarios(usuarios);
+        } catch (FileNotFoundException e) {
+            // Manejar la excepción si el archivo no existe
+            System.out.println("El archivo 'usuarios.dat' no se encontró.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error al leer los usuarios desde el archivo 'usuarios.dat'");
+            e.printStackTrace();
+        }
+    }
     
 
 	public ArrayList<Trabajador> getListaTrabajadores() {

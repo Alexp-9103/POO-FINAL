@@ -12,6 +12,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import logico.Control;
+import logico.JJDCommunications;
 import logico.User;
 
 public class Login extends JFrame {
@@ -39,7 +41,7 @@ public class Login extends JFrame {
             public void run() {
                 try {
                     // Cargar usuarios desde el archivo usuarios.dat
-                    cargarUsuariosDesdeArchivo();
+                	JJDCommunications.getInstance().cargarUsuariosDesdeArchivo();
 
                     Login frame = new Login();
                     frame.setLocationRelativeTo(null); // Colocar la ventana en el centro
@@ -49,21 +51,6 @@ public class Login extends JFrame {
                 }
             }
         });
-    }
-    
-    // Método para cargar usuarios desde el archivo usuarios.dat
-    private static void cargarUsuariosDesdeArchivo() {
-        try (FileInputStream fileIn = new FileInputStream("usuarios.dat");
-             ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
-            ArrayList<User> usuarios = (ArrayList<User>) objectIn.readObject();
-            Control.getInstance().setUsuarios(usuarios); // Establecer los usuarios en la instancia de Control
-        } catch (FileNotFoundException e) {
-            // Manejar la excepcion si el archivo no existe
-            System.out.println("El archivo 'usuarios.dat' no se encontro. Se creara uno nuevo.");
-            // No es necesario establecer la instancia de Control, ya que getInstance() crea la instancia si es null
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     
