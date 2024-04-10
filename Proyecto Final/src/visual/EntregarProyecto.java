@@ -43,17 +43,29 @@ public class EntregarProyecto extends JDialog {
     }
 
     private void cargarProyectos() {
-        JJDCommunications jjd = JJDCommunications.getInstance();
-      
+        JJDCommunications jjd = null;
+        try {
+            jjd = JJDCommunications.getInstance();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al obtener datos del sistema.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         ArrayList<Cliente> clientes = jjd.getListaClientes();
         proyectosComboBox.removeAllItems();
         for (Cliente cliente : clientes) {
             ArrayList<Proyecto> proyectosCliente = cliente.getMisProyectos();
             for (Proyecto proyecto : proyectosCliente) {
-                proyectosComboBox.addItem(proyecto);
+                if (!proyecto.isContratoActivo()) {
+                    proyectosComboBox.addItem(proyecto);
+                }
             }
         }
+        if (proyectosComboBox.getItemCount() == 0) {
+            entregarButton.setEnabled(false);
+        }
     }
+
 
 
     private void confirmarEntregaProyecto() {
@@ -70,7 +82,7 @@ public class EntregarProyecto extends JDialog {
                 "Confirmar Entrega de Proyecto", JOptionPane.YES_NO_OPTION);
 
         if (confirmacion == JOptionPane.YES_OPTION) {
-            proyectoSeleccionado.setEntregado(true); 
+            proyectoSeleccionado.setContratoActivo(true); 
             JOptionPane.showMessageDialog(this, "¡El proyecto \"" + nombreProyecto + "\" ha sido entregado con éxito!",
                     "Proyecto Entregado", JOptionPane.INFORMATION_MESSAGE);
         }
