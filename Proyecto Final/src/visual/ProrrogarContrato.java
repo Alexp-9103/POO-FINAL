@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import logico.Contrato;
 import logico.JJDCommunications;
+import logico.Proyecto;
+
+import java.util.ArrayList;
 
 public class ProrrogarContrato extends JDialog {
 
@@ -32,7 +35,6 @@ public class ProrrogarContrato extends JDialog {
      * Create the dialog.
      */
     public ProrrogarContrato() {
-    	cargarContratosDisponibles();
         setTitle("Prorrogar Contrato");
         setBounds(100, 100, 400, 200);
         getContentPane().setLayout(new BorderLayout());
@@ -99,18 +101,33 @@ public class ProrrogarContrato extends JDialog {
             JOptionPane.showMessageDialog(this, "Ingrese un número válido de días de prorroga.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void cargarContratosDisponibles() {
-        // Obtener la instancia de JJDCommunications para acceder a la lista de contratos
-        JJDCommunications jjd = JJDCommunications.getInstance();
-        // Obtener la lista de contratos
-        ArrayList<Contrato> contratos = jjd.getListaContratos();
         // Limpiar el combo box antes de cargar los contratos
         comboBoxContratos.removeAllItems();
-        // Agregar los contratos al combo box
-        for (Contrato contrato : contratos) {
-            comboBoxContratos.addItem(contrato);
+        
+        // Obtener la instancia de JJDCommunications para acceder a la lista de proyectos
+        JJDCommunications jjd = JJDCommunications.getInstance();
+        // Obtener la lista de proyectos
+        ArrayList<Proyecto> proyectos = jjd.getListaProyectos();
+        
+        // Iterar sobre la lista de proyectos
+        for (Proyecto proyecto : proyectos) {
+            // Verificar si el proyecto está activo
+            if (proyecto.isContratoActivo()) { // Suponiendo que tienes un método isContratoActivo en la clase Proyecto
+                // Obtener el contrato asociado al proyecto
+                Contrato contrato = jjd.obtenerContratoPorProyecto(proyecto.getIdProyecto());
+                // Verificar si se encontró un contrato asociado al proyecto y si está en prórroga
+                if (contrato != null && contrato.isProrroga()) { 
+                    // Agregar el contrato al combo box
+                    comboBoxContratos.addItem(contrato);
+                }
+            }
         }
     }
+
+
+
+
 
 }
