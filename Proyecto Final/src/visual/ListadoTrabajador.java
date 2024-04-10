@@ -28,7 +28,7 @@ public class ListadoTrabajador extends JDialog {
 
     public ListadoTrabajador() {
     	setTitle("Listado De Trabajador");
-        setSize(900, 500); // Tamaño ajustado para que quepa todo el contenido
+        setSize(900, 500); // TamaÃ±o ajustado para que quepa todo el contenido
         setLocationRelativeTo(null);
 
         jjdCommunications = JJDCommunications.getInstance();
@@ -47,7 +47,7 @@ public class ListadoTrabajador extends JDialog {
 
         comboBox = new JComboBox<>();
         comboBox.addActionListener(e -> loadTrabajadores(comboBox.getSelectedIndex()));
-        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"<Todos>", "Jefe de Proyecto", "Diseñador", "Programador", "Planificador"}));
+        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"<Todos>", "Jefe de Proyecto", "DiseÃ±ador", "Programador", "Planificador"}));
         panel.add(comboBox);
         
 
@@ -58,7 +58,7 @@ public class ListadoTrabajador extends JDialog {
         JScrollPane scrollPane = new JScrollPane();
         tablePanel.add(scrollPane, BorderLayout.CENTER);
         
-        String[] headers = {"ID", "Nombre", "Dirección", "Sexo", "Edad", "Salario por Hora", "Tipo de Trabajador", "Evaluación"};
+        String[] headers = {"ID", "Nombre", "DirecciÃ³n", "Sexo", "Edad", "Salario por Hora", "Tipo de Trabajador", "EvaluaciÃ³n"};
 
         JTable table = new JTable();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -81,25 +81,25 @@ public class ListadoTrabajador extends JDialog {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // Usar FlowLayout con alineación centrada
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // Usar FlowLayout con alineaciÃ³n centrada
         contentPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Agregar el botón de detalles al panel de botones
+        // Agregar el botÃ³n de detalles al panel de botones
         JButton btnDetalles = new JButton("Detalle de Trabajador");
         buttonPanel.add(btnDetalles);
 
-        // Agregar el botón de eliminar al panel de botones
+        // Agregar el botÃ³n de eliminar al panel de botones
         JButton btnEliminar = new JButton("Eliminar");
         buttonPanel.add(btnEliminar);
 
 
 
-        // Acción para eliminar un trabajador
+        // AcciÃ³n para eliminar un trabajador
         btnEliminar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table.getSelectedRow();
                 if (selectedRow != -1) {
-                    int option = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea eliminar este trabajador?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
+                    int option = JOptionPane.showConfirmDialog(null, "Â¿EstÃ¡ seguro de que desea eliminar este trabajador?", "ConfirmaciÃ³n de eliminaciÃ³n", JOptionPane.YES_NO_OPTION);
                     if (option == JOptionPane.YES_OPTION) {
                         String id = (String) model.getValueAt(selectedRow, 0);
                         jjdCommunications.eliminarTrabajador(id);
@@ -112,7 +112,7 @@ public class ListadoTrabajador extends JDialog {
         });
 
         
-        // Acción para ver detalles de un trabajador
+        // AcciÃ³n para ver detalles de un trabajador
         btnDetalles.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table.getSelectedRow();
@@ -134,7 +134,7 @@ public class ListadoTrabajador extends JDialog {
         // Limpiar modelo de tabla antes de cargar nuevos datos
         model.setRowCount(0);
 
-        // Cargar datos de trabajadores según el tipo seleccionado
+        // Cargar datos de trabajadores segÃºn el tipo seleccionado
         for (Trabajador trabajador : jjdCommunications.getListaTrabajadores()) {
             boolean agregar = false;
             switch (index) {
@@ -144,7 +144,7 @@ public class ListadoTrabajador extends JDialog {
                 case 1: // Jefe de Proyecto
                     agregar = trabajador instanceof JefeProyecto;
                     break;
-                case 2: // Diseñador
+                case 2: // DiseÃ±ador
                     agregar = trabajador instanceof Disenador;
                     break;
                 case 3: // Programador
@@ -160,7 +160,7 @@ public class ListadoTrabajador extends JDialog {
                 if (trabajador instanceof JefeProyecto) {
                     tipoTrabajador = "Jefe de Proyecto";
                 } else if (trabajador instanceof Disenador) {
-                    tipoTrabajador = "Diseñador";
+                    tipoTrabajador = "DiseÃ±ador";
                 } else if (trabajador instanceof Programador) {
                     tipoTrabajador = "Programador";
                 } else if (trabajador instanceof Planificador) {

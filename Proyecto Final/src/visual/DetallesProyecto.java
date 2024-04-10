@@ -126,32 +126,31 @@ public class DetallesProyecto extends JDialog {
     }
 
     private void loadProyectoDetails(String nombreProyecto) {
-        
-        System.out.println("Buscando proyecto: " + nombreProyecto);
         Proyecto proyecto = JJDCommunications.getInstance().buscarProyecto(nombreProyecto);
         if (proyecto != null) {
             lblIdProyecto.setText(proyecto.getIdProyecto());
             lblNombreProyecto.setText(proyecto.getNombre());
             lblCantidadTrabajadores.setText(String.valueOf(proyecto.getCantTrabajadores()));
             lblContratoActivo.setText(proyecto.isContratoActivo() ? "Sí" : "No");
-
-            ArrayList<Trabajador> trabajadores = proyecto.getLosTrabajadores();
-            modelTrabajadores.setRowCount(0);
-            for (Trabajador trabajador : trabajadores) {
-                modelTrabajadores.addRow(new Object[]{
-                        trabajador.getId(),
-                        trabajador.getNombre(),
-                        trabajador.getSexo(),
-                        getTipoTrabajador(trabajador)
-                });
-            }
+            System.out.println("Detalles del proyecto cargados exitosamente.");
+            loadTrabajadoresInvolucrados(proyecto);
         } else {
-            // Si el proyecto no se encuentra, puedes mostrar un mensaje o establecer valores predeterminados en los campos
-            lblIdProyecto.setText("No se encontró");
-            lblNombreProyecto.setText("No se encontró");
-            lblCantidadTrabajadores.setText("No se encontró");
-            lblContratoActivo.setText("No se encontró");
-            modelTrabajadores.setRowCount(0);
+            System.out.println("No se encontró el proyecto con nombre: " + nombreProyecto);
+        }
+    }
+
+    private void loadTrabajadoresInvolucrados(Proyecto proyecto) {
+        ArrayList<Trabajador> trabajadores = proyecto.getLosTrabajadores();
+        modelTrabajadores.setRowCount(0);
+        for (Trabajador trabajador : trabajadores) {
+            String tipoTrabajador = getTipoTrabajador(trabajador);
+            modelTrabajadores.addRow(new Object[]{
+                    trabajador.getId(),
+                    trabajador.getNombre(),
+                    trabajador.getSexo(),
+                    tipoTrabajador
+            });
+            System.out.println("Trabajador " + trabajador.getId() + " añadido al proyecto.");
         }
     }
 
