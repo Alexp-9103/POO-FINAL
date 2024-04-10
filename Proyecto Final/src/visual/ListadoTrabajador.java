@@ -28,7 +28,10 @@ public class ListadoTrabajador extends JDialog {
 
     public ListadoTrabajador() {
     	setTitle("Listado De Trabajador");
-        setSize(900, 500); // Tamaño ajustado para que quepa todo el contenido
+
+
+        setSize(900, 500); 
+
         setLocationRelativeTo(null);
 
         jjdCommunications = JJDCommunications.getInstance();
@@ -171,7 +174,7 @@ public class ListadoTrabajador extends JDialog {
                 model.addRow(new Object[]{
                     trabajador.getId(),
                     trabajador.getNombre(),
-                    trabajador.getApellido(), // Aqu� se agrega el apellido
+                    trabajador.getApellido(), // Aquí se agrega el apellido
                     trabajador.getDireccion(),
                     trabajador.getSexo(),
                     trabajador.getEdad(),
