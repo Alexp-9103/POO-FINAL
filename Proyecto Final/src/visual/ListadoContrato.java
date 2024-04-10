@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 
 import logico.Contrato;
 import logico.JJDCommunications;
+import logico.Proyecto;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,6 +23,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+
 
 public class ListadoContrato extends JDialog {
 
@@ -88,25 +91,25 @@ public class ListadoContrato extends JDialog {
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
             {
-                JButton btnEliminar = new JButton("Eliminar");
-                btnEliminar.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        int selectedRow = table.getSelectedRow();
-                        if (selectedRow != -1) {
-                            int option = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea eliminar este contrato?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
-                            if (option == JOptionPane.YES_OPTION) {
-                                String idContrato = (String) model.getValueAt(selectedRow, 0);
-                                // Implementa la lógica para eliminar el contrato con el idContrato
-                                JJDCommunications.getInstance().eliminarContrato(idContrato); // Suponiendo que existe un método eliminarContrato en JJDCommunications
-                                cargarContratos(); // Recargar la tabla después de eliminar
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Por favor, seleccione un contrato para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                });
+            	JButton btnEliminar = new JButton("Eliminar");
+            	btnEliminar.addActionListener(new ActionListener() {
+            	    public void actionPerformed(ActionEvent e) {
+            	        int selectedRow = table.getSelectedRow();
+            	        if (selectedRow != -1) {
+            	            int option = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea eliminar este contrato?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
+            	            if (option == JOptionPane.YES_OPTION) {
+            	                String idContrato = (String) model.getValueAt(selectedRow, 0);
+            	                // Implementa la lógica para eliminar el contrato con el idContrato
+            	                eliminarContrato(idContrato); // Llama al método para eliminar el contrato
+            	            }
+            	        } else {
+            	            JOptionPane.showMessageDialog(null, "Por favor, seleccione un contrato para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            	        }
+            	    }
+            	});
 
-                buttonPane.add(btnEliminar);
+            	buttonPane.add(btnEliminar);
+
             }
         }
     }
@@ -120,11 +123,55 @@ public class ListadoContrato extends JDialog {
                 rows[0] = contrato.getIdContrato();
                 rows[1] = contrato.getIdCliente();
                 rows[2] = contrato.getNombreProyecto();
-                rows[3] = contrato.getFechaInicio();
-                rows[4] = contrato.getFechaEntrega();
+                
+                // Formatear la fecha de inicio
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                rows[3] = dateFormat.format(contrato.getFechaInicio());
+                
+                // Formatear la fecha de entrega
+                rows[4] = dateFormat.format(contrato.getFechaEntrega());
+                
                 rows[5] = contrato.isProrroga() ? "Si" : "No";
                 model.addRow(rows);
             }
         }
     }
+    
+    
+    private void eliminarContrato(String idContrato) {
+        // Eliminar el contrato
+        JJDCommunications.getInstance().eliminarContrato(idContrato);
+
+        // Obtener el ID del proyecto asociado al contrato
+        String idProyectoAsociado = obtenerIdProyectoPorContrato(idContrato);
+
+        // Desactivar el contrato activo del proyecto asociado
+        if (idProyectoAsociado != null) {
+            Proyecto proyectoAsociado = JJDCommunications.getInstance().buscarProyecto(idProyectoAsociado);
+            if (proyectoAsociado != null) {
+                proyectoAsociado.setContratoActivo(false);
+            }
+        }
+
+        // Recargar la tabla después de eliminar
+        cargarContratos();
+    }
+
+    private String obtenerIdProyectoPorContrato(String idContrato) {
+        // Buscar el contrato en la lista de contratos
+        ArrayList<Contrato> contratos = JJDCommunications.getInstance().getListaContratos();
+        for (Contrato contrato : contratos) {
+            if (contrato.getIdContrato().equals(idContrato)) {
+                // Si se encuentra el contrato, retornar el ID del proyecto asociado
+                return contrato.getIdProyecto();
+            }
+        }
+        // Si no se encuentra el contrato, retornar null
+        return null;
+    }
+
+
+
+
+
 }
