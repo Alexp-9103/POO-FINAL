@@ -251,14 +251,33 @@ public class JJDCommunications implements Serializable {
         }
     }
 
-    public Proyecto buscarProyecto(String idProyecto) {
+    public Proyecto buscarProyecto(String nombre) {
         for (Proyecto proyecto : ListaProyectos) {
-            if (proyecto.getIdProyecto().equalsIgnoreCase(idProyecto)) {
+            if (proyecto.getNombre().equalsIgnoreCase(nombre)) {
                 return proyecto;
             }
         }
         return null;
     }
+    
+    
+    public ArrayList<Proyecto> obtenerProyectosPorCliente(String idCliente) {
+        ArrayList<Proyecto> proyectos = new ArrayList<>();
+        // Recorrer todos los contratos para buscar los proyectos asociados al cliente
+        for (Contrato contrato : ListaContratos) {
+            // Verificar si el contrato pertenece al cliente con el ID proporcionado
+            if (contrato.getIdCliente().equalsIgnoreCase(idCliente)) {
+                // Obtener el proyecto asociado al contrato
+                Proyecto proyecto = buscarProyecto(contrato.getIdProyecto());
+                if (proyecto != null && !proyectos.contains(proyecto)) {
+                    // Si el proyecto no está en la lista de proyectos asociados al cliente, agregarlo
+                    proyectos.add(proyecto);
+                }
+            }
+        }
+        return proyectos;
+    }
+
 
 
     public Contrato obtenerContratoPorProyecto(String idProyecto) {
@@ -322,8 +341,6 @@ public class JJDCommunications implements Serializable {
                 break;
         }
     }
-
-    
     
 
     
