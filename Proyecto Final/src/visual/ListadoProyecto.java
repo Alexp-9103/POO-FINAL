@@ -6,6 +6,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import logico.JJDCommunications;
 import logico.Proyecto;
+import logico.Trabajador;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -137,9 +138,18 @@ public class ListadoProyecto extends JDialog {
             int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar el proyecto?", "Confirmación", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 String idProyecto = (String) model.getValueAt(selectedRow, 0);
-                JJDCommunications.getInstance().eliminarProyecto(idProyecto);
-                loadProyectos(comboBox.getSelectedIndex());
+                Proyecto proyectoEliminar = JJDCommunications.getInstance().buscarProyecto(idProyecto);
+                if (proyectoEliminar != null) {
+                    // Iterar sobre los trabajadores asociados al proyecto y desasociarlos
+                    for (Trabajador trabajador : proyectoEliminar.getLosTrabajadores()) {
+                        trabajador.desasociarProyecto();
+                    }
+                    // Eliminar el proyecto de la lista de proyectos
+                    JJDCommunications.getInstance().eliminarProyecto(idProyecto);
+                    loadProyectos(comboBox.getSelectedIndex());
+                }
             }
         }
     }
+
 }

@@ -142,14 +142,18 @@ public class RegContrato extends JDialog {
         String proyectoSeleccionado = (String) comboBoxProyectos.getSelectedItem();
         fechaInicio = (Date) spinnerFechaInicio.getValue();
         fechaEntrega = (Date) spinnerFechaEntrega.getValue();
- 
+
         JJDCommunications jjd = JJDCommunications.getInstance();
- 
-        Cliente cliente = jjd.BuscarCliente(clienteSeleccionado);
+
+        // Obtener el ID del cliente seleccionado
+        String clienteId = clienteSeleccionado.split(" - ")[0]; // Obtener el ID antes del primer espacio
+        Cliente cliente = jjd.BuscarCliente(clienteId);
+
+        // Obtener el proyecto seleccionado por su nombre
         Proyecto proyecto = jjd.buscarProyecto(proyectoSeleccionado);
- 
+
         if (cliente != null && proyecto != null) {
-            // Modificar la creaciÃ³n del contrato para adaptarse al nuevo constructor
+            // Modificar la creación del contrato para adaptarse al nuevo constructor
             Contrato contrato = new Contrato(idContrato, cliente.getId(), proyecto.getIdProyecto(), proyecto.getNombre(), fechaInicio, fechaEntrega, false);
             jjd.insertarContrato(contrato);
             JOptionPane.showMessageDialog(this, "Contrato registrado exitosamente.");
@@ -157,5 +161,9 @@ public class RegContrato extends JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Error: Cliente o proyecto seleccionado no encontrado.");
         }
+        
+        dispose();
     }
+
+    
 }

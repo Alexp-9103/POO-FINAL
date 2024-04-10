@@ -1,6 +1,7 @@
 package logico;
 
 import java.util.Date;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,8 +18,8 @@ public class JJDCommunications implements Serializable {
     private ArrayList<Cliente> ListaClientes;
     private ArrayList<Proyecto> ListaProyectos;
     private ArrayList<Contrato> ListaContratos;
-    private static final String FILE_NAME = "data.dat";
 	public static JJDCommunications JJD = null;
+	private static final String FILE_NAME = "data.dat";
 	
     private static final int MAX_JEFE_PROYECTO = 1;
     private static final int MAX_PROGRAMADOR = 3;
@@ -42,9 +43,19 @@ public class JJDCommunications implements Serializable {
         ListaClientes = new ArrayList<>();
         ListaProyectos = new ArrayList<>();
         ListaContratos = new ArrayList<>();
+    }	    
+    
+    public static JJDCommunications getInstance() {
+        if (JJD == null) {
+            synchronized (JJDCommunications.class) { // Sincronizar el bloque para garantizar la concurrencia segura
+                if (JJD == null) {
+                	JJD = new JJDCommunications();
+                }
+            }
+        }
+        return JJD;
     }
-	    
-
+    
     public void guardarDatos() {
         try (FileOutputStream fileOut = new FileOutputStream(FILE_NAME);
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
@@ -54,26 +65,63 @@ public class JJDCommunications implements Serializable {
         }
     }
     
-    public static JJDCommunications cargarDatos() {
-        JJDCommunications jjd = null;
-        try (FileInputStream fileIn = new FileInputStream(FILE_NAME);
+    public void cargarDatos() {
+        File archivoDatos = new File(FILE_NAME);
+        if (!archivoDatos.exists()) {
+            System.out.println("El archivo 'data.dat' no existe.");
+            return; // Terminar el m�todo si el archivo no existe
+        }
+
+        try (FileInputStream fileIn = new FileInputStream(archivoDatos);
              ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
-            jjd = (JJDCommunications) objectIn.readObject();
+            JJDCommunications instancia = (JJDCommunications) objectIn.readObject();
+            // Copiar los datos de la instancia le�da al objeto actual
+            this.ListaTrabajadores = instancia.ListaTrabajadores;
+            this.ListaClientes = instancia.ListaClientes;
+            this.ListaProyectos = instancia.ListaProyectos;
+            this.ListaContratos = instancia.ListaContratos;
+            // Tambi�n puedes copiar otras variables de instancia si es necesario
         } catch (FileNotFoundException e) {
-            // El archivo no existe, puede ser la primera ejecución
-            System.out.println("No se encontró el archivo de datos. Se creará uno nuevo.");
+            // Manejar la excepci�n si el archivo no existe
+            System.out.println("El archivo 'data.dat' no se encontr�.");
         } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error al leer los datos desde el archivo 'data.dat'");
             e.printStackTrace();
         }
-        return jjd;
+    }
+
+
+    public void cargarUsuariosDesdeArchivo() {
+        File archivoUsuarios = new File("usuarios.dat");
+        if (!archivoUsuarios.exists()) {
+            try {
+                archivoUsuarios.createNewFile();
+                System.out.println("Se ha creado un nuevo archivo 'usuarios.dat'");
+            } catch (IOException e) {
+                System.out.println("Error al crear el archivo 'usuarios.dat'");
+                e.printStackTrace();
+                return; // Terminar el m�todo si ocurre un error al crear el archivo
+            }
+        }
+
+        if (archivoUsuarios.length() == 0) {
+            System.out.println("El archivo 'usuarios.dat' est� vac�o.");
+            return; // Terminar el m�todo si el archivo est� vac�o
+        }
+
+        try (FileInputStream fileIn = new FileInputStream(archivoUsuarios);
+             ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+            ArrayList<User> usuarios = (ArrayList<User>) objectIn.readObject();
+            Control.getInstance().setUsuarios(usuarios);
+        } catch (FileNotFoundException e) {
+            // Manejar la excepci�n si el archivo no existe
+            System.out.println("El archivo 'usuarios.dat' no se encontr�.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error al leer los usuarios desde el archivo 'usuarios.dat'");
+            e.printStackTrace();
+        }
     }
     
-    public static JJDCommunications getInstance(){
-		if(JJD==null){
-			JJD = new JJDCommunications();
-		}
-		return JJD;
-	}
 
 	public ArrayList<Trabajador> getListaTrabajadores() {
 		return ListaTrabajadores;
@@ -168,6 +216,23 @@ public class JJDCommunications implements Serializable {
 			
 			return null;
 		}
+	
+	public void desasociarTrabajadoresProyecto(String idProyecto) {
+	    for (Proyecto proyecto : ListaProyectos) {
+	        if (proyecto.getIdProyecto().equals(idProyecto)) {
+	            // Obtener la lista de trabajadores asociados al proyecto
+	            ArrayList<Trabajador> trabajadoresProyecto = proyecto.getLosTrabajadores();
+	            // Establecer el estado de disponibilidad de los trabajadores asociados a true
+	            for (Trabajador trabajador : trabajadoresProyecto) {
+	                trabajador.estaDisponible();
+	            }
+	            // Eliminar el proyecto de la lista de proyectos
+	            ListaProyectos.remove(proyecto);
+	            break;
+	        }
+	    }
+	}
+
 	
     public Trabajador BuscarTrabajador(String id) {
         for (Trabajador trabajador : ListaTrabajadores) {
