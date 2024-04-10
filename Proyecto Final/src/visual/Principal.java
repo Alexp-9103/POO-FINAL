@@ -24,8 +24,6 @@ public class Principal extends JFrame {
     private JPanel contentPane;
     private Dimension dim;
 
-
-
     /**
      * Create the frame.
      */
@@ -186,6 +184,15 @@ public class Principal extends JFrame {
             }
         });
         mnProyectosAdministrativo.add(mntmListarProyectosAdministrativo);
+        
+        JMenuItem mntmEntregarProyecto = new JMenuItem("Entregar Proyecto");
+        mntmEntregarProyecto.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Accion para listar todos los proyectos
+            	abrirEntregarProyecto();
+            }
+        });
+        mnProyectosAdministrativo.add(mntmListarProyectosAdministrativo);
 
         // Gestion de Clientes
         JMenu mnClientesAdministrativo = new JMenu("Gestion de Clientes");
@@ -252,6 +259,7 @@ public class Principal extends JFrame {
             }
         });
         mnCostosPenalizacionesAdministrativo.add(mntmCalcularCostoProyectoAdministrativo);
+       
 
 
         contentPane = new JPanel();
@@ -318,6 +326,13 @@ public class Principal extends JFrame {
         costoProyecto.setModal(true);
         costoProyecto.setVisible(true);
     }
+    
+    private void abrirEntregarProyecto() {
+        EntregarProyecto entregarProyecto = new EntregarProyecto();
+        entregarProyecto.setModal(true);
+        entregarProyecto.setVisible(true);
+    }
+
 
 
 }

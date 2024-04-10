@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import logico.JJDCommunications;
 import logico.Proyecto;
 
-public class EntregarProyecto extends JFrame {
+public class EntregarProyecto extends JDialog {
     private JComboBox<Proyecto> proyectosComboBox;
     private JButton entregarButton;
 

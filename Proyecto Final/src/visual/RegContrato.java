@@ -156,6 +156,10 @@ public class RegContrato extends JDialog {
             // Modificar la creación del contrato para adaptarse al nuevo constructor
             Contrato contrato = new Contrato(idContrato, cliente.getId(), proyecto.getIdProyecto(), proyecto.getNombre(), fechaInicio, fechaEntrega, false);
             jjd.insertarContrato(contrato);
+
+            // Agregar el proyecto asociado al cliente
+            cliente.agregarProyecto(proyecto);
+
             JOptionPane.showMessageDialog(this, "Contrato registrado exitosamente.");
             generarIdContrato();
         } else {
@@ -164,6 +168,7 @@ public class RegContrato extends JDialog {
         
         dispose();
     }
+
 
     
 }
