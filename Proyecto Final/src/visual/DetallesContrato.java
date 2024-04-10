@@ -26,7 +26,7 @@ public class DetallesContrato extends JDialog {
      * Create the dialog.
      */
     public DetallesContrato(String idContrato) {
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 450, 400);
         getContentPane().setLayout(null);
         contentPanel.setBounds(0, 0, 434, 221);
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
