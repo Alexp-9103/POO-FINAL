@@ -1,8 +1,10 @@
 package logico;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Proyecto {
+public class Proyecto implements Serializable {
+    private static final long serialVersionUID = 1L;
 	
 	String idProyecto;
 	String nombre;

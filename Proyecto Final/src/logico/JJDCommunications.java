@@ -1,11 +1,8 @@
 package logico;
 
 import java.util.Date;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,8 +14,8 @@ public class JJDCommunications implements Serializable {
     private ArrayList<Cliente> ListaClientes;
     private ArrayList<Proyecto> ListaProyectos;
     private ArrayList<Contrato> ListaContratos;
-    private static final String FILE_NAME = "data.dat";
 	public static JJDCommunications JJD = null;
+	private static final String FILE_NAME = "data.dat";
 	
     private static final int MAX_JEFE_PROYECTO = 1;
     private static final int MAX_PROGRAMADOR = 3;
@@ -42,9 +39,19 @@ public class JJDCommunications implements Serializable {
         ListaClientes = new ArrayList<>();
         ListaProyectos = new ArrayList<>();
         ListaContratos = new ArrayList<>();
+    }	    
+    
+    public static JJDCommunications getInstance() {
+        if (JJD == null) {
+            synchronized (Control.class) { // Sincronizar el bloque para garantizar la concurrencia segura
+                if (JJD == null) {
+                	JJD = new JJDCommunications();
+                }
+            }
+        }
+        return JJD;
     }
-	    
-
+    
     public void guardarDatos() {
         try (FileOutputStream fileOut = new FileOutputStream(FILE_NAME);
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
@@ -53,27 +60,8 @@ public class JJDCommunications implements Serializable {
             e.printStackTrace();
         }
     }
+
     
-    public static JJDCommunications cargarDatos() {
-        JJDCommunications jjd = null;
-        try (FileInputStream fileIn = new FileInputStream(FILE_NAME);
-             ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
-            jjd = (JJDCommunications) objectIn.readObject();
-        } catch (FileNotFoundException e) {
-            // El archivo no existe, puede ser la primera ejecución
-            System.out.println("No se encontró el archivo de datos. Se creará uno nuevo.");
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return jjd;
-    }
-    
-    public static JJDCommunications getInstance(){
-		if(JJD==null){
-			JJD = new JJDCommunications();
-		}
-		return JJD;
-	}
 
 	public ArrayList<Trabajador> getListaTrabajadores() {
 		return ListaTrabajadores;

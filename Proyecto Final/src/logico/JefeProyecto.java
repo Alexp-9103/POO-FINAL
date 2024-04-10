@@ -1,6 +1,9 @@
 package logico;
 
-public class JefeProyecto extends Trabajador {
+import java.io.Serializable;
+
+public class JefeProyecto extends Trabajador implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int cantidadTrabajadores;
 
 

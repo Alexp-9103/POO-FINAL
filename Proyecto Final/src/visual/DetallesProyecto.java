@@ -20,6 +20,7 @@ import logico.JJDCommunications;
 import java.awt.Dimension;
 
 public class DetallesProyecto extends JDialog {
+    // Código existente
 	private JLabel lblIdProyecto;
 	private JLabel lblNombreProyecto;
 	private JLabel lblCantidadTrabajadores;
@@ -32,6 +33,7 @@ public class DetallesProyecto extends JDialog {
 	 */
 	public DetallesProyecto(String nombreProyecto) {
 		setTitle("Detalles del Proyecto");
+		setModal(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setSize(800, 500);
 		setLocationRelativeTo(null);

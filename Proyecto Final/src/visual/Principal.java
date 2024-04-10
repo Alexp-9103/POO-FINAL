@@ -3,9 +3,7 @@ package visual;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -15,7 +13,6 @@ import logico.JJDCommunications;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,40 +22,7 @@ import java.awt.event.WindowEvent;
 public class Principal extends JFrame {
 
     private JPanel contentPane;
-    private boolean isAdmin;
     private Dimension dim;
-
-
-    /**
-     * Launch the application.
-     * 
-     */
-    
-    public static void main(String[] args) {
-        try {
-            // Inicializar la clase controladora
-        	JJDCommunications controlador = new JJDCommunications();
-
-            // Cargar datos desde el controlador
-        	JJDCommunications.cargarDatos();
-
-            // Mostrar el dialogo de inicio de sesion
-            Principal dialog = new Principal(true);
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            dialog.setVisible(true);
-
-            // Guardar datos al cerrar la aplicacion
-            dialog.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    // Guardar datos a través del controlador
-                	controlador.guardarDatos();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 
 
@@ -66,6 +30,15 @@ public class Principal extends JFrame {
      * Create the frame.
      */
     public Principal(boolean isAdmin) {
+    	
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Guardar los datos al cerrar la ventana
+                JJDCommunications.getInstance().guardarDatos();
+            }
+        });
+    	
         setTitle("Principal");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         dim = getToolkit().getScreenSize();

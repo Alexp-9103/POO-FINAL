@@ -1,6 +1,9 @@
 package logico;
 
-public class Planificador extends Trabajador {
+import java.io.Serializable;
+
+public class Planificador extends Trabajador implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int frecuenciaPlanificacion;
 
     public Planificador(String id, String nombre, String direccion, char sexo, int edad, double salarioHora, String evaluacion, int frecuenciaPlanificacion) {
