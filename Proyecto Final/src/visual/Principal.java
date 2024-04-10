@@ -192,7 +192,7 @@ public class Principal extends JFrame {
             	abrirEntregarProyecto();
             }
         });
-        mnProyectosAdministrativo.add(mntmListarProyectosAdministrativo);
+        mnProyectosAdministrativo.add(mntmEntregarProyecto);
 
         // Gestion de Clientes
         JMenu mnClientesAdministrativo = new JMenu("Gestion de Clientes");
@@ -260,7 +260,6 @@ public class Principal extends JFrame {
         });
         mnCostosPenalizacionesAdministrativo.add(mntmCalcularCostoProyectoAdministrativo);
        
-
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
