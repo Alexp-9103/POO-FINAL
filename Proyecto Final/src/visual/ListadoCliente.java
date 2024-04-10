@@ -48,6 +48,7 @@ public class ListadoCliente extends JDialog {
      * Create the dialog.
      */
     public ListadoCliente() {
+        jjdCommunications = JJDCommunications.getInstance(); // Inicializar jjdCommunications
     	setTitle("Listado De Cliente");
         setBounds(100, 100, 600, 400);
         getContentPane().setLayout(new BorderLayout());

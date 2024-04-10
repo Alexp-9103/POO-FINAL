@@ -86,22 +86,6 @@ public class ListadoContrato extends JDialog {
             JPanel buttonPane = new JPanel();
             buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
             getContentPane().add(buttonPane, BorderLayout.SOUTH);
-            {
-                JButton btnVerDetalles = new JButton("Ver Detalles");
-                btnVerDetalles.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        int selectedRow = table.getSelectedRow();
-                        if (selectedRow != -1) {
-                            String idContrato = (String) model.getValueAt(selectedRow, 0);
-                            DetallesContrato detallesContrato = new DetallesContrato(idContrato);
-                            detallesContrato.setVisible(true);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Por favor, seleccione un Contrato para ver los detalles.");
-                        }
-                    }
-                });
-                buttonPane.add(btnVerDetalles);
-            }
 
             {
                 JButton btnEliminar = new JButton("Eliminar");
@@ -113,6 +97,7 @@ public class ListadoContrato extends JDialog {
                             if (option == JOptionPane.YES_OPTION) {
                                 String idContrato = (String) model.getValueAt(selectedRow, 0);
                                 // Implementa la lógica para eliminar el contrato con el idContrato
+                                JJDCommunications.getInstance().eliminarContrato(idContrato); // Suponiendo que existe un método eliminarContrato en JJDCommunications
                                 cargarContratos(); // Recargar la tabla después de eliminar
                             }
                         } else {
@@ -120,6 +105,7 @@ public class ListadoContrato extends JDialog {
                         }
                     }
                 });
+
                 buttonPane.add(btnEliminar);
             }
         }
