@@ -23,85 +23,87 @@ public class Contrato implements Serializable {
         this.fechaInicio = fechaInicio;
         this.fechaEntrega = fechaEntrega;
         this.prorroga = prorroga;
-       
     }
 
-	public String getIdContrato() {
-		return idContrato;
-	}
+    public String getIdContrato() {
+        return idContrato;
+    }
 
-	public void setIdContrato(String idContrato) {
-		this.idContrato = idContrato;
-	}
+    public void setIdContrato(String idContrato) {
+        this.idContrato = idContrato;
+    }
 
-	public String getIdCliente() {
-		return idCliente;
-	}
+    public String getIdCliente() {
+        return idCliente;
+    }
 
-	public void setIdCliente(String idCliente) {
-		this.idCliente = idCliente;
-	}
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
+    }
 
-	public String getIdProyecto() {
-		return idProyecto;
-	}
-	
-	public void setIdProyecto(String idProyecto) {
-		this.idProyecto = idProyecto;
-	}
+    public String getIdProyecto() {
+        return idProyecto;
+    }
+    
+    public void setIdProyecto(String idProyecto) {
+        this.idProyecto = idProyecto;
+    }
 
-	public String getNombreProyecto() {
-		return nombreProyecto;
-	}
+    public String getNombreProyecto() {
+        return nombreProyecto;
+    }
 
-	public void setNombreProyecto(String nombreProyecto) {
-		this.nombreProyecto = nombreProyecto;
-	}
+    public void setNombreProyecto(String nombreProyecto) {
+        this.nombreProyecto = nombreProyecto;
+    }
 
-	public Date getFechaInicio() {
-		return fechaInicio;
-	}
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
 
-	public void setFechaInicio(Date fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
 
-	public Date getFechaEntrega() {
-		return fechaEntrega;
-	}
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
 
-	public void setFechaEntrega(Date fechaEntrega) {
-		this.fechaEntrega = fechaEntrega;
-	}
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
 
-	public boolean isProrroga() {
-		return prorroga;
-	}
+    public boolean isProrroga() {
+        return prorroga;
+    }
 
-	public void setProrroga(boolean prorroga) {
-		this.prorroga =prorroga;
-
-	}
-	
-	@Override
-	public String toString() {
-	    return "ID: " + getIdContrato() + " - Proyecto: " + getNombreProyecto();
-	}
+    public void setProrroga(boolean prorroga) {
+        this.prorroga =prorroga;
+    }
+    
+    @Override
+    public String toString() {
+        return "ID: " + getIdContrato() + " - Proyecto: " + getNombreProyecto();
+    }
 
     public double calcularPenalizacion(Date fechaActual) {
         long diasRetraso = (fechaActual.getTime() - fechaEntrega.getTime()) / (1000 * 60 * 60 * 24);
         double penalizacion = 0.01 * diasRetraso;
         return penalizacion;
     }
-	
-	public  double calcularCostoProyecto(Date fechaInicio, Date fechaEntrega) {
-		double costoProyecto = 0;
-		
-		JJDCommunications jjd = new JJDCommunications();
-		
-		costoProyecto = ((jjd.calcularSalarioTotal(fechaInicio,fechaEntrega)*6)*0.25);
+    
+    public  double calcularCostoProyecto(Date fechaInicio, Date fechaEntrega) {
+        double costoProyecto = 0;
+        
+        JJDCommunications jjd = new JJDCommunications();
+        
+        costoProyecto = ((jjd.calcularSalarioTotal(fechaInicio,fechaEntrega)*6)*0.25);
 
-		return costoProyecto;
-  }		
-	
+        return costoProyecto;
+    }
+
+    public boolean estaEntregadoATiempo() {
+        Date fechaActual = new Date(); // Obtener la fecha actual
+        return fechaActual.before(fechaEntrega); // Devuelve true si la fecha actual es antes de la fecha de entrega
+    }
 }

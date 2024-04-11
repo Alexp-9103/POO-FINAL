@@ -1,5 +1,5 @@
 package visual;
- 
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -136,42 +136,51 @@ public class RegContrato extends JDialog {
         textFieldIdContrato.setText(idContrato);
     }
  
-    private void registrarContrato() {
-        String idContrato = textFieldIdContrato.getText();
-        String clienteSeleccionado = (String) comboBoxClientes.getSelectedItem();
-        String proyectoSeleccionado = (String) comboBoxProyectos.getSelectedItem();
-        fechaInicio = (Date) spinnerFechaInicio.getValue();
-        fechaEntrega = (Date) spinnerFechaEntrega.getValue();
+    
+    
+private void registrarContrato() {
+    String idContrato = textFieldIdContrato.getText();
+    String clienteSeleccionado = (String) comboBoxClientes.getSelectedItem();
+    String proyectoSeleccionado = (String) comboBoxProyectos.getSelectedItem();
+    fechaInicio = (Date) spinnerFechaInicio.getValue();
+    fechaEntrega = (Date) spinnerFechaEntrega.getValue();
 
-        JJDCommunications jjd = JJDCommunications.getInstance();
+    JJDCommunications jjd = JJDCommunications.getInstance();
 
-        // Obtener el ID del cliente seleccionado
-        String clienteId = clienteSeleccionado.split(" - ")[0]; // Obtener el ID antes del primer espacio
-        Cliente cliente = jjd.BuscarCliente(clienteId);
+    // Obtener el ID del cliente seleccionado
+    String clienteId = clienteSeleccionado.split(" - ")[0]; // Obtener el ID antes del primer espacio
+    Cliente cliente = jjd.BuscarCliente(clienteId);
 
-        // Obtener el proyecto seleccionado por su nombre
-        Proyecto proyecto = jjd.buscarProyecto(proyectoSeleccionado);
+    // Obtener el proyecto seleccionado por su nombre
+    Proyecto proyecto = jjd.buscarProyecto(proyectoSeleccionado);
 
-        if (cliente != null && proyecto != null) {
-            // Modificar la creaciÃ³n del contrato para adaptarse al nuevo constructor
-            Contrato contrato = new Contrato(idContrato, cliente.getId(), proyecto.getIdProyecto(), proyecto.getNombre(), fechaInicio, fechaEntrega, false);
-            jjd.insertarContrato(contrato);
+    if (cliente != null && proyecto != null) {
+        // Modificar la creación del contrato para adaptarse al nuevo constructor
+        Contrato contrato = new Contrato(idContrato, cliente.getId(), proyecto.getIdProyecto(), proyecto.getNombre(), fechaInicio, fechaEntrega, false);
+        jjd.insertarContrato(contrato);
 
-            // Agregar el proyecto asociado al cliente
-            cliente.agregarProyecto(proyecto);
+        // Asignar el contrato al proyecto
+        proyecto.setContrato(contrato);
 
-            JOptionPane.showMessageDialog(this, "Contrato registrado exitosamente.");
-            generarIdContrato();
-         // Actualizar el estado del proyecto a "Activo"
-            proyecto.setContratoActivo(true);
+        // Agregar el proyecto asociado al cliente
+        cliente.agregarProyecto(proyecto);
 
-        } else {
-            JOptionPane.showMessageDialog(this, "Error: Cliente o proyecto seleccionado no encontrado.");
-        }
-        
-        dispose();
+        JOptionPane.showMessageDialog(this, "Contrato registrado exitosamente.");
+        generarIdContrato();
+        // Actualizar el estado del proyecto a "Activo"
+        proyecto.setContratoActivo(true);
+
+    } else {
+        JOptionPane.showMessageDialog(this, "Error: Cliente o proyecto seleccionado no encontrado.");
     }
 
+    dispose();
 
-    
+    System.out.println("Fecha de inicio del contrato: " + fechaInicio);
+    System.out.println("Fecha de entrega del contrato: " + fechaEntrega);
+
+}
+
+
+
 }

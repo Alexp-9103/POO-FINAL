@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import logico.JJDCommunications;
+import logico.Trabajador;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -165,6 +166,16 @@ public class Principal extends JFrame {
             }
         });
         mnTrabajadoresAdministrativo.add(mntmListarTrabajadoresAdministrativo);
+        
+        JMenuItem mntmConsultarEvaluacionTrabajador = new JMenuItem("Consultar Evaluacion de Trabajador");
+        mntmConsultarEvaluacionTrabajador.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Accion para listar todos los trabajadores
+            	abrirConsultarEvaluacionTrabajador(); // Asegúrate de tener una variable 'trabajador' disponible aquí
+            }
+        });
+        mnTrabajadoresAdministrativo.add(mntmConsultarEvaluacionTrabajador);
+
 
         // Gestion de Proyectos
         JMenu mnProyectosAdministrativo = new JMenu("Gestion de Proyectos");
@@ -334,6 +345,14 @@ public class Principal extends JFrame {
         entregarProyecto.setModal(true);
         entregarProyecto.setVisible(true);
     }
+
+    private void abrirConsultarEvaluacionTrabajador() {
+        ConsultarEvaluacionTrabajador consultaEvaluacionProyecto = new ConsultarEvaluacionTrabajador();
+        consultaEvaluacionProyecto.setTrabajadores(JJDCommunications.getInstance().getListaTrabajadores());
+        consultaEvaluacionProyecto.setVisible(true);
+    }
+
+
 
 
 

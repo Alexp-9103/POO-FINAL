@@ -2,11 +2,10 @@ package visual;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import logico.Cliente;
 import logico.JJDCommunications;
 import logico.Proyecto;
+import logico.Trabajador;
 
 public class EntregarProyecto extends JDialog {
     private JComboBox<Proyecto> proyectosComboBox;
@@ -55,21 +54,41 @@ public class EntregarProyecto extends JDialog {
             return;
         }
 
+        // Verificar si el contrato del proyecto está activo
+        if (!proyectoSeleccionado.isContratoActivo()) {
+            JOptionPane.showMessageDialog(this, "El proyecto no tiene un contrato activo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         // Obtener el nombre del proyecto seleccionado
         String nombreProyecto = proyectoSeleccionado.getNombre();
 
         int confirmacion = JOptionPane.showConfirmDialog(this,
-                "Â¿EstÃ¡s seguro de que deseas entregar el proyecto \"" + nombreProyecto + "\"?",
+                "¿Estás seguro de que deseas entregar el proyecto \"" + nombreProyecto + "\"?",
                 "Confirmar Entrega de Proyecto", JOptionPane.YES_NO_OPTION);
 
         if (confirmacion == JOptionPane.YES_OPTION) {
+            // Evaluar a los trabajadores involucrados en el proyecto
+            boolean proyectoEntregadoATiempo = proyectoSeleccionado.estaEntregadoATiempo();
+            System.out.println("Proyecto entregado a tiempo: " + proyectoEntregadoATiempo);
+            for (Trabajador trabajador : proyectoSeleccionado.getLosTrabajadores()) {
+                System.out.println("Antes de actualizar evaluación para trabajador: " + trabajador.getId());
+                trabajador.actualizarEvaluacion(proyectoEntregadoATiempo);
+                System.out.println("Después de actualizar evaluación para trabajador: " + trabajador.getId());
+            }
+
+            // Actualizar estado del proyecto
             proyectoSeleccionado.setContratoActivo(false);
-            JOptionPane.showMessageDialog(this, "Â¡El proyecto \"" + nombreProyecto + "\" ha sido entregado con Ã©xito!",
+
+            JOptionPane.showMessageDialog(this, "¡El proyecto \"" + nombreProyecto + "\" ha sido entregado con éxito!",
                     "Proyecto Entregado", JOptionPane.INFORMATION_MESSAGE);
+
             proyectosComboBox.removeItem(proyectoSeleccionado);
         }
     }
 
+  
+    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new EntregarProyecto().setVisible(true));
     }

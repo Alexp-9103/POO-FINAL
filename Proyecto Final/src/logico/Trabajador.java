@@ -128,5 +128,22 @@ public abstract class Trabajador implements Serializable {
         int horasTrabajadasPorDia = 6;
         double salarioTotal = trabajador.getSalarioHora() * diasTrabajados * horasTrabajadasPorDia;
         return salarioTotal;
-    }        
+    }   
+	
+	public void actualizarEvaluacion(boolean proyectoEntregadoATiempo) {
+        if (proyectoEntregadoATiempo) {
+            if (Evaluacion.equals("Cumplidor")) {
+                Evaluacion = "Destacado";
+            } else if (Evaluacion.equals("Incumplidor")) {
+                Evaluacion = "Cumplidor";
+            }
+        } else {
+            if (Evaluacion.equals("Cumplidor")) {
+                Evaluacion = "Incumplidor";
+            } else if (Evaluacion.equals("Destacado")) {
+                Evaluacion = "Cumplidor";
+            }
+        }
+    }
+
 }

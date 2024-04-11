@@ -32,13 +32,13 @@ public class DetallesProyecto extends JDialog {
      */
     public DetallesProyecto(String nombreProyecto) {
         setTitle("Detalles del Proyecto");
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        setSize(800, 500);
-        setLocationRelativeTo(null);
+        setBounds(100, 100, 800, 600);
+        setModal(true);
+        getContentPane().setLayout(new BorderLayout());
 
         JPanel contentPanel = new JPanel();
-        contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        contentPanel.setLayout(new BorderLayout(0, 0));
+        contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        contentPanel.setLayout(new BorderLayout());
         getContentPane().add(contentPanel, BorderLayout.CENTER);
 
         JPanel detailsPanel = new JPanel();
