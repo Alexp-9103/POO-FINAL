@@ -438,8 +438,7 @@ public class JJDCommunications implements Serializable {
         return 0;
     }
     
-
-    
+ 
     private int diferenciaDias(Date fechaInicio, Date fechaFin) {
         long diferenciaMillis = fechaFin.getTime() - fechaInicio.getTime();
         return (int) (diferenciaMillis / (1000 * 60 * 60 * 24));
