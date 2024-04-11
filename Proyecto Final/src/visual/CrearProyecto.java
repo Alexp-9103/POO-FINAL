@@ -199,6 +199,43 @@ public class CrearProyecto extends JFrame {
 
 
     private void guardarProyecto() {
+        // Obtener el número de cada tipo de trabajador en el proyecto
+        int numProgramadores = 0;
+        int numJefesProyecto = 0;
+        int numDisenadores = 0;
+        int numPlanificadores = 0;
+
+        for (int i = 0; i < modelTrabajadoresProyecto.size(); i++) {
+            String workerDetails = modelTrabajadoresProyecto.getElementAt(i);
+            String[] workerInfo = workerDetails.split("\\|");
+            String tipoTrabajador = workerInfo[3].trim();
+
+            if (tipoTrabajador.equals("Programador")) {
+                numProgramadores++;
+            } else if (tipoTrabajador.equals("Jefe de Proyecto")) {
+                numJefesProyecto++;
+            } else if (tipoTrabajador.equals("Disenador")) {
+                numDisenadores++;
+            } else if (tipoTrabajador.equals("Planificador")) {
+                numPlanificadores++;
+            }
+        }
+
+        // Validar el número mínimo de integrantes
+        if (numProgramadores < 2 || numJefesProyecto < 1 || numDisenadores < 1) {
+            JOptionPane.showMessageDialog(this, "El proyecto debe tener al menos 2 programadores, 1 jefe de proyecto y 1 diseñador.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Si se requiere al menos un planificador, verificar su presencia
+        if (numPlanificadores < 1) {
+            int opcion = JOptionPane.showConfirmDialog(this, "El proyecto no tiene planificador asignado. ¿Desea continuar sin planificador?", "Advertencia", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (opcion == JOptionPane.NO_OPTION) {
+                return; // Cancelar la operación
+            }
+        }
+
+        // Si se ha superado la validación, guardar el proyecto
         String idProyecto = textIdProyecto.getText();
         String nombreProyecto = textNombreProyecto.getText();
         ArrayList<Trabajador> trabajadoresProyecto = new ArrayList<>();
@@ -208,13 +245,14 @@ public class CrearProyecto extends JFrame {
             String workerId = workerInfo[0].trim();
             Trabajador trabajador = JJDCommunications.getInstance().buscarTrabajadorPorId(workerId);
             if (trabajador != null) {
-            	trabajador.aumentarProyectos();
+                trabajador.aumentarProyectos();
                 trabajadoresProyecto.add(trabajador);
             }
         }
-        
+
         if (!trabajadoresProyecto.isEmpty()) {
-            Proyecto proyecto = new Proyecto(idProyecto, nombreProyecto, trabajadoresProyecto.size(), false, false, trabajadoresProyecto);     JJDCommunications.getInstance().insertarProyecto(proyecto);
+            Proyecto proyecto = new Proyecto(idProyecto, nombreProyecto, trabajadoresProyecto.size(), false, false, trabajadoresProyecto);
+            JJDCommunications.getInstance().insertarProyecto(proyecto);
 
             JOptionPane.showMessageDialog(this, "Proyecto guardado exitosamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
             dispose();

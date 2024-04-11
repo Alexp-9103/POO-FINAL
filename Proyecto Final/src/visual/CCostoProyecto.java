@@ -30,18 +30,18 @@ public class CCostoProyecto extends JDialog {
 
     public CCostoProyecto() {
         setTitle("Calcular Costo de Proyecto");
-        setBounds(100, 100, 600, 250); // Ajustar el tamaño de la ventana
+        setBounds(100, 100, 600, 250); 
         getContentPane().setLayout(new BorderLayout());
-        contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10)); // Ajustar los márgenes internos
+        contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10)); 
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
         JLabel lblProyectoACalcular = new JLabel("Proyecto a Calcular:");
-        lblProyectoACalcular.setBounds(20, 20, 150, 20); // Ajustar posición y tamaño
+        lblProyectoACalcular.setBounds(20, 20, 150, 20);
         contentPanel.add(lblProyectoACalcular);
 
         comboBoxProyectos = new JComboBox<>();
-        comboBoxProyectos.setBounds(180, 20, 350, 20); // Ajustar posición y tamaño
+        comboBoxProyectos.setBounds(180, 20, 350, 20); 
         contentPanel.add(comboBoxProyectos);
 
         JButton btnCalcular = new JButton("Calcular Costo");
@@ -50,11 +50,11 @@ public class CCostoProyecto extends JDialog {
                 calcularCostoProyecto();
             }
         });
-        btnCalcular.setBounds(250, 60, 150, 30); // Ajustar posición y tamaño
+        btnCalcular.setBounds(250, 60, 150, 30); 
         contentPanel.add(btnCalcular);
 
         lblCostoProyecto = new JLabel("");
-        lblCostoProyecto.setBounds(20, 100, 550, 20); // Ajustar posición y tamaño
+        lblCostoProyecto.setBounds(20, 100, 550, 20); 
         contentPanel.add(lblCostoProyecto);
 
         jjd = JJDCommunications.getInstance();

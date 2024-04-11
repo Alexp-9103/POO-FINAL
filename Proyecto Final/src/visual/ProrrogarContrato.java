@@ -101,9 +101,10 @@ public class ProrrogarContrato extends JDialog {
             int diasProrroga = (int) spinnerDiasProrroga.getValue();
             Contrato contratoSeleccionado = (Contrato) comboBoxContratos.getSelectedItem();
             if (contratoSeleccionado != null) {
-                // Prorrogar el contrato
+               
                 jjd.prorrogarContrato(contratoSeleccionado, diasProrroga);
                 JOptionPane.showMessageDialog(this, "Contrato prorrogado exitosamente.\nNueva fecha de entrega: " + contratoSeleccionado.getFechaEntrega(), "Prórroga Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                contratoSeleccionado.setProrroga(true);
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Seleccione un contrato antes de continuar.", "Error", JOptionPane.ERROR_MESSAGE);

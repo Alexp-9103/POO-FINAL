@@ -54,7 +54,7 @@ public class EntregarProyecto extends JDialog {
             return;
         }
 
-        // Verificar si el contrato del proyecto está activo
+        // Verificar si el contrato del proyecto estï¿½ activo
         if (!proyectoSeleccionado.isContratoActivo()) {
             JOptionPane.showMessageDialog(this, "El proyecto no tiene un contrato activo.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -64,7 +64,7 @@ public class EntregarProyecto extends JDialog {
         String nombreProyecto = proyectoSeleccionado.getNombre();
 
         int confirmacion = JOptionPane.showConfirmDialog(this,
-                "¿Estás seguro de que deseas entregar el proyecto \"" + nombreProyecto + "\"?",
+                "ï¿½Estï¿½s seguro de que deseas entregar el proyecto \"" + nombreProyecto + "\"?",
                 "Confirmar Entrega de Proyecto", JOptionPane.YES_NO_OPTION);
 
         if (confirmacion == JOptionPane.YES_OPTION) {
@@ -72,15 +72,15 @@ public class EntregarProyecto extends JDialog {
             boolean proyectoEntregadoATiempo = proyectoSeleccionado.estaEntregadoATiempo();
             System.out.println("Proyecto entregado a tiempo: " + proyectoEntregadoATiempo);
             for (Trabajador trabajador : proyectoSeleccionado.getLosTrabajadores()) {
-                System.out.println("Antes de actualizar evaluación para trabajador: " + trabajador.getId());
+                System.out.println("Antes de actualizar evaluaciï¿½n para trabajador: " + trabajador.getId());
                 trabajador.actualizarEvaluacion(proyectoEntregadoATiempo);
-                System.out.println("Después de actualizar evaluación para trabajador: " + trabajador.getId());
+                System.out.println("Despuï¿½s de actualizar evaluaciï¿½n para trabajador: " + trabajador.getId());
             }
 
             // Actualizar estado del proyecto
             proyectoSeleccionado.setContratoActivo(false);
 
-            JOptionPane.showMessageDialog(this, "¡El proyecto \"" + nombreProyecto + "\" ha sido entregado con éxito!",
+            JOptionPane.showMessageDialog(this, "ï¿½El proyecto \"" + nombreProyecto + "\" ha sido entregado con ï¿½xito!",
                     "Proyecto Entregado", JOptionPane.INFORMATION_MESSAGE);
 
             proyectosComboBox.removeItem(proyectoSeleccionado);

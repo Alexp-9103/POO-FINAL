@@ -288,7 +288,7 @@ public class JJDCommunications implements Serializable {
                 return contrato;
             }
         }
-        return null; // Si no se encuentra ningï¿½n contrato con el ID de proyecto proporcionado
+        return null;
     }
 
     public static boolean puedeAgregarTrabajador(String tipoTrabajador) {
@@ -427,7 +427,7 @@ public class JJDCommunications implements Serializable {
 
     public double calcularPenalizacion(Proyecto proyecto) {
         Contrato contrato = obtenerContratoPorProyecto(proyecto.getIdProyecto());
-        if (contrato != null) {
+        if (contrato != null && !contrato.isProrroga()) { 
             Date fechaEntrega = contrato.getFechaInicio();
             Date fechaLimite = contrato.getFechaEntrega();
             int diasRetraso = diferenciaDias(fechaEntrega, fechaLimite);
@@ -441,7 +441,8 @@ public class JJDCommunications implements Serializable {
         }
         return 0;
     }
-    
+
+
  
     private int diferenciaDias(Date fechaInicio, Date fechaFin) {
         long diferenciaMillis = fechaFin.getTime() - fechaInicio.getTime();
