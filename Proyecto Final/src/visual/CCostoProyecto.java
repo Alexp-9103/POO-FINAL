@@ -18,9 +18,6 @@ public class CCostoProyecto extends JDialog {
 
     private JJDCommunications jjd;
 
-    /**
-     * Launch the application.
-     */
     public static void main(String[] args) {
         try {
             CCostoProyecto dialog = new CCostoProyecto();
@@ -31,23 +28,20 @@ public class CCostoProyecto extends JDialog {
         }
     }
 
-    /**
-     * Create the dialog.
-     */
     public CCostoProyecto() {
         setTitle("Calcular Costo de Proyecto");
-        setBounds(100, 100, 450, 200);
+        setBounds(100, 100, 600, 250); // Ajustar el tamaño de la ventana
         getContentPane().setLayout(new BorderLayout());
-        contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10)); // Ajustar los márgenes internos
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
         JLabel lblProyectoACalcular = new JLabel("Proyecto a Calcular:");
-        lblProyectoACalcular.setBounds(10, 32, 150, 14);
+        lblProyectoACalcular.setBounds(20, 20, 150, 20); // Ajustar posición y tamaño
         contentPanel.add(lblProyectoACalcular);
 
         comboBoxProyectos = new JComboBox<>();
-        comboBoxProyectos.setBounds(170, 29, 250, 20);
+        comboBoxProyectos.setBounds(180, 20, 350, 20); // Ajustar posición y tamaño
         contentPanel.add(comboBoxProyectos);
 
         JButton btnCalcular = new JButton("Calcular Costo");
@@ -56,11 +50,11 @@ public class CCostoProyecto extends JDialog {
                 calcularCostoProyecto();
             }
         });
-        btnCalcular.setBounds(150, 70, 150, 23);
+        btnCalcular.setBounds(250, 60, 150, 30); // Ajustar posición y tamaño
         contentPanel.add(btnCalcular);
 
         lblCostoProyecto = new JLabel("");
-        lblCostoProyecto.setBounds(10, 110, 400, 14);
+        lblCostoProyecto.setBounds(20, 100, 550, 20); // Ajustar posición y tamaño
         contentPanel.add(lblCostoProyecto);
 
         jjd = JJDCommunications.getInstance();
@@ -93,3 +87,4 @@ public class CCostoProyecto extends JDialog {
         }
     }
 }
+

@@ -13,6 +13,7 @@ public class Contrato implements Serializable {
     private Date fechaInicio;
     private Date fechaEntrega;
     private boolean prorroga;
+    
 
     public Contrato(String idContrato, String idCliente, String idProyecto, String nombreProyecto, Date fechaInicio, Date fechaEntrega, boolean prorroga) {
         this.idContrato = idContrato;

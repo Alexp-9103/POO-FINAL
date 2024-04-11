@@ -113,7 +113,7 @@ public class RegContrato extends JDialog {
         btnCancelar.setBounds(184, 228, 115, 23);
         getContentPane().add(btnCancelar);
  
-        // Generar ID automático para el contrato
+        // Generar ID automÃ¡tico para el contrato
         generarIdContrato();
  
         // Obtener la instancia de JJDCommunications
@@ -153,7 +153,7 @@ public class RegContrato extends JDialog {
         Proyecto proyecto = jjd.buscarProyecto(proyectoSeleccionado);
 
         if (cliente != null && proyecto != null) {
-            // Modificar la creaci�n del contrato para adaptarse al nuevo constructor
+            // Modificar la creación del contrato para adaptarse al nuevo constructor
             Contrato contrato = new Contrato(idContrato, cliente.getId(), proyecto.getIdProyecto(), proyecto.getNombre(), fechaInicio, fechaEntrega, false);
             jjd.insertarContrato(contrato);
 

@@ -96,11 +96,11 @@ public class ListadoContrato extends JDialog {
             	    public void actionPerformed(ActionEvent e) {
             	        int selectedRow = table.getSelectedRow();
             	        if (selectedRow != -1) {
-            	            int option = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea eliminar este contrato?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
+            	            int option = JOptionPane.showConfirmDialog(null, "Â¿EstÃ¡ seguro de que desea eliminar este contrato?", "ConfirmaciÃ³n de eliminaciÃ³n", JOptionPane.YES_NO_OPTION);
             	            if (option == JOptionPane.YES_OPTION) {
             	                String idContrato = (String) model.getValueAt(selectedRow, 0);
-            	                // Implementa la lógica para eliminar el contrato con el idContrato
-            	                eliminarContrato(idContrato); // Llama al método para eliminar el contrato
+            	                // Implementa la lÃ³gica para eliminar el contrato con el idContrato
+            	                eliminarContrato(idContrato); // Llama al mÃ©todo para eliminar el contrato
             	            }
             	        } else {
             	            JOptionPane.showMessageDialog(null, "Por favor, seleccione un contrato para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -153,7 +153,7 @@ public class ListadoContrato extends JDialog {
             }
         }
 
-        // Recargar la tabla después de eliminar
+        // Recargar la tabla despuÃ©s de eliminar
         cargarContratos();
     }
 

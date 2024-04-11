@@ -251,15 +251,15 @@ public class JJDCommunications implements Serializable {
         }
     }
 
-    public Proyecto buscarProyecto(String nombre) {
+    public Proyecto buscarProyecto(String idProyecto) {
         for (Proyecto proyecto : ListaProyectos) {
-            if (proyecto.getNombre().equalsIgnoreCase(nombre)) {
+            if (proyecto.getIdProyecto().equalsIgnoreCase(idProyecto)) {
                 return proyecto;
             }
         }
         return null;
     }
-    
+
     
     public ArrayList<Proyecto> obtenerProyectosPorCliente(String idCliente) {
         ArrayList<Proyecto> proyectos = new ArrayList<>();
@@ -277,6 +277,7 @@ public class JJDCommunications implements Serializable {
         }
         return proyectos;
     }
+
 
 
 
@@ -341,6 +342,8 @@ public class JJDCommunications implements Serializable {
                 break;
         }
     }
+
+    
     
 
     

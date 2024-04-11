@@ -28,7 +28,10 @@ public class ListadoTrabajador extends JDialog {
 
     public ListadoTrabajador() {
     	setTitle("Listado De Trabajador");
+
+
         setSize(900, 500); 
+
         setLocationRelativeTo(null);
 
         jjdCommunications = JJDCommunications.getInstance();
