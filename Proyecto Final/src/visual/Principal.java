@@ -125,7 +125,7 @@ public class Principal extends JFrame {
         mntmCalcularCostoProyectoUsuario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Accion para calcular el costo de un proyecto
-            	abrirCostoProyecto();
+            	abrirCCostoProyecto();
             }
         });
         mnCostosPenalizacionesUsuario.add(mntmCalcularCostoProyectoUsuario);
@@ -258,7 +258,7 @@ public class Principal extends JFrame {
         mntmCalcularCostoProyectoAdministrativo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Accion para calcular el costo de un proyecto
-            	abrirCostoProyecto();
+            	abrirCCostoProyecto();
             }
         });
         mnCostosPenalizacionesAdministrativo.add(mntmCalcularCostoProyectoAdministrativo);
@@ -323,10 +323,10 @@ public class Principal extends JFrame {
         prorrogarContrato.setVisible(true);
     }
 
-    private void abrirCostoProyecto() {
-        CostoProyecto costoProyecto = new CostoProyecto();
-        costoProyecto.setModal(true);
-        costoProyecto.setVisible(true);
+    private void abrirCCostoProyecto() {
+        CCostoProyecto ccostoProyecto = new CCostoProyecto();
+        ccostoProyecto.setModal(true);
+        ccostoProyecto.setVisible(true);
     }
     
     private void abrirEntregarProyecto() {

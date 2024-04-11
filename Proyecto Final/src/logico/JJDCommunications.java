@@ -395,9 +395,7 @@ public class JJDCommunications implements Serializable {
         return null;
     }
     
-    
-
-
+  
     public void prorrogarContrato(Contrato contrato, int diasProrroga) {
         // Obtener la fecha de entrega actual del contrato
         Date fechaEntregaActual = contrato.getFechaEntrega();
@@ -408,8 +406,55 @@ public class JJDCommunications implements Serializable {
         contrato.setFechaEntrega(nuevaFechaEntrega);
     }
 
+    public double calcularCostoProyecto(Proyecto proyecto) {
+        Contrato contrato = obtenerContratoPorProyecto(proyecto.getIdProyecto());
+        if (contrato != null) {
+            Date fechaInicio = contrato.getFechaInicio();
+            Date fechaEntrega = contrato.getFechaEntrega();
+            int diasDiferencia = diferenciaDias(fechaInicio, fechaEntrega);
+            double costoTotal = 0;
+            for (Trabajador trabajador : proyecto.getLosTrabajadores()) {
+                costoTotal += diasDiferencia * trabajador.getSalarioHora() * 0.25;
+            }
+            return costoTotal;
+        }
+        return 0; 
+    }
+
+    public double calcularPenalizacion(Proyecto proyecto) {
+        Contrato contrato = obtenerContratoPorProyecto(proyecto.getIdProyecto());
+        if (contrato != null) {
+            Date fechaEntrega = contrato.getFechaInicio();
+            Date fechaLimite = contrato.getFechaEntrega();
+            int diasRetraso = diferenciaDias(fechaEntrega, fechaLimite);
+            if (diasRetraso > 0) {
+                double penalizacionTotal = 0;
+                for (Trabajador trabajador : proyecto.getLosTrabajadores()) {
+                    penalizacionTotal += diasRetraso * trabajador.getSalarioHora() * 0.01;
+                }
+                return penalizacionTotal;
+            }
+        }
+        return 0;
+    }
+    
 
     
-    	
+    private int diferenciaDias(Date fechaInicio, Date fechaFin) {
+        long diferenciaMillis = fechaFin.getTime() - fechaInicio.getTime();
+        return (int) (diferenciaMillis / (1000 * 60 * 60 * 24));
+    } 
+    
+    public Proyecto obtenerProyectoPorId(String idProyecto) {
+        for (Proyecto proyecto : ListaProyectos) {
+            if (proyecto.getIdProyecto().equals(idProyecto)) {
+                return proyecto;
+            }
+        }
+        return null;
+    }
 
-}
+    
+ }
+    
+    	
